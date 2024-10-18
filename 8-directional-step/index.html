@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="en"><head><title>Eightomic: 8-Directional Grid Step Navigation</title><link href="https://eightomic.com/8-directional-step/" rel="canonical"><link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.1px;text-decoration:none;transition:opacity 0.2s ease;}a:hover{opacity:0.9;}body,html{background:#fafafa;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:23px;margin:0;overflow-x:hidden;width:100%;}code{background:#f3f3f3 !important;border:2px solid #bcbcbc !important;border-radius:4px;box-sizing:border-box !important;color:#222;display:inline-block;font-family:monospace !important;font-size:11px;font-weight:normal;height:auto;line-height:18px !important;margin:6px 0 16px;max-height:800px;overflow-x:scroll;padding:30px 31px 25px !important;white-space:pre;width:100% !important;}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3 {display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.7px;line-height:32px;margin:-6px 0 29px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 16px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.2px;margin:13px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 15px;width:100%;}p .code,ul .code{background:#f3f3f3;border:2px solid #bcbcbc;border-radius:4px;color:#222;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;line-height:16px;margin:2px 1px;padding:4px 5px 0;}ul{list-style:none;margin:0;padding:0;}ul li{color:#555;margin-bottom:15px;}.eightomic-icon{float:left;margin:0 15px 9px 0;}.eightomic-icon img{float:left;height:32px !important;margin:-3px 0 0;}.game{background:#000;border-radius:5px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;transition:opacity 0.2s ease;}.game:hover {opacity:0.9;}.game.no-margin-top{margin-top:10px !important;}.game a{border-radius:5px;height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game img{display:block;height:32px;margin:12px 0 0;width:32px;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game p{color:#999;margin-bottom:0;}.game .version{color:#f02222;display:block;font-size:12px;font-weight:bold;margin:5px 0 3px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="eightomic-icon" href="/"><img src="/icon-eightomic.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>8-Directional Grid Step Navigation: An Optimal Calculation of Diagonal and Orthogonal Navigation Steps in 2-Dimensional Grids</h1><div class="section"><p class="no-margin-bottom">Eightomic developed a grid step navigation calculation algorithm with a library in C99 as a substantial improvement to all existing navigation algorithms for rectangular grids in a 2D plane.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><code>#include &lt;stdbool.h&gt;
+
+struct eightomic_navigate_s {
+  unsigned long grid_width;
+  unsigned long grid_height;
+  unsigned long source;
+  unsigned long destination;
+  long source_step;
+  unsigned long source_x;
+  unsigned long source_y;
+  unsigned long destination_x;
+  unsigned long destination_y;
+  char source_x_step;
+  char source_y_step;
+  unsigned long repetitions_count;
+  bool has_source_coordinates;
+  bool has_destination_coordinates;
+};
+
+void eightomic_navigate(struct eightomic_s *s) {
+  if (s->repetitions_count == 0) {
+    if (s->has_source_coordinates == false) {
+      s->source_y = s->source / s->grid_width;
+      s->source_x = s->source - (s->grid_width * s->source_y);
+      s->has_source_coordinates = true;
+    }
+
+    if (s->has_destination_coordinates == false) {
+      s->destination_y = s->destination / s->grid_width;
+      s->destination_x = s->destination - (s->grid_width * s->destination_y);
+      s->has_destination_coordinates = true;
+    }
+
+    if (s->source_x == s->destination_x) {
+      s->source_x_step = 0;
+
+      if (s->source_y < s->destination_y) {
+        s->source_step = s->grid_width;
+        s->source_y_step = 1;
+        s->repetitions_count = s->destination_y - s->source_y;
+      } else {
+        if (s->source_y > s->destination_y) {
+          s->source_step = -s->grid_width;
+          s->source_y_step = -1;
+          s->repetitions_count = s->source_y - s->destination_y;
+        } else {
+          s->source_step = 0;
+          s->source_y_step = 0;
+          s->repetitions_count = 0;
+        }
+      }
+    } else {
+      if (s->source_y == s->destination_y) {
+        s->source_y_step = 0;
+
+        if (s->source_x < s->destination_x) {
+          s->source_step = 1;
+          s->source_x_step = 1;
+          s->repetitions_count = s->destination_x - s->source_x;
+        } else {
+          s->source_step = -1;
+          s->source_x_step = -1;
+          s->repetitions_count = s->source_x - s->destination_x;
+        }
+      } else {
+        if (s->source_x < s->destination_x) {
+          s->repetitions_count = s->destination_x - s->source_x;
+          s->source_x_step = 1;
+
+          if (s->source_y < s->destination_y) {
+            s->source_step = s->grid_width + 1;
+            s->source_y_step = 1;
+
+            if ((s->destination_y - s->source_y) < s->repetitions_count) {
+              s->repetitions_count = s->destination_y - s->source_y;
+            }
+          } else {
+            s->source_step = -s->grid_width + 1;
+            s->source_y_step = -1;
+
+            if ((s->source_y - s->destination_y) < s->repetitions_count) {
+              s->repetitions_count = s->source_y - s->destination_y;
+            }
+          }
+        } else {
+          s->repetitions_count = s->source_x - s->destination_x;
+          s->source_x_step = -1;
+
+          if (s->source_y < s->destination_y) {
+            s->source_step = s->grid_width - 1;
+            s->source_y_step = 1;
+
+            if ((s->destination_y - s->source_y) < s->repetitions_count) {
+              s->repetitions_count = s->destination_y - s->source_y;
+            }
+          } else {
+            s->source_step = -s->grid_width - 1;
+            s->source_y_step = -1;
+
+            if ((s->source_y - s->destination_y) < s->repetitions_count) {
+              s->repetitions_count = s->source_y - s->destination_y;
+            }
+          }
+        }
+      }
+    }
+  } else {
+    s->source += s->source_step;
+    s->source_x += s->source_x_step;
+    s->source_y += s->source_y_step;
+    s->repetitions_count--;
+  }
+}</code><h3>Reference</h3><p><span class="code no-margin-left">eightomic_navigate()</span> is the step navigation function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is the <span class="code">struct eightomic_navigate_s</span> pointer.</p><p>The following elements in <span class="code">s</span> must be initialized.</p><code>struct eightomic_navigate_s s = {
+  .grid_width = 10,
+  .grid_height = 10,
+  .source = 0,
+  .destination = 95,
+  .source_step = 0,
+  .repetitions_count = 0,
+  .has_source_coordinates = false,
+  .has_destination_coordinates = false
+};</code><p><span class="code no-margin-left">s.grid_width</span> is the width of the rectangular grid.</p><p><span class="code no-margin-left">s.grid_height</span> is the height of the rectangular grid.</p><p><span class="code no-margin-left">s.source</span> is the starting position as an index in a grid array with <span class="code">s.grid_width</span> * <span class="code">s.grid_height</span> elements.</p><p><span class="code no-margin-left">s.destination</span> is the ending position as an index in a grid array with <span class="code">s.grid_width</span> * <span class="code">s.grid_height</span> elements.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Requirements</h3><p class="no-margin-bottom">C compiler with C99 (ISO/IEC 9899:1999) standard compatibility.</p></div><div class="section"><h2>Explanation</h2><p>This grid navigation algorithm is designed to calculate the next step in 1 of 8 possible directions within the bounds of a rectangular grid by only knowing the grid width, grid height, source index position and destination index position.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and security requirements.</p><p>For example, the following <span class="code">grid</span> array uses a source <span class="code">1</span> at index position <span class="code">0</span> and a destination <span class="code">2</span> at index position <span class="code">95</span>.</p><code>unsigned char grid[100] = {
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 2, 0, 0, 0, 0
+};</code><p>The next step forward towards the destination <span class="code">2</span> from the source <span class="code">1</span> is at index position <span class="code">11</span>.</p><p>In this case, the <span class="code">eightomic_navigate()</span> function increments <span class="code">s.source</span> to advance to this position.</p><p>This is applied recursively until <span class="code">s.source</span> reaches <span class="code">s.destination</span> as demonstrated in the following code example.</p><code>int main(void) {
+  struct eightomic_navigate_s s = {
+    .grid_width = 10,
+    .grid_height = 10,
+    .source = 0,
+    .destination = 95,
+    .source_step = 0,
+    .repetitions_count = 0,
+    .has_source_coordinates = false,
+    .has_destination_coordinates = false
+  };
+  unsigned char grid[100] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  };
+  unsigned char i = 0;
+
+  grid[s.source] = 1;
+  eightomic_navigate(&s);
+
+  while (s.source != s.destination) {
+    eightomic_navigate(&s);
+    grid[s.source] = 3;
+  }
+
+  grid[s.destination] = 2;
+  i = 0;
+
+  while (i != 100) {
+    printf("%u ", grid[i]);
+
+    if (((i + 1) % 10) == 0) {
+      printf("\n");
+    }
+
+    i++;
+  }
+
+  return 0;
+}</code><p>The following grid output is the traversal from the source to the destination with each step marked as <span class="code">3</span>.</p><code>1 0 0 0 0 0 0 0 0 0
+0 3 0 0 0 0 0 0 0 0
+0 0 3 0 0 0 0 0 0 0
+0 0 0 3 0 0 0 0 0 0
+0 0 0 0 3 0 0 0 0 0
+0 0 0 0 0 3 0 0 0 0
+0 0 0 0 0 3 0 0 0 0
+0 0 0 0 0 3 0 0 0 0
+0 0 0 0 0 3 0 0 0 0
+0 0 0 0 0 2 0 0 0 0</code><p>This simple calculation could be processed billions of times per minute, so it's necessary to micro-optimize wherever possible.</p><p>There are plenty of ways to do this wrong by calculating steps incorrectly and wasting CPU cycles and memory.</p><p>For example, the following code is the first attempt at creating this algorithm without optimization.</p><code>long bad_navigate(const unsigned long grid_width,
+                  const unsigned long grid_height, const unsigned long source,
+                  const unsigned long destination) {
+  long map[10] = {0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
+  const unsigned long source_x = source % grid_width;
+  const unsigned long source_y = source / grid_width;
+  const unsigned long destination_x = destination % grid_width;
+  const unsigned long destination_y = destination / grid_width;
+  unsigned char i = source_y < destination_y;
+  map[0] = -(grid_width + 1);
+  map[1] = grid_width - 1;
+  map[2] = -1;
+  map[3] = 0;
+  map[4] = -(grid_width - 1);
+  map[5] = grid_width + 1;
+  map[8] = -grid_width;
+  map[9] = grid_width;
+
+  if (source_y == destination_y) {
+    i += 2;
+  }
+
+  if (source_x < destination_x) {
+    i += 4;
+  }
+
+  if (source_x == destination_x) {
+    i += 8;
+  }
+
+  return map[i];
+}</code><p>Although the aforementioned solution works, <span class="code">map</span> isn't required and wastes 40–80 bytes of memory per instance.</p><p>In addition to the 4 required conditional statements, <span class="code">map</span> uses 8 dereferences, 8 assignments and 7 arithmetic operations.</p><p>These 4 conditional statements can be optimized further by nesting conditional statements and using <span class="code">=</span> operations instead of <span class="code">+=</span> operations.</p><p>The following code is a second attempt without mapping the traversal steps.</p><code>long bad_navigate(const unsigned long grid_width,
+                  const unsigned long grid_height, const unsigned long source,
+                  const unsigned long destination) {
+  const unsigned long source_x = source % grid_width;
+  const unsigned long source_y = source / grid_width;
+  const unsigned long destination_x = destination % grid_width;
+  const unsigned long destination_y = destination / grid_width;
+  long step = 0;
+
+  if (source != destination) {
+    if (source_x == destination_x) {
+      if (source_y < destination_y) {
+        step = grid_width;
+      } else {
+        step = -grid_width;
+      }
+    } else {
+      if (source_y == destination_y) {
+        if (source_x < destination_x) {
+          step = 1;
+        } else {
+          step = -1;
+        }
+      } else {
+        if (source_x < destination_x) {
+          if (source_y < destination_y) {
+            step = grid_width + 1;
+          } else {
+            step = -grid_width + 1;
+          }
+        } else {
+          if (source_y < destination_y) {
+            step = grid_width - 1;
+          } else {
+            step = -grid_width - 1;
+          }
+        }
+      }
+    }
+  }
+
+  return step;
+}</code><p>The aforementioned code is passable, but still not optimal.</p><p>The initialized value for step is overwritten in a majority of cases and the <span class="code">%</span> operator uses too many CPU cycles.</p><p>Arithmetic division with the <span class="code">/</span> operator is necessary to calculate both <span class="code">source_y</span> and <span class="code">destination_y</span>, but <span class="code">source_x</span> and <span class="code">destination_x</span> can use cheaper operations with arithmetic <span class="code">*</span> and <span class="code">-</span> instead of <span class="code">%</span>.</p><p>The following code tests the processing time of <span class="code">%</span> operations in a loop without compiler optimization enabled.</p><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+  unsigned short a = 11111;
+  unsigned long b = 0;
+  unsigned short c = 0;
+
+  while (b != 111111111) {
+    c += a % 111;
+    a += c;
+    b++;
+  }
+
+  return 0;
+}</code><p>Arithmetic <span class="code">*</span> and <span class="code">-</span> were more efficient by a few seconds when testing against both <span class="code">/</span> and <span class="code">%</span> with more than 100m iterations as shown in the following table.</p><code>Operators   Expression            Average Time
+
+* -         c += c - (a * 111);   0m6.105s
+/           c += a / 111;         0m6.780s
+%           c += a % 111;         0m8.282s</code><p>The following code is the optimal result with a usage example.</p><code>#include &lt;stdbool.h&gt;
+#include &lt;stdio.h&gt;
+
+struct eightomic_navigate_s {
+  unsigned long grid_width;
+  unsigned long grid_height;
+  unsigned long source;
+  unsigned long destination;
+  long source_step;
+  unsigned long source_x;
+  unsigned long source_y;
+  unsigned long destination_x;
+  unsigned long destination_y;
+  char source_x_step;
+  char source_y_step;
+  unsigned long repetitions_count;
+  bool has_source_coordinates;
+  bool has_destination_coordinates;
+};
+
+void eightomic_navigate(struct eightomic_navigate_s *s) {
+  if (s->repetitions_count == 0) {
+    if (s->has_source_coordinates == false) {
+      s->source_y = s->source / s->grid_width;
+      s->source_x = s->source - (s->grid_width * s->source_y);
+      s->has_source_coordinates = true;
+    }
+
+    if (s->has_destination_coordinates == false) {
+      s->destination_y = s->destination / s->grid_width;
+      s->destination_x = s->destination - (s->grid_width * s->destination_y);
+      s->has_destination_coordinates = true;
+    }
+
+    if (s->source_x == s->destination_x) {
+      s->source_x_step = 0;
+
+      if (s->source_y < s->destination_y) {
+        s->source_step = s->grid_width;
+        s->source_y_step = 1;
+        s->repetitions_count = s->destination_y - s->source_y;
+      } else {
+        if (s->source_y > s->destination_y) {
+          s->source_step = -s->grid_width;
+          s->source_y_step = -1;
+          s->repetitions_count = s->source_y - s->destination_y;
+        } else {
+          s->source_step = 0;
+          s->source_y_step = 0;
+          s->repetitions_count = 0;
+        }
+      }
+    } else {
+      if (s->source_y == s->destination_y) {
+        s->source_y_step = 0;
+
+        if (s->source_x < s->destination_x) {
+          s->source_step = 1;
+          s->source_x_step = 1;
+          s->repetitions_count = s->destination_x - s->source_x;
+        } else {
+          s->source_step = -1;
+          s->source_x_step = -1;
+          s->repetitions_count = s->source_x - s->destination_x;
+        }
+      } else {
+        if (s->source_x < s->destination_x) {
+          s->repetitions_count = s->destination_x - s->source_x;
+          s->source_x_step = 1;
+
+          if (s->source_y < s->destination_y) {
+            s->source_step = s->grid_width + 1;
+            s->source_y_step = 1;
+
+            if ((s->destination_y - s->source_y) < s->repetitions_count) {
+              s->repetitions_count = s->destination_y - s->source_y;
+            }
+          } else {
+            s->source_step = -s->grid_width + 1;
+            s->source_y_step = -1;
+
+            if ((s->source_y - s->destination_y) < s->repetitions_count) {
+              s->repetitions_count = s->source_y - s->destination_y;
+            }
+          }
+        } else {
+          s->repetitions_count = s->source_x - s->destination_x;
+          s->source_x_step = -1;
+
+          if (s->source_y < s->destination_y) {
+            s->source_step = s->grid_width - 1;
+            s->source_y_step = 1;
+
+            if ((s->destination_y - s->source_y) < s->repetitions_count) {
+              s->repetitions_count = s->destination_y - s->source_y;
+            }
+          } else {
+            s->source_step = -s->grid_width - 1;
+            s->source_y_step = -1;
+
+            if ((s->source_y - s->destination_y) < s->repetitions_count) {
+              s->repetitions_count = s->source_y - s->destination_y;
+            }
+          }
+        }
+      }
+    }
+  } else {
+    s->source += s->source_step;
+    s->source_x += s->source_x_step;
+    s->source_y += s->source_y_step;
+    s->repetitions_count--;
+  }
+}
+
+int main(void) {
+  struct eightomic_navigate_s s = {
+    .grid_width = 10,
+    .grid_height = 10,
+    .source = 0,
+    .destination = 95,
+    .source_step = 0,
+    .repetitions_count = 0,
+    .has_source_coordinates = false,
+    .has_destination_coordinates = false
+  };
+  unsigned char grid[100] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  };
+  unsigned char i = 0;
+
+  grid[s.source] = 1;
+  eightomic_navigate(&s);
+
+  while (s.source != s.destination) {
+    eightomic_navigate(&s);
+    grid[s.source] = 3;
+  }
+
+  grid[s.destination] = 2;
+  i = 0;
+
+  while (i != 100) {
+    printf("%u ", grid[i]);
+
+    if (((i + 1) % 10) == 0) {
+      printf("\n");
+    }
+
+    i++;
+  }
+
+  return 0;
+}</code><p>In addition to saving CPU time and memory, the required conditional statements are nested properly to minimize conditional checks for each navigational direction, as shown in the following table.</p><code>Case   Conditional Checks    Conditional Checks
+       Before Optimization   After Optimization
+
+0      1                     3
+1      3                     2
+2      3                     3
+3      4                     3
+4      4                     3
+5      5                     4
+6      5                     4
+7      5                     4
+8      5                     4
+       __________            __________
+
+       35                    30</code><p>The minority case when the source is the same as the destination requires more conditional checks to decrease the overall count from <span class="code">35</span> to <span class="code">30</span> and the average count from <span class="code">3.89</span> to <span class="code">3.33</span>.</p><p>Furthermore, it'd be wasteful to calculate x and y coordinates for each space traversal instead of calculating repetitions in the same direction, so the directional calculations for each turn are separate from iterative, incremental space traversals in <span class="code">eightomic_navigate()</span>.</p><p>The x and y coordinates are saved after the first calculation and they're either incremented or decremented after each navigation step.</p><p>The <span class="code">eightomic_navigate()</span> function is iterative to allow flexibility with using the changed source index position for each step.</p><p>To navigate to a new destination after reaching the current destination, <span class="code">s.destination</span> must be set to the new index position and <span class="code">s.has_destination_coordinates</span> must be set to <span class="code">false</span>.</p><p>Although it may be unsafe if done incorrectly, navigating can be optimized further by defining <span class="code">s.source_x</span>, <span class="code">s.source_y</span>, <span class="code">s.destination_x</span>, <span class="code">s.destination_y</span>, <span class="code">s.has_destination_coordinates</span> and <span class="code">s.has_destination_coordinates</span> in the <span class="code">struct</span> if the x and y grid coordinates are already known.</p><p>4-directional navigation is omitted because it's a trivial adjustment from the 8-directional result and it's dependent on the position of obstacles.</p><p>For example, the 8-directional calculation from position <span class="code">21</span> to <span class="code">32</span> in the following grid with obstacles marked as <span class="code">4</span> doesn't need to consider adjacent obstacles, but the 4-directional adjustment considers a possible obstacle at either position <span class="code">22</span> or <span class="code">31</span>.</p><code>0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 1 0 0 0 0 0 0 0 0
+0 4 3 0 0 0 0 0 0 0
+0 0 4 3 0 0 0 0 0 0
+0 0 4 3 0 0 0 0 0 0
+0 0 4 3 0 0 0 0 0 0
+0 0 0 2 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0</code><p class="no-margin-bottom">In this case, a 4-directional implementation should adjust the calculation step from <span class="code">11</span> to <span class="code">1</span> instead of <span class="code">10</span> based on the obstacle at position <span class="code">31</span>.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.14</span></div></div></main><footer><div class="no-margin-bottom"><p><a class="eightomic-icon" href="/"><img src="/icon-eightomic.jpg"></a> &copy; 2024 Eightomic</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/#research">Research</a></li><li><a href="/terms/">Terms</a></li></ul><ul class="social-media"><li><a href="https://github.com/eightomic" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/eightomic" target="_blank"><img src="/icon-instagram.jpg"></a></li><li><a href="https://www.reddit.com/r/eightomic/" target="_blank"><img src="/icon-reddit.jpg"></a></li><li><a href="https://www.tiktok.com/@eightomic" target="_blank"><img src="/icon-tiktok.jpg"></a></li><li><a href="https://x.com/eightomic" target="_blank"><img src="/icon-x.jpg"></a></li><li><a href="https://www.youtube.com/@eightomic" target="_blank"><img src="/icon-youtube.jpg"></a></li></ul><p style="color: #777; font-size: 12px; line-height: 19px; margin: 52px 0 0;">All depictions of danger and violence in Eightomic games are for fictional gaming entertainment purposes only. Some Eightomic games may have frantic animations with non-realistic blood and gore graphical effects which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
