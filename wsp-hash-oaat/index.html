@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><title>WSP-Hash-OAAT</title><link href="https://williamstaffordparsons.github.io/wsp-hash-oaat/" rel="canonical"><link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.1px;text-decoration:none;transition:opacity 0.2s ease;}a:hover{opacity:0.9;}body,html{background:#fafafa;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:23px;margin:0;overflow-x:hidden;width:100%;}code{background:#f3f3f3 !important;border:2px solid #bcbcbc !important;border-radius:4px;box-sizing:border-box !important;color:#222;display:inline-block;font-family:monospace !important;font-size:11px;font-weight:normal;height:auto;line-height:18px !important;margin:6px 0 16px;max-height:800px;overflow-x:scroll;padding:30px 31px 25px !important;white-space:pre;width:100% !important;}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.7px;line-height:32px;margin:-6px 0 29px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 16px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.2px;margin:13px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 15px;width:100%;}p .code,ul .code{background:#f3f3f3;border:2px solid #bcbcbc;border-radius:4px;color:#222;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;line-height:16px;margin:2px 1px;padding:4px 5px 0;}ul{list-style:none;margin:0;padding:0;}ul li{color:#555;margin-bottom:15px;}.game{background:#000;border-radius:5px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;transition:opacity 0.2s ease;}.game:hover {opacity:0.9;}.game.no-margin-top{margin-top:5px !important;}.game a{border-radius:5px;height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game img{display:block;height:32px;margin:12px 0 0;width:32px;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game p{color:#999;margin-bottom:0;}.game .version{color:#f02222;display:block;font-size:12px;font-weight:bold;margin:5px 0 3px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}.william-stafford-parsons-icon{float:left;margin:0 15px 9px 0;}.william-stafford-parsons-icon img{float:left;height:32px !important;margin:-3px 0 0;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="william-stafford-parsons-icon" href="/"><img src="/icon-william-stafford-parsons.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Hash-OAAT: A Fast, Lightweight, Non-Multiplicative, One-at-a-Time 32-Bit Hashing Algorithm That Passes Rigorous Statistical Quality Tests</h1><div class="section"><p class="no-margin-bottom"><a href="/about/">William Stafford Parsons</a> developed a tiny 32-bit OAAT hashing algorithm with a library in C99 as a substantial improvement to FNV-1a, Good OAAT, Jenkins OAAT, Micro OAAT and Murmur OAAT.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><code>#include &lt;stdint.h&gt;
+
+struct wsp_hash_oaat_s {
+  uint32_t _state;
+  uint32_t state;
+};
+
+void wsp_hash_oaat_initialize(struct wsp_hash_oaat_s *s) {
+  s->_state = 1111;
+  s->state = 1111111111;
+}
+
+void wsp_hash_oaat_transform(unsigned long i, unsigned long input_count,
+                             const uint8_t *input, struct wsp_hash_oaat_s *s) {
+  while (i != input_count) {
+    s->state += input[i];
+    s->state += s->state << 3;
+    s->state = (s->state << 19) | (s->state >> 13);
+    s->_state += s->state + 1;
+    i++;
+  }
+}
+
+void wsp_hash_oaat_finalize(struct wsp_hash_oaat_s *s) {
+  s->state ^= s->_state >> 1;
+  s->state += (s->_state << 27) | (s->_state >> 5);
+  s->_state ^= s->state >> 4;
+  s->state += (s->_state << 8) | (s->_state >> 24);
+  s->state ^= s->_state >> 3;
+  s->_state += (s->state << 14) | (s->state >> 18);
+  s->_state += (s->_state >> 7) ^ ((s->state << 9) | (s->state >> 23));
+  s->state ^= s->_state;
+}</code><h3>Reference</h3><p><span class="code no-margin-left">wsp_hash_oaat_initialize()</span> is the initialization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_oaat_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_oaat_transform()</span> is the core hashing loop that accepts the 4 following arguments.</p><p><span class="code no-margin-left">i</span> is the starting index position of elements in the <span class="code">input</span> array.</p><p><span class="code no-margin-left">input_count</span> is the count of elements in the <span class="code">input</span> array.</p><p><span class="code no-margin-left">input</span> is the <span class="code">const uint8_t</span> array to hash.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_oaat_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_oaat_finalize()</span> is the finalization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_oaat_s</span> pointer. <span class="code">s.state</span> contains the finalized hash digest result.</p><h3>Requirements</h3><p class="no-margin-bottom">C compiler with C99 (ISO/IEC 9899:1999) standard compatibility.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Hash-OAAT is designed to hash keys in data structures as a performance and security upgrade to replace existing implementations of FNV-1a, Good OAAT, Jenkin's OAAT, Micro OAAT and Murmur OAAT.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and security requirements.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>Low-cost addition and bitwise instructions work well on a wide range of CPU queue loads and devices.</p><p>The additive constant <span class="code">1</span>, summed with the internal <span class="code">s->state</span>, eliminates any possible vulnerability to <span class="code">input</span> elements with a <span class="code">0</span> value.</p><p>Seed tests are omitted to discourage using one-at-a-time hashing algorithms as PRNGs.</p><p>Furthermore, not allowing a seed secures the possibility of 2^32 deterministic attacks.</p><p>OAAT hashing algorithms are chosen over multi-byte hashing algorithms when hashing is infrequent or when there are implementation constraints, such as compiler security precautions, small input buffer sizes or strict compliance rules.</p><p>Compared to FNV-1a, Jenkin's OAAT, Micro OAAT and Murmur OAAT, the speed's faster on average.</p><p>Compared to Good OAAT, the speed is similar across different input sizes and compilers while achieving superior statistical quality in SMHasher. WSP-Hash-OAAT passes all extended SMHasher tests with better results across a majority of tests, including avalanche distribution.</p><p>FNV-1a, Jenkin's OAAT, Micro OAAT, and Murmur OAAT all fail most SMHasher tests with 1000x to 4000x the expected number of collisions in some tests, which could lead to slow hash table performance and program failure when too much memory is allocated to compensate.</p><p>As with the other OAAT algorithms, it shouldn't be used for any cryptographic purposes due to the easily-reversible finalization sequence.</p><p>As with the other hashing functions in SMHasher, it was tested with the following all-at-once hashing function instead of the slower segmented functions from the aforementioned library code.</p><code class="no-margin-bottom">#include &lt;stdint.h&gt;
+
+uint32_t wsp_hash_oaat(unsigned long input_count, const uint8_t *input) {
+  uint32_t _state = 1111;
+  uint32_t state = 1111111111;
+  unsigned long i = 0;
+
+  while (i != input_count) {
+    state += input[i];
+    state += state << 3;
+    state = (state << 19) | (state >> 13);
+    _state += state + 1;
+    i++;
+  }
+
+  state ^= _state >> 1;
+  state += (_state << 27) | (_state >> 5);
+  _state ^= state >> 4;
+  state += (_state << 8) | (_state >> 24);
+  state ^= _state >> 3;
+  _state += (state << 14) | (state >> 18);
+  _state += (_state >> 7) ^ ((state << 9) | (state >> 23));
+  return _state ^ state;
+}</code></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.1.1</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
