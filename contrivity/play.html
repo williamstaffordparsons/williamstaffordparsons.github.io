@@ -1757,7 +1757,7 @@
       <div class="title-screen">
         <p class="copyright"><span>Contrivity</span> &copy; 2024 <a href="https://williamstaffordparsons.github.io/" target="_blank">William Stafford Parsons</a></p>
         <p class="prompt">Press an Arrow Key To Play</p>
-        <p class="version">v1.0.16</p>
+        <p class="version">v1.0.17</p>
       </div>
     </div>
   </body>
@@ -2047,7 +2047,6 @@
           const _38 = _35 >> 3
 
           if (_38 > 49) {
-            _38 = 49
             delete _4[48][_93]
             delete _4[49][_93]
             delete _4[50][_93]
@@ -2059,9 +2058,6 @@
             delete _4[_38][_93]
             delete _4[_38 + 1][_93]
           }
-
-          delete _4[_38][_93]
-          delete _4[_38 + 1][_93]
         } else {
           delete _4[0][_93]
           delete _4[1][_93]
@@ -2408,7 +2404,7 @@
           }
         },
         "use": function() {
-          _137()
+          _120()
 
           if (
             _11 < _12 ||
@@ -2473,8 +2469,8 @@
               )
 
               setTimeout(function() {
-                _55 = _138
-                _56 = _139
+                _55 = _121
+                _56 = _122
                 _62.setAttribute(
                   "style",
                   "left: " + _55 + "px; top: "
@@ -2584,12 +2580,12 @@
           ) * 0.45
           let _80
             = (_78 * 0.5)
-            + (_138 & 7) - (_21 & 7)
+            + (_121 & 7) - (_21 & 7)
           let _81
             = (_79 * 0.5)
-            + (_139 & 7) - ((_21 >> 3) & 7)
-          let _82 = _138 + 3
-          let _83 = _139 + 3
+            + (_122 & 7) - ((_21 >> 3) & 7)
+          let _82 = _121 + 3
+          let _83 = _122 + 3
           let _84 = 3
           let _85 = _21 & 3
           let _86 = 25
@@ -2861,8 +2857,8 @@
             _86 = 50
           }
 
-          _71 = _138
-          _72 = _139
+          _71 = _121
+          _72 = _122
           _89.setAttribute(
             "style",
             "left: " + _71 + "px; top: "
@@ -3065,7 +3061,7 @@
           }
         },
         "use": function() {
-          _137()
+          _120()
 
           if (
             _11 < _12 ||
@@ -3116,8 +3112,8 @@
             )
 
             setTimeout(function() {
-              _55 = _138
-              _56 = _139
+              _55 = _121
+              _56 = _122
               _62.setAttribute(
                 "style",
                 "left: " + _55 + "px; top: "
@@ -3229,8 +3225,8 @@
           let _86 = 25
           const _110 = _15
           const _111 = _16
-          const _112 = _138 + 3
-          const _113 = _139 + 3
+          const _112 = _121 + 3
+          const _113 = _122 + 3
           const _89 = _18.pop()
 
           const _114 = function() {
@@ -3247,12 +3243,12 @@
             ) * 0.4
             let _80
               = _78
-              + (_138 & 7) - (_21 & 7)
+              + (_121 & 7) - (_21 & 7)
             let _81
               = _79
-              + (_139 & 7) - ((_21 >> 3) & 7)
-            let _82 = _138 + 3
-            let _83 = _139 + 3
+              + (_122 & 7) - ((_21 >> 3) & 7)
+            let _82 = _121 + 3
+            let _83 = _122 + 3
             const _90 = _19.pop()
 
             const _91 = function(_106) {
@@ -3538,8 +3534,8 @@
             }
           }, _66)
 
-          _71 = _138
-          _72 = _139
+          _71 = _121
+          _72 = _122
           _89.setAttribute(
             "style",
             "left: " + _71 + "px; top: "
@@ -3675,7 +3671,7 @@
           }
         },
         "use": function() {
-          _137()
+          _120()
 
           if (
             _11 < _12 ||
@@ -3704,8 +3700,8 @@
           let _86 = 25
           const _110 = _15
           const _111 = _16
-          const _112 = _138
-          const _113 = _139
+          const _112 = _121
+          const _113 = _122
 
           const _114 = function() {
             let _64 = false
@@ -3721,10 +3717,10 @@
             ) * 0.4
             let _80
               = _78
-              + (_138 & 7) - (_21 & 7)
+              + (_121 & 7) - (_21 & 7)
             let _81
               = _79
-              + (_139 & 7) - ((_21 >> 3) & 7)
+              + (_122 & 7) - ((_21 >> 3) & 7)
             let _82 = _112 + 3
             let _83 = _113 + 3
             const _90 = _19.pop()
@@ -4097,8 +4093,8 @@
               }
 
               setTimeout(function() {
-                _71 = _138
-                _72 = _139
+                _71 = _121
+                _72 = _122
                 _89.setAttribute(
                   "style",
                   "left: " + _71 + "px; top: "
@@ -4140,312 +4136,6 @@
             _10 = 1
             _11 = 0
           }
-        }
-      },
-      {
-        "delay_maximum": 0,
-        "destroy": function() {
-          let i = 0
-
-          _13.remove()
-
-          while (i != 120) {
-            _19[i].remove()
-            i++
-          }
-        },
-        "initialize": function() {
-          let i = 0
-          _51.setAttribute(
-            "class",
-            "electromagnetic-radiation-gun element player-weapon"
-          )
-          _13 = document.createElement("div")
-          _13.setAttribute(
-            "class",
-            "electromagnetic-radiation-gun element player-weapon-muzzle-flash"
-          )
-          _13 = _23.appendChild(
-            _13
-          )
-          _19 = Array(120)
-
-          while (i != 120) {
-            _19[i] = document.createElement("div")
-            _19[i].setAttribute(
-              "class",
-              "electromagnetic-radiation-gun element player-weapon-projectile"
-            )
-            _19[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            _19[i] = _23.appendChild(
-              _19[i]
-            )
-            i++
-          }
-        },
-        "use": function() {
-          _137()
-
-          if (
-            _11 < _12 ||
-            _22 != 0
-          ) {
-            _11++
-            return
-          }
-
-          if (_49.hasAttribute("recoil_light")) {
-            _49.removeAttribute("recoil_light")
-            _51.removeAttribute("recoil_light")
-          }
-
-          if ((_50[133] + _50[141]
-            + _50[147] + _50[150]) == 0) {
-            return
-          }
-
-          _11 = 0
-
-          let _117 = false
-          let _64 = false
-          let _65 = false
-          let _66 = 3
-          let _67 = 0
-          let _87 = _138
-          let _88 = _139
-          let _118 = 95
-          let _68 = 8
-          const _119
-            = ((_21 & 3) + 1) * 0.6
-          let _78 = (
-            _15
-            + (_21 & 1) - ((_21 >> 1) & 1)
-          ) / _119
-          let _79 = (
-            _16
-            + ((_21 >> 2) & 1) - ((_21 >> 3) & 1)
-          ) / _119
-          let _80
-            = _78 * 0.033
-          let _81
-            = _79 * 0.033
-          let _82 = _138 + 3
-          let _83 = _139 + 3
-          let _120 = 1
-          const _90 = _19.pop()
-
-          const _91 = function(_106) {
-            if (_65 == true) {
-              return
-            }
-
-            _65 = true
-
-            if (_2 == 26) {
-              if (_117 == false) {
-                _80 *= 2
-                _81 *= 2
-                _117 = true
-                _78 *= 2
-                _79 *= 2
-              }
-            } else {
-              if (_117 == true) {
-                _80 *= 0.5
-                _81 *= 0.5
-                _117 = false
-                _78 *= 0.5
-                _79 *= 0.5
-              }
-            }
-
-            _82 += _78
-            _83 += _79
-            _90.setAttribute(
-              "style",
-              "left: " + _82 + "px; top: "
-                + _83 + "px;"
-            )
-
-            if (
-              _82 >= 0 &&
-              _82 <= 672 &&
-              _83 >= 0 &&
-              _83 <= 378
-            ) {
-              if (_64 == true) {
-                const _92
-                  = _82 >> 4
-
-                for (const _93 in _3[
-                  _92
-                ]) {
-                  if (
-                    _82
-                      <= (_43[_93] + 28) &&
-                    (_82 + 8)
-                      >= _43[_93] &&
-                    _83
-                      <= (_44[_93] + 28) &&
-                    (_83 + 8)
-                      >= _44[_93]
-                  ) {
-                    _28(
-                      5,
-                      _93,
-                      _80,
-                      _81
-                    )
-                  }
-                }
-              } else {
-                const _92
-                  = _83 >> 3
-
-                for (const _93 in _4[
-                  _92
-                ]) {
-                  if (
-                    _82
-                      <= (_43[_93] + 28) &&
-                    (_82 + 8)
-                      >= _43[_93] &&
-                    _83
-                      <= (_44[_93] + 28) &&
-                    (_83 + 8)
-                      >= _44[_93]
-                  ) {
-                    _28(
-                      5,
-                      _93,
-                      _80,
-                      _81
-                    )
-                  }
-                }
-              }
-            }
-
-            _65 = false
-          }
-
-          const _85 = _21 & 3
-
-          if (_15 != 0) {
-            _64 = true
-          }
-
-          if (_78 < 0) {
-            if (_79 < 0) {
-              const _106 = setInterval(function() {
-                if (
-                  _83 > -50 &&
-                  _82 > -50
-                ) {
-                  _91(_106)
-                } else {
-                  _19.push(_90)
-                  clearInterval(_106)
-                }
-              }, 10)
-            } else {
-              const _106 = setInterval(function() {
-                if (
-                  _82 > -50 &&
-                  _83 < 428
-                ) {
-                  _91(_106)
-                } else {
-                  _19.push(_90)
-                  clearInterval(_106)
-                }
-              }, 10)
-            }
-          } else {
-            if (_79 < 0) {
-              const _106 = setInterval(function() {
-                if (
-                  _82 < 722 &&
-                  _83 > -50
-                ) {
-                  _91(_106)
-                } else {
-                  _19.push(_90)
-                  clearInterval(_106)
-                }
-              }, 10)
-            } else {
-              const _106 = setInterval(function() {
-                if (
-                  _82 < 722 &&
-                  _83 < 428
-                ) {
-                  _91(_106)
-                } else {
-                  _19.push(_90)
-                  clearInterval(_106)
-                }
-              }, 10)
-            }
-          }
-
-          if (_2 != 26) {
-            _66 = 6
-            _120 = 2
-          }
-
-          const _105 = setInterval(function() {
-            _87 += _78
-            _88 += _79
-
-            if (_68 != 26) {
-              _67--
-              _68 += 2
-              _13.setAttribute(
-                "style",
-                "height: " + _68 + "px; left: "
-                  + _87 + "px; margin: "
-                  + _67 + "px 0 0 "
-                  + _67 + "px; top: "
-                  + _88 + "px; width: "
-                  + _68 + "px;"
-              )
-            } else {
-              if (_118 > 0) {
-                _13.setAttribute(
-                  "style",
-                  "height: " + _68 + "px; left: "
-                    + _87 + "px; margin: "
-                    + _67 + "px 0 0 "
-                    + _67 + "px; opacity: 0."
-                    + _118 + "; top: "
-                    + _88 + "px; width: "
-                    + _68 + "px;"
-                )
-                _118 -= 5
-              } else {
-                _13.setAttribute(
-                  "style",
-                  "display: none;"
-                )
-                clearInterval(_105)
-              }
-            }
-          }, _66)
-
-          setTimeout(function() {
-            _49.setAttribute(
-              "recoil_light",
-              _85
-            )
-            _51.setAttribute(
-              "recoil_light",
-              _85
-            )
-          }, _120)
         }
       },
       {
@@ -4521,7 +4211,7 @@
           }
         },
         "use": function() {
-          _137()
+          _120()
 
           if (
             _11 < _12 ||
@@ -4578,12 +4268,12 @@
           ) * 0.36
           let _80
             = (_78 * 2)
-            + (_138 & 7) - (_21 & 7)
+            + (_121 & 7) - (_21 & 7)
           let _81
             = (_79 * 2)
-            + (_139 & 7) - ((_21 >> 3) & 7)
-          let _82 = _138
-          let _83 = _139
+            + (_122 & 7) - ((_21 >> 3) & 7)
+          let _82 = _121
+          let _83 = _122
           let _84 = 2
           let _85 = _21 & 3
           let _86 = 25
@@ -4850,8 +4540,8 @@
             _86 = 50
           }
 
-          _71 = _138
-          _72 = _139
+          _71 = _121
+          _72 = _122
           _89.setAttribute(
             "style",
             "left: " + _71 + "px; top: "
@@ -4983,461 +4673,6 @@
         }
       },
       {
-        "delay_maximum": 1,
-        "destroy": function() {
-          let i = 0
-
-          while (i != 20) {
-            _19[i].remove()
-            i++
-          }
-
-          _18[0].remove()
-          _18[1].remove()
-        },
-        "initialize": function() {
-          let i = 0
-          _51.setAttribute(
-            "class",
-            "element flamethrower player-weapon"
-          )
-          _19 = Array(20)
-          _18 = Array(2)
-
-          while (i != 20) {
-            _19[i] = document.createElement("div")
-            _19[i].setAttribute(
-              "class",
-              "element flamethrower player-weapon-projectile"
-            )
-            _19[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            _19[i] = _23.appendChild(
-              _19[i]
-            )
-            i++
-          }
-
-          i = 0
-
-          while (i != 2) {
-            _18[i] = document.createElement("div")
-            _18[i].setAttribute(
-              "class",
-              "element flamethrower player-weapon-projectile-effect"
-            )
-            _18[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            _18[i] = _23.appendChild(
-              _18[i]
-            )
-            i++
-          }
-        },
-        "use": function() {
-          _137()
-
-          if (_22 != 0) {
-            return
-          }
-
-          if (_49.hasAttribute("recoil_heavy")) {
-            _49.removeAttribute("recoil_heavy")
-            _51.removeAttribute("recoil_heavy")
-          }
-
-          if ((_50[133] + _50[141]
-            + _50[147] + _50[150]) == 0) {
-            return
-          }
-
-          let _120 = 1
-          const _85 = _21 & 3
-
-          if (_2 != 26) {
-            _120 = 2
-          }
-
-          setTimeout(function() {
-            _49.setAttribute(
-              "recoil_heavy",
-              _85
-            )
-            _51.setAttribute(
-              "recoil_heavy",
-              _85
-            )
-          }, _120)
-
-          if (_11 < _12) {
-            _11++
-            return
-          }
-
-          _11 = 0
-
-          let _64 = false
-          let _65 = false
-          let _94 = 8
-          let _121
-          let _122
-          let _78 = (
-            _15
-            + _85 - ((_21 >> 2) & 3)
-          ) * 0.42
-          let _79 = (
-            _16
-            + _85 - ((_21 >> 4) & 3)
-          ) * 0.42
-          let _80
-            = _78 * 0.075
-          let _81
-            = _79 * 0.075
-          let _82 = _138 + 3
-          let _123 = 0
-          let _124 = 5
-          let _125 = 15
-          let _83 = _139 + 3
-          let _98 = 20
-          let _99 = 10
-          let _100 = 8
-          const _90 = _19.pop()
-
-          const _126 = function() {
-            let _97 = 100
-
-            const _103 = setInterval(function() {
-              if (_97 != 0) {
-                if (_2 == 26) {
-                  if (_99 == 5) {
-                    _78 *= 2
-                    _79 *= 2
-                    _124 = 5
-                    _125 = 15
-                    _98 = 20
-                    _99 = 10
-                  }
-                } else {
-                  if (_99 == 10) {
-                    _78 *= 0.5
-                    _79 *= 0.5
-                    _124 = 2.5
-                    _125 = 7
-                    _98 = 10
-                    _99 = 5
-                  }
-                }
-
-                _94 += _99
-                _97 -= _98
-
-                if (_97 < 0) {
-                  _97 = 0
-                }
-
-                _82 += _78
-                _83 += _79
-                _82 += (_21
-                  & _125)
-                  - ((_21 >> 5) & _125)
-                _123 += _124
-                _121 = _82
-                  - _123
-                _83 += ((_21 >> 3)
-                  & _125)
-                  - ((_21 >> 7) & _125)
-                _122 = _83
-                  - _123
-                _100 += _99
-                _90.setAttribute(
-                  "style",
-                  "background-color: #333; height: "
-                    + _94 + "px; left: "
-                    + _121 + "px; opacity: 0."
-                    + _97 + "; top: "
-                    + _122 + "px; width: "
-                    + _100 + "px; z-index: 4;"
-                )
-              } else {
-                _90.setAttribute(
-                  "style",
-                  "display: none;"
-                )
-                _19.push(_90)
-                clearInterval(_103)
-              }
-            }, 20)
-          }
-
-          const _91 = function(_106) {
-            if (_65 == true) {
-              return
-            }
-
-            _65 = true
-
-            if (_2 == 26) {
-              if (_99 == 5) {
-                _80 *= 2
-                _81 *= 2
-                _78 *= 2
-                _79 *= 2
-                _124 = 5
-                _98 = 20
-                _99 = 10
-              }
-
-              _94 += 2
-              _100 += 2
-            } else {
-              if (_99 == 10) {
-                _80 *= 0.5
-                _81 *= 0.5
-                _78 *= 0.5
-                _79 *= 0.5
-                _124 = 2.5
-                _98 = 10
-                _99 = 5
-              }
-
-              _94++
-              _100++
-            }
-
-            _82 += _78
-            _123++
-            _121 = _82
-              - _123
-            _83 += _79
-            _122 = _83
-              - _123
-            _90.setAttribute(
-              "style",
-              "height: " + _94 + "px; left: "
-                + _121 + "px; top: "
-                + _122 + "px; width: "
-                + _100 + "px;"
-            )
-
-            if (
-              _121 >= 0 &&
-              _121 <= 672 &&
-              _122 >= 0 &&
-              _122 <= 378
-            ) {
-              if (_64 == true) {
-                const _92
-                  = _121 >> 4
-
-                for (const _93 in _3[
-                  _92
-                ]) {
-                  if (
-                    _121
-                      <= (_43[_93] + 28) &&
-                    (_121 + _100)
-                      >= _43[_93] &&
-                    _122
-                      <= (_44[_93] + 28) &&
-                    (_122 + _94)
-                      >= _44[_93]
-                  ) {
-                    _28(
-                      2,
-                      _93,
-                      _80,
-                      _81
-                    )
-                  }
-                }
-              } else {
-                const _92
-                  = _122 >> 3
-
-                for (const _93 in _4[
-                  _92
-                ]) {
-                  if (
-                    _121
-                      <= (_43[_93] + 28) &&
-                    (_121 + _100)
-                      >= _43[_93] &&
-                    _122
-                      <= (_44[_93] + 28) &&
-                    (_122 + _94)
-                      >= _44[_93]
-                  ) {
-                    _28(
-                      2,
-                      _93,
-                      _80,
-                      _81
-                    )
-                  }
-                }
-              }
-            }
-
-            _65 = false
-          }
-
-          _90.setAttribute(
-            "recoil_heavy",
-            _85
-          )
-
-          if (_15 != 0) {
-            _64 = true
-          }
-
-          if (_78 < 0) {
-            if (_79 < 0) {
-              const _106 = setInterval(function() {
-                if (
-                  _94 < 38 &&
-                  _82 > -50 &&
-                  _83 > -50
-                ) {
-                  _91(_106)
-                } else {
-                  if (_94 >= 38) {
-                    _126()
-                    clearInterval(_106)
-                  } else {
-                    _90.setAttribute(
-                      "style",
-                      "display: none;"
-                    )
-                    _19.push(_90)
-                    clearInterval(_106)
-                  }
-                }
-              }, 10)
-            } else {
-              const _106 = setInterval(function() {
-                if (
-                  _94 < 38 &&
-                  _82 > -50 &&
-                  _83 < 428
-                ) {
-                  _91(_106)
-                } else {
-                  if (_94 >= 38) {
-                    _126()
-                    clearInterval(_106)
-                  } else {
-                    _90.setAttribute(
-                      "style",
-                      "display: none;"
-                    )
-                    _19.push(_90)
-                    clearInterval(_106)
-                  }
-                }
-              }, 10)
-            }
-          } else {
-            if (_79 < 0) {
-              const _106 = setInterval(function() {
-                if (
-                  _94 < 38 &&
-                  _82 < 722 &&
-                  _83 > -50
-                ) {
-                  _91(_106)
-                } else {
-                  if (_94 >= 38) {
-                    _126()
-                    clearInterval(_106)
-                  } else {
-                    _90.setAttribute(
-                      "style",
-                      "display: none;"
-                    )
-                    _19.push(_90)
-                    clearInterval(_106)
-                  }
-                }
-              }, 10)
-            } else {
-              const _106 = setInterval(function() {
-                if (
-                  _94 < 38 &&
-                  _82 < 722 &&
-                  _83 < 428
-                ) {
-                  _91(_106)
-                } else {
-                  if (_94 >= 38) {
-                    _126()
-                    clearInterval(_106)
-                  } else {
-                    _90.setAttribute(
-                      "style",
-                      "display: none;"
-                    )
-                    _19.push(_90)
-                    clearInterval(_106)
-                  }
-                }
-              }, 10)
-            }
-          }
-
-          if (_18.length != 0) {
-            let _127 = (_21 & 15)
-              - ((_21 >> 4) & 15)
-            let _128 = ((_21 >> 8) & 15)
-              - ((_21 >> 12) & 15)
-            let _129
-            let _130
-            let _131 = 85
-            let _132 = 15
-            const _133 = _18.pop()
-
-            _129 = _82
-            _130 = _83
-            _133.setAttribute(
-              "style",
-              "left: " + _129 + "px; top: "
-                + _130 + "px;"
-            )
-
-            if (_2 != 26) {
-              _127 *= 0.5
-              _128 *= 0.5
-              _131 = 92.5
-              _132 = 7.5
-            }
-
-            const _134 = setInterval(function() {
-              if (_131 > 40) {
-                _129 += _127
-                _130 += _128
-                _133.setAttribute(
-                  "style",
-                  "left: " + _129 + "px; opacity: 0."
-                    + _131 + "; top: "
-                    + _130 + "px;"
-                )
-                _131 -= _132
-              } else {
-                _133.setAttribute(
-                  "style",
-                  "display: none;"
-                )
-                _18.push(_133)
-                clearInterval(_134)
-              }
-            }, 40)
-          }
-        }
-      },
-      {
         "delay_maximum": 13,
         "destroy": function() {
           let i = 0
@@ -5510,7 +4745,7 @@
           }
         },
         "use": function() {
-          _137()
+          _120()
 
           if (
             _11 < _12 ||
@@ -5590,8 +4825,8 @@
                 )
 
                 setTimeout(function() {
-                  _55 = _138
-                  _56 = _139
+                  _55 = _121
+                  _56 = _122
                   _62.setAttribute(
                     "style",
                     "left: " + _55 + "px; top: "
@@ -5728,12 +4963,12 @@
           ) * 0.4
           let _80
             = (_78 * 3)
-            + (_138 & 7) - (_21 & 7)
+            + (_121 & 7) - (_21 & 7)
           let _81
             = (_79 * 3)
-            + (_139 & 7) - ((_21 >> 3) & 7)
-          let _82 = _138 + 1
-          let _83 = _139 + 1
+            + (_122 & 7) - ((_21 >> 3) & 7)
+          let _82 = _121 + 1
+          let _83 = _122 + 1
           let _84 = 8
           let _86 = 25
           const _87 = _82
@@ -6006,8 +5241,8 @@
             _86 = 50
           }
 
-          _71 = _138
-          _72 = _139
+          _71 = _121
+          _72 = _122
           _89.setAttribute(
             "style",
             "left: " + _71 + "px; top: "
@@ -6207,7 +5442,7 @@
           }
         },
         "use": function() {
-          _137()
+          _120()
 
           if (
             _11 < _12 ||
@@ -6255,9 +5490,9 @@
             = _78 * 0.25
           let _81
             = _79 * 0.25
-          let _82 = _138 + 3
-          let _83 = _139 + 3
-          let _120 = 1
+          let _82 = _121 + 3
+          let _83 = _122 + 3
+          let _117 = 1
           const _89 = _18.pop()
           const _90 = _19.pop()
 
@@ -6450,7 +5685,7 @@
             _73 = 99
             _74 = 1
             _76 = 1
-            _120 = 2
+            _117 = 2
           }
 
           if (_78 < 0) {
@@ -6541,8 +5776,8 @@
             }, _66)
           }
 
-          _71 = _138
-          _72 = _139
+          _71 = _121
+          _72 = _122
           _89.setAttribute(
             "style",
             "left: " + _71 + "px; top: "
@@ -6581,7 +5816,7 @@
               "recoil_heavy",
               _85
             )
-          }, _120)
+          }, _117)
         }
       },
       {
@@ -6656,7 +5891,7 @@
           }
         },
         "use": function() {
-          _137()
+          _120()
 
           if (
             _11 < _12 ||
@@ -6701,12 +5936,12 @@
           ) * 0.36
           let _80
             = (_78 * 2)
-            + (_138 & 7) - (_21 & 7)
+            + (_121 & 7) - (_21 & 7)
           let _81
             = (_79 * 2)
-            + (_139 & 7) - ((_21 >> 3) & 7)
-          let _82 = _138
-          let _83 = _139
+            + (_122 & 7) - ((_21 >> 3) & 7)
+          let _82 = _121
+          let _83 = _122
           let _84 = 2
           let _86 = 25
           const _87 = _82
@@ -6977,8 +6212,8 @@
             _86 = 50
           }
 
-          _71 = _138
-          _72 = _139
+          _71 = _121
+          _72 = _122
           _89.setAttribute(
             "style",
             "left: " + _71 + "px; top: "
@@ -7177,7 +6412,7 @@
           }
         },
         "use": function() {
-          _137()
+          _120()
 
           if (
             _11 < _12 ||
@@ -7231,8 +6466,8 @@
             )
 
             setTimeout(function() {
-              _55 = _138
-              _56 = _139
+              _55 = _121
+              _56 = _122
               _62.setAttribute(
                 "style",
                 "left: " + _55 + "px; top: "
@@ -7341,12 +6576,12 @@
           ) * 0.4
           let _80
             = (_78 * 0.5)
-            + (_138 & 7) - (_21 & 7)
+            + (_121 & 7) - (_21 & 7)
           let _81
             = (_79 * 0.5)
-            + (_139 & 7) - ((_21 >> 3) & 7)
-          let _82 = _138 + 3
-          let _83 = _139 + 3
+            + (_122 & 7) - ((_21 >> 3) & 7)
+          let _82 = _121 + 3
+          let _83 = _122 + 3
           let _85 = _21 & 3
           let _86 = 25
           const _87 = _82
@@ -7551,8 +6786,8 @@
             _86 = 50
           }
 
-          _71 = _138
-          _72 = _139
+          _71 = _121
+          _72 = _122
           _89.setAttribute(
             "style",
             "left: " + _71 + "px; top: "
@@ -7683,17 +6918,17 @@
       }
     ]
 
-    const _135 = function(callback) {
+    const _118 = function(callback) {
       if (document.readyState != "complete") {
         setTimeout(function() {
-          _135(callback)
+          _118(callback)
         }, 10)
       } else {
         callback()
       }
     }
 
-    const _136 = function() {
+    const _119 = function() {
       if ((_50[97] + _50[100]
         + _50[115] + _50[119]) == 0) {
         return
@@ -7752,117 +6987,117 @@
       )
     }
 
-    const _137 = function() {
-      let _138 = _8 + 8
-      let _139 = _9 + 8
-      let _140 = 0
-      let _141 = 0
+    const _120 = function() {
+      let _121 = _8 + 8
+      let _122 = _9 + 8
+      let _123 = 0
+      let _124 = 0
 
       if (_50[150] == true) {
-        _141 = -23
+        _124 = -23
 
         if (_50[141] == true) {
-          _140 = -17
-          _141 = -17
+          _123 = -17
+          _124 = -17
         } else {
           if (_50[147] == true) {
-            _140 = 17
-            _141 = -17
+            _123 = 17
+            _124 = -17
           }
         }
 
-        _15 = _140
-        _16 = _141
+        _15 = _123
+        _16 = _124
       } else {
         if (_50[141] == true) {
-          _140 = -23
+          _123 = -23
 
           if (_50[150] == true) {
-            _140 = -17
-            _141 = -17
+            _123 = -17
+            _124 = -17
           } else {
             if (_50[133] == true) {
-              _140 = -17
-              _141 = 17
+              _123 = -17
+              _124 = 17
             }
           }
 
-          _15 = _140
-          _16 = _141
+          _15 = _123
+          _16 = _124
         } else {
           if (_50[133] == true) {
-            _141 = 23
+            _124 = 23
 
             if (_50[141] == true) {
-              _140 = -17
-              _141 = 17
+              _123 = -17
+              _124 = 17
             } else {
               if (_50[147] == true) {
-                _140 = 17
-                _141 = 17
+                _123 = 17
+                _124 = 17
               }
             }
 
-            _15 = _140
-            _16 = _141
+            _15 = _123
+            _16 = _124
           } else {
             if (_50[147] == true) {
-              _140 = 23
+              _123 = 23
 
               if (_50[150] == true) {
-                _140 = 17
-                _141 = -17
+                _123 = 17
+                _124 = -17
               } else {
                 if (_50[133] == true) {
-                  _140 = 17
-                  _141 = 17
+                  _123 = 17
+                  _124 = 17
                 }
               }
 
-              _15 = _140
-              _16 = _141
+              _15 = _123
+              _16 = _124
             }
           }
         }
       }
 
-      window._138 = _138
+      window._121 = _121
         + _15
-      window._139 = _139
+      window._122 = _122
         + _16
       _51.setAttribute(
         "style",
-        "left: " + window._138 + "px; top: "
-          + window._139 + "px;"
+        "left: " + window._121 + "px; top: "
+          + window._122 + "px;"
       )
     }
 
-    const _142 = function(selector, callback) {
-      const _143 = document.querySelectorAll(selector)
+    const _125 = function(selector, callback) {
+      const _126 = document.querySelectorAll(selector)
 
-      if (_143.length) {
-        for (const _144 in _143) {
-          if (_143.hasOwnProperty(_144)) {
-            callback(_143[_144])
+      if (_126.length) {
+        for (const _127 in _126) {
+          if (_126.hasOwnProperty(_127)) {
+            callback(_126[_127])
           }
         }
       }
     }
 
-    const _145 = function() {
+    const _128 = function() {
       let i = 0
       let j
-      let _146 = _21
-      let _147 = _21 & 65535
-      const _148 = ((_21 >> 5) & 15) + 20
+      let _129 = _21
+      let _130 = _21 & 65535
+      const _131 = ((_21 >> 5) & 15) + 20
 
-      _142(".bits, .pieces", function(selected_element) {
+      _125(".bits, .pieces", function(selected_element) {
         selected_element.remove()
       })
 
       while (i != 51) {
-        const _149 = document.createElement("div")
-        const _150 = document.createElement("div")
+        const _132 = document.createElement("div")
+        const _133 = document.createElement("div")
 
         if (typeof _24[i] != "undefined") {
           _24[i].remove()
@@ -7877,25 +7112,25 @@
         _25[i] = _23.appendChild(
           document.createElement("div")
         )
-        _149.setAttribute(
+        _132.setAttribute(
           "class",
           "health-container"
         )
-        _150.setAttribute(
+        _133.setAttribute(
           "class",
           "health"
         )
-        _149.appendChild(
-          _150
+        _132.appendChild(
+          _133
         )
 
         if (typeof _27[i] != "undefined") {
           _27[i].remove()
         }
 
-        _27[i] = _150
+        _27[i] = _133
         _25[i].appendChild(
-          _149
+          _132
         )
         _40[i] = 0
         _3[i] = {}
@@ -7932,31 +7167,31 @@
         _47[i] = false
         _48[i] = false
 
-        _146 = ((_146 << 13)
-          | (_146 >> 19)) ^ _147
+        _129 = ((_129 << 13)
+          | (_129 >> 19)) ^ _130
 
-        if (_146 < 0) {
-          _146 >>>= _147 & 15
+        if (_129 < 0) {
+          _129 >>>= _130 & 15
         }
 
-        _147 += 1111111
+        _130 += 1111111
 
-        if ((_146 & 1) == 0) {
-          if (((_146 >> 1) & 1) == 0) {
+        if ((_129 & 1) == 0) {
+          if (((_129 >> 1) & 1) == 0) {
             _43[i] = -50
           } else {
             _43[i] = 722
           }
 
-          _44[i] = _146 % 378
+          _44[i] = _129 % 378
         } else {
-          if (((_146 >> 2) & 1) == 0) {
+          if (((_129 >> 2) & 1) == 0) {
             _44[i] = -50
           } else {
             _44[i] = 428
           }
 
-          _43[i] = _146 % 672
+          _43[i] = _129 % 672
         }
 
         _25[i].setAttribute(
@@ -7978,7 +7213,7 @@
         10
       )
 
-      const _151 = setInterval(function() {
+      const _134 = setInterval(function() {
         if (
           _0 != 17 &&
           i != 51
@@ -7986,7 +7221,7 @@
           let _34 = _43[i]
           let _35 = _44[i]
 
-          if (i == _148) {
+          if (i == _131) {
             _23.classList.add("bullet-time")
             _2 = 52
             _7 = 1.5
@@ -8077,26 +7312,26 @@
           i++
         } else {
           if (_0 == 0) {
-            let _152 = 0
+            let _135 = 0
 
-            clearInterval(_151)
+            clearInterval(_134)
             _49.removeAttribute("recoil_heavy")
             _49.removeAttribute("recoil_light")
             _51.removeAttribute("recoil_heavy")
             _51.removeAttribute("recoil_light")
 
             _22 = setInterval(function() {
-              if (_152 != 680) {
-                _154.setAttribute(
+              if (_135 != 680) {
+                _137.setAttribute(
                   "style",
-                  "height: 378px; width: " + _152 + "px;"
+                  "height: 378px; width: " + _135 + "px;"
                 )
-                _152 += 4
+                _135 += 4
               } else {
                 clearInterval(_22)
                 i = 0
                 _22 = 0
-                _154.setAttribute(
+                _137.setAttribute(
                   "style",
                   "display:none; width: 0;"
                 )
@@ -8111,7 +7346,7 @@
                     % _52.length
                 }
 
-                _145()
+                _128()
               }
             }, 10)
           }
@@ -8119,11 +7354,11 @@
       }, 150)
     }
 
-    const _153 = document.querySelector(".prompt")
-    const _154 = document.createElement("div")
+    const _136 = document.querySelector(".prompt")
+    const _137 = document.createElement("div")
 
     onload = function() {
-      _135(function() {
+      _118(function() {
         _23.setAttribute(
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: "
@@ -8137,52 +7372,52 @@
         document.querySelector("body").addEventListener(
           "keydown",
           function(event) {
-            let _155 = event.key.charCodeAt(0)
+            let _138 = event.key.charCodeAt(0)
 
             if (
               event.key[0] == "A" &&
               event.key[1] == "r"
             ) {
               event.preventDefault()
-              _155 += event.key.charCodeAt(5)
+              _138 += event.key.charCodeAt(5)
             }
 
-            _50[_155] = 1
+            _50[_138] = 1
           }
         )
 
         document.querySelector("body").addEventListener(
           "keyup",
           function(event) {
-            let _155 = event.key.charCodeAt(0)
+            let _138 = event.key.charCodeAt(0)
 
             if (
               event.key[0] == "A" &&
               event.key[1] == "r"
             ) {
               event.preventDefault()
-              _155 += event.key.charCodeAt(5)
+              _138 += event.key.charCodeAt(5)
             }
 
-            _50[_155] = 0
+            _50[_138] = 0
           }
         )
 
-        const _156 = setInterval(function() {
+        const _139 = setInterval(function() {
           if ((_50[133] + _50[141]
             + _50[147] + _50[150]) != 0) {
             let __21 = 0
             let i = 0
             let j
 
-            clearInterval(_156)
-            clearInterval(_157)
-            _153.classList.add("hidden")
-            _154.setAttribute(
+            clearInterval(_139)
+            clearInterval(_140)
+            _136.classList.add("hidden")
+            _137.setAttribute(
               "class",
               "element wave-cleanup"
             )
-            _23.append(_154)
+            _23.append(_137)
             _49.setAttribute("class", "element player")
             _8 = 322
             _9 = 175
@@ -8200,7 +7435,7 @@
             _50[141] = 0
             _50[147] = 0
             _50[150] = 0
-            _6 = setInterval(_136, 20)
+            _6 = setInterval(_119, 20)
             _14 = Date.now() % _52.length
             _23.appendChild(_51)
 
@@ -8219,12 +7454,12 @@
               }
             }, 10)
 
-            _145()
+            _128()
           }
         }, 10)
 
-        const _157 = setInterval(function() {
-          _153.classList.toggle("hidden")
+        const _140 = setInterval(function() {
+          _136.classList.toggle("hidden")
         }, 500)
       })
     }
