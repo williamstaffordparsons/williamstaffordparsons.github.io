@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <title>Play Contrivity</title>
-    <link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon">
+    <link href="favicon.ico" rel="icon" type="image/x-icon">
     <meta content="noindex" name="robots">
     <meta charset="utf-8">
     <style type="text/css">
@@ -1630,9 +1630,6 @@
         width: 0;
         z-index: 4;
       }
-        .player-weapon-muzzle-flash.electromagnetic-radiation-gun {
-          background-color: #555;
-        }
       .player-weapon-projectile {
         background-color: #fff;
         border: none;
@@ -1641,14 +1638,16 @@
         width: 8px;
         z-index: 5;
       }
-        .player-weapon-projectile.electromagnetic-radiation-gun {
-          background-color: #444;
+        .player-weapon-projectile.energy-carbine,
+        .player-weapon-projectile.pulse-rifle {
+          border-radius: 64px;
+          height: 12px;
+          width: 12px;
         }
         .player-weapon-projectile.flamethrower {
           border-radius: 300px;
         }
-        .player-weapon-projectile.heavy-machine-gun,
-        .player-weapon-projectile.sniper-rifle {
+        .player-weapon-projectile.heavy-machine-gun {
           border-radius: 48px;
           height: 10px;
           width: 10px;
@@ -1666,12 +1665,6 @@
             width: 24px;
             z-index: 5;
           }
-        .player-weapon-projectile.energy-carbine,
-        .player-weapon-projectile.pulse-rifle {
-          border-radius: 64px;
-          height: 12px;
-          width: 12px;
-        }
       .player-weapon-projectile-effect {
         background-color: #ddd;
         border: none;
@@ -1730,7 +1723,7 @@
       <div class="title-screen">
         <p class="copyright">&copy; 2024 <a href="https://williamstaffordparsons.github.io/" target="_blank">William Stafford Parsons</a></p>
         <p class="prompt">Press an Arrow Key To Play</p>
-        <p class="version">Contrivity v1.0.18</p>
+        <p class="version">Contrivity v1.0.21</p>
       </div>
     </div>
   </body>
@@ -2305,14 +2298,14 @@
 
           _13.remove()
 
-          while (i != 15) {
+          while (i != 30) {
             _19[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             _18[i].remove()
             i++
           }
@@ -2333,10 +2326,10 @@
           _13 = _23.appendChild(
             _13
           )
-          _19 = Array(15)
-          _18 = Array(10)
+          _19 = Array(30)
+          _18 = Array(20)
 
-          while (i != 15) {
+          while (i != 30) {
             _19[i] = document.createElement("div")
             _19[i].setAttribute(
               "class",
@@ -2354,7 +2347,7 @@
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             _18[i] = document.createElement("div")
             _18[i].setAttribute(
               "class",
@@ -2371,7 +2364,7 @@
           }
         },
         "use": function() {
-          _119()
+          _135()
 
           if (
             _11 < _12 ||
@@ -2436,8 +2429,8 @@
               )
 
               setTimeout(function() {
-                _54 = _120
-                _55 = _121
+                _54 = _136
+                _55 = _137
                 _61.setAttribute(
                   "style",
                   "left: " + _54 + "px; top: "
@@ -2547,12 +2540,12 @@
           ) * 0.45
           let _79
             = (_77 * 0.5)
-            + (_120 & 7) - (_21 & 7)
+            + (_136 & 7) - (_21 & 7)
           let _80
             = (_78 * 0.5)
-            + (_121 & 7) - ((_21 >> 3) & 7)
-          let _81 = _120 + 3
-          let _82 = _121 + 3
+            + (_137 & 7) - ((_21 >> 3) & 7)
+          let _81 = _136 + 3
+          let _82 = _137 + 3
           let _83 = 3
           let _84 = _21 & 3
           let _85 = 25
@@ -2824,8 +2817,8 @@
             _85 = 50
           }
 
-          _70 = _120
-          _71 = _121
+          _70 = _136
+          _71 = _137
           _88.setAttribute(
             "style",
             "left: " + _70 + "px; top: "
@@ -2961,14 +2954,14 @@
 
           _13.remove()
 
-          while (i != 80) {
+          while (i != 120) {
             _19[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 7) {
+          while (i != 15) {
             _18[i].remove()
             i++
           }
@@ -2990,10 +2983,10 @@
           _13 = _23.appendChild(
             _13
           )
-          _19 = Array(80)
-          _18 = Array(7)
+          _19 = Array(120)
+          _18 = Array(15)
 
-          while (i != 80) {
+          while (i != 120) {
             _19[i] = document.createElement("div")
             _19[i].setAttribute(
               "class",
@@ -3011,7 +3004,7 @@
 
           i = 0
 
-          while (i != 7) {
+          while (i != 15) {
             _18[i] = document.createElement("div")
             _18[i].setAttribute(
               "class",
@@ -3028,7 +3021,7 @@
           }
         },
         "use": function() {
-          _119()
+          _135()
 
           if (
             _11 < _12 ||
@@ -3079,8 +3072,8 @@
             )
 
             setTimeout(function() {
-              _54 = _120
-              _55 = _121
+              _54 = _136
+              _55 = _137
               _61.setAttribute(
                 "style",
                 "left: " + _54 + "px; top: "
@@ -3149,9 +3142,9 @@
                     _10 = 20
 
                     if (_2 == 26) {
-                      _11 = -30
+                      _11 = -25
                     } else {
-                      _11 = -60
+                      _11 = -50
                     }
 
                     _50.removeAttribute("reload")
@@ -3192,8 +3185,8 @@
           let _85 = 25
           const _109 = _15
           const _110 = _16
-          const _111 = _120 + 3
-          const _112 = _121 + 3
+          const _111 = _136 + 3
+          const _112 = _137 + 3
           const _88 = _18.pop()
 
           const _113 = function() {
@@ -3210,12 +3203,12 @@
             ) * 0.4
             let _79
               = _77
-              + (_120 & 7) - (_21 & 7)
+              + (_136 & 7) - (_21 & 7)
             let _80
               = _78
-              + (_121 & 7) - ((_21 >> 3) & 7)
-            let _81 = _120 + 3
-            let _82 = _121 + 3
+              + (_137 & 7) - ((_21 >> 3) & 7)
+            let _81 = _136 + 3
+            let _82 = _137 + 3
             const _89 = _19.pop()
 
             const _90 = function(_105) {
@@ -3501,8 +3494,8 @@
             }
           }, _65)
 
-          _70 = _120
-          _71 = _121
+          _70 = _136
+          _71 = _137
           _88.setAttribute(
             "style",
             "left: " + _70 + "px; top: "
@@ -3565,20 +3558,20 @@
         }
       },
       {
-        "delay_maximum": 25,
+        "delay_maximum": 20,
         "destroy": function() {
           let i = 0
 
           _13.remove()
 
-          while (i != 45) {
+          while (i != 80) {
             _19[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 3) {
+          while (i != 6) {
             _18[i].remove()
             i++
           }
@@ -3587,7 +3580,7 @@
           let i = 0
 
           _10 = 2
-          _11 = 25
+          _11 = 20
           _50.setAttribute(
             "class",
             "double-barreled-shotgun element player-weapon"
@@ -3600,10 +3593,10 @@
           _13 = _23.appendChild(
             _13
           )
-          _19 = Array(45)
-          _18 = Array(3)
+          _19 = Array(80)
+          _18 = Array(6)
 
-          while (i != 45) {
+          while (i != 80) {
             _19[i] = document.createElement("div")
             _19[i].setAttribute(
               "class",
@@ -3621,7 +3614,7 @@
 
           i = 0
 
-          while (i != 4) {
+          while (i != 6) {
             _18[i] = document.createElement("div")
             _18[i].setAttribute(
               "class",
@@ -3638,7 +3631,7 @@
           }
         },
         "use": function() {
-          _119()
+          _135()
 
           if (
             _11 < _12 ||
@@ -3667,8 +3660,8 @@
           let _85 = 25
           const _109 = _15
           const _110 = _16
-          const _111 = _120
-          const _112 = _121
+          const _111 = _136
+          const _112 = _137
 
           const _113 = function() {
             let _63 = false
@@ -3684,10 +3677,10 @@
             ) * 0.4
             let _79
               = _77
-              + (_120 & 7) - (_21 & 7)
+              + (_136 & 7) - (_21 & 7)
             let _80
               = _78
-              + (_121 & 7) - ((_21 >> 3) & 7)
+              + (_137 & 7) - ((_21 >> 3) & 7)
             let _81 = _111 + 3
             let _82 = _112 + 3
             const _89 = _19.pop()
@@ -3759,7 +3752,7 @@
                       let _99 = 8
 
                       _27(
-                        35,
+                        30,
                         _92,
                         _79,
                         _80
@@ -3829,7 +3822,7 @@
                       let _99 = 8
 
                       _27(
-                        35,
+                        30,
                         _92,
                         _79,
                         _80
@@ -4005,10 +3998,8 @@
             _5 = true
 
             if (_2 == 26) {
-              _11 = -65
               _60 = 230
             } else {
-              _11 = -130
               _60 = 460
             }
 
@@ -4028,8 +4019,10 @@
                 _5 = false
 
                 if (_2 == 26) {
+                  _11 = -20
                   _60 = 30
                 } else {
+                  _11 = -40
                   _60 = 60
                 }
 
@@ -4060,8 +4053,8 @@
               }
 
               setTimeout(function() {
-                _70 = _120
-                _71 = _121
+                _70 = _136
+                _71 = _137
                 _88.setAttribute(
                   "style",
                   "left: " + _70 + "px; top: "
@@ -4112,14 +4105,14 @@
 
           _13.remove()
 
-          while (i != 16) {
+          while (i != 30) {
             _19[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 12) {
+          while (i != 20) {
             _18[i].remove()
             i++
           }
@@ -4140,10 +4133,10 @@
           _13 = _23.appendChild(
             _13
           )
-          _19 = Array(16)
-          _18 = Array(12)
+          _19 = Array(30)
+          _18 = Array(20)
 
-          while (i != 16) {
+          while (i != 30) {
             _19[i] = document.createElement("div")
             _19[i].setAttribute(
               "class",
@@ -4161,7 +4154,7 @@
 
           i = 0
 
-          while (i != 12) {
+          while (i != 20) {
             _18[i] = document.createElement("div")
             _18[i].setAttribute(
               "class",
@@ -4178,7 +4171,7 @@
           }
         },
         "use": function() {
-          _119()
+          _135()
 
           if (
             _11 < _12 ||
@@ -4235,12 +4228,12 @@
           ) * 0.36
           let _79
             = (_77 * 2)
-            + (_120 & 7) - (_21 & 7)
+            + (_136 & 7) - (_21 & 7)
           let _80
             = (_78 * 2)
-            + (_121 & 7) - ((_21 >> 3) & 7)
-          let _81 = _120
-          let _82 = _121
+            + (_137 & 7) - ((_21 >> 3) & 7)
+          let _81 = _136
+          let _82 = _137
           let _83 = 2
           let _84 = _21 & 3
           let _85 = 25
@@ -4507,8 +4500,8 @@
             _85 = 50
           }
 
-          _70 = _120
-          _71 = _121
+          _70 = _136
+          _71 = _137
           _88.setAttribute(
             "style",
             "left: " + _70 + "px; top: "
@@ -4640,20 +4633,471 @@
         }
       },
       {
-        "delay_maximum": 13,
+        "delay_maximum": 1,
+        "destroy": function() {
+          let i = 0
+
+          while (i != 70) {
+            _19[i].remove()
+            i++
+          }
+
+          _18[0].remove()
+          _18[1].remove()
+        },
+        "initialize": function() {
+          let i = 0
+          _50.setAttribute(
+            "class",
+            "element flamethrower player-weapon"
+          )
+          _19 = Array(70)
+          _18 = Array(2)
+
+          while (i != 70) {
+            _19[i] = document.createElement("div")
+            _19[i].setAttribute(
+              "class",
+              "element flamethrower player-weapon-projectile"
+            )
+            _19[i].setAttribute(
+              "style",
+              "display: none;"
+            )
+            _19[i] = _23.appendChild(
+              _19[i]
+            )
+            i++
+          }
+
+          i = 0
+
+          while (i != 2) {
+            _18[i] = document.createElement("div")
+            _18[i].setAttribute(
+              "class",
+              "element flamethrower player-weapon-projectile-effect"
+            )
+            _18[i].setAttribute(
+              "style",
+              "display: none;"
+            )
+            _18[i] = _23.appendChild(
+              _18[i]
+            )
+            i++
+          }
+        },
+        "use": function() {
+          _135()
+
+          if (_22 != 0) {
+            return
+          }
+
+          if (_48.hasAttribute("recoil_heavy")) {
+            _48.removeAttribute("recoil_heavy")
+            _50.removeAttribute("recoil_heavy")
+          }
+
+          if ((_49[133] + _49[141]
+            + _49[147] + _49[150]) == 0) {
+            return
+          }
+
+          let _116 = 1
+          const _84 = _21 & 3
+
+          if (_2 != 26) {
+            _116 = 2
+          }
+
+          setTimeout(function() {
+            _48.setAttribute(
+              "recoil_heavy",
+              _84
+            )
+            _50.setAttribute(
+              "recoil_heavy",
+              _84
+            )
+          }, _116)
+
+          if (_11 < _12) {
+            _11++
+            return
+          }
+
+          _11 = 0
+
+          let _63 = false
+          let _64 = false
+          let _93 = 8
+          let _117
+          let _118
+          let _77 = (
+            _15
+            + _84 - ((_21 >> 2) & 3)
+          ) * 0.42
+          let _78 = (
+            _16
+            + _84 - ((_21 >> 4) & 3)
+          ) * 0.42
+          let _79
+            = _77 * 0.1
+          let _80
+            = _78 * 0.1
+          let _81 = _136 + 3
+          let _119 = 0
+          let _120 = 5
+          let _121 = 15
+          let _82 = _137 + 3
+          let _97 = 20
+          let _98 = 2
+          let _99 = 8
+          const _89 = _19.pop()
+
+          const _122 = function() {
+            let _96 = 100
+
+            const _102 = setInterval(function() {
+              if (_96 != 0) {
+                if (_2 == 26) {
+                  if (_98 == 2) {
+                    _77 *= 2
+                    _78 *= 2
+                    _120 = 5
+                    _121 = 15
+                    _97 = 20
+                    _98 = 4
+                  }
+                } else {
+                  if (_98 == 4) {
+                    _77 *= 0.5
+                    _78 *= 0.5
+                    _120 = 2.5
+                    _121 = 7
+                    _97 = 10
+                    _98 = 2
+                  }
+                }
+
+                _93 += _98
+                _96 -= _97
+
+                if (_96 < 0) {
+                  _96 = 0
+                }
+
+                _81 += _77
+                _82 += _78
+                _81 += (_21
+                  & _121)
+                  - ((_21 >> 5) & _121)
+                _119 += _120
+                _117 = _81
+                  - _119
+                _82 += ((_21 >> 3)
+                  & _121)
+                  - ((_21 >> 7) & _121)
+                _118 = _82
+                  - _119
+                _99 += _98
+                _89.setAttribute(
+                  "style",
+                  "background-color: #333; height: "
+                    + _93 + "px; left: "
+                    + _117 + "px; opacity: 0."
+                    + _96 + "; top: "
+                    + _118 + "px; width: "
+                    + _99 + "px; z-index: 4;"
+                )
+              } else {
+                _89.setAttribute(
+                  "style",
+                  "display: none;"
+                )
+                _19.push(_89)
+                clearInterval(_102)
+              }
+            }, 20)
+          }
+
+          const _90 = function(_105) {
+            if (_64 == true) {
+              return
+            }
+
+            _64 = true
+
+            if (_2 == 26) {
+              if (_98 == 1) {
+                _79 *= 2
+                _80 *= 2
+                _77 *= 2
+                _78 *= 2
+                _120 = 5
+                _97 = 20
+                _98 = 2
+              }
+            } else {
+              if (_98 == 2) {
+                _79 *= 0.5
+                _80 *= 0.5
+                _77 *= 0.5
+                _78 *= 0.5
+                _120 = 2.5
+                _97 = 10
+                _98 = 1
+              }
+            }
+
+            _93 += _98
+            _81 += _77
+            _119++
+            _117 = _81
+              - _119
+            _82 += _78
+            _118 = _82
+              - _119
+            _99 += _98
+            _89.setAttribute(
+              "style",
+              "height: " + _93 + "px; left: "
+                + _117 + "px; top: "
+                + _118 + "px; width: "
+                + _99 + "px;"
+            )
+
+            if (
+              _117 >= 0 &&
+              _117 <= 672 &&
+              _118 >= 0 &&
+              _118 <= 378
+            ) {
+              if (_63 == true) {
+                const _91
+                  = _117 >> 4
+
+                for (const _92 in _3[
+                  _91
+                ]) {
+                  if (
+                    _117
+                      <= (_42[_92] + 28) &&
+                    (_117 + _99)
+                      >= _42[_92] &&
+                    _118
+                      <= (_43[_92] + 28) &&
+                    (_118 + _93)
+                      >= _43[_92]
+                  ) {
+                    _27(
+                      3,
+                      _92,
+                      _79,
+                      _80
+                    )
+                  }
+                }
+              } else {
+                const _91
+                  = _118 >> 3
+
+                for (const _92 in _4[
+                  _91
+                ]) {
+                  if (
+                    _117
+                      <= (_42[_92] + 28) &&
+                    (_117 + _99)
+                      >= _42[_92] &&
+                    _118
+                      <= (_43[_92] + 28) &&
+                    (_118 + _93)
+                      >= _43[_92]
+                  ) {
+                    _27(
+                      3,
+                      _92,
+                      _79,
+                      _80
+                    )
+                  }
+                }
+              }
+            }
+
+            _64 = false
+          }
+
+          _89.setAttribute(
+            "recoil_heavy",
+            _84
+          )
+
+          if (_15 != 0) {
+            _63 = true
+          }
+
+          if (_77 < 0) {
+            if (_78 < 0) {
+              const _105 = setInterval(function() {
+                if (
+                  _93 < 50 &&
+                  _81 > -50 &&
+                  _82 > -50
+                ) {
+                  _90(_105)
+                } else {
+                  if (_93 >= 50) {
+                    _122()
+                    clearInterval(_105)
+                  } else {
+                    _89.setAttribute(
+                      "style",
+                      "display: none;"
+                    )
+                    _19.push(_89)
+                    clearInterval(_105)
+                  }
+                }
+              }, 10)
+            } else {
+              const _105 = setInterval(function() {
+                if (
+                  _93 < 50 &&
+                  _81 > -50 &&
+                  _82 < 428
+                ) {
+                  _90(_105)
+                } else {
+                  if (_93 >= 50) {
+                    _122()
+                    clearInterval(_105)
+                  } else {
+                    _89.setAttribute(
+                      "style",
+                      "display: none;"
+                    )
+                    _19.push(_89)
+                    clearInterval(_105)
+                  }
+                }
+              }, 10)
+            }
+          } else {
+            if (_78 < 0) {
+              const _105 = setInterval(function() {
+                if (
+                  _93 < 50 &&
+                  _81 < 722 &&
+                  _82 > -50
+                ) {
+                  _90(_105)
+                } else {
+                  if (_93 >= 50) {
+                    _122()
+                    clearInterval(_105)
+                  } else {
+                    _89.setAttribute(
+                      "style",
+                      "display: none;"
+                    )
+                    _19.push(_89)
+                    clearInterval(_105)
+                  }
+                }
+              }, 10)
+            } else {
+              const _105 = setInterval(function() {
+                if (
+                  _93 < 50 &&
+                  _81 < 722 &&
+                  _82 < 428
+                ) {
+                  _90(_105)
+                } else {
+                  if (_93 >= 50) {
+                    _122()
+                    clearInterval(_105)
+                  } else {
+                    _89.setAttribute(
+                      "style",
+                      "display: none;"
+                    )
+                    _19.push(_89)
+                    clearInterval(_105)
+                  }
+                }
+              }, 10)
+            }
+          }
+
+          if (_18.length != 0) {
+            let _123 = (_21 & 15)
+              - ((_21 >> 4) & 15)
+            let _124 = ((_21 >> 8) & 15)
+              - ((_21 >> 12) & 15)
+            let _125
+            let _126
+            let _127 = 85
+            let _128 = 15
+            const _129 = _18.pop()
+
+            _125 = _81
+            _126 = _82
+            _129.setAttribute(
+              "style",
+              "left: " + _125 + "px; top: "
+                + _126 + "px;"
+            )
+
+            if (_2 != 26) {
+              _123 *= 0.5
+              _124 *= 0.5
+              _127 = 92.5
+              _128 = 7.5
+            }
+
+            const _130 = setInterval(function() {
+              if (_127 > 40) {
+                _125 += _123
+                _126 += _124
+                _129.setAttribute(
+                  "style",
+                  "left: " + _125 + "px; opacity: 0."
+                    + _127 + "; top: "
+                    + _126 + "px;"
+                )
+                _127 -= _128
+              } else {
+                _129.setAttribute(
+                  "style",
+                  "display: none;"
+                )
+                _18.push(_129)
+                clearInterval(_130)
+              }
+            }, 40)
+          }
+        }
+      },
+      {
+        "delay_maximum": 11,
         "destroy": function() {
           let i = 0
 
           _13.remove()
 
-          while (i != 15) {
+          while (i != 40) {
             _19[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 8) {
+          while (i != 20) {
             _18[i].remove()
             i++
           }
@@ -4674,10 +5118,10 @@
           _13 = _23.appendChild(
             _13
           )
-          _19 = Array(15)
-          _18 = Array(8)
+          _19 = Array(40)
+          _18 = Array(20)
 
-          while (i != 15) {
+          while (i != 40) {
             _19[i] = document.createElement("div")
             _19[i].setAttribute(
               "class",
@@ -4695,7 +5139,7 @@
 
           i = 0
 
-          while (i != 8) {
+          while (i != 20) {
             _18[i] = document.createElement("div")
             _18[i].setAttribute(
               "class",
@@ -4712,7 +5156,7 @@
           }
         },
         "use": function() {
-          _119()
+          _135()
 
           if (
             _11 < _12 ||
@@ -4792,8 +5236,8 @@
                 )
 
                 setTimeout(function() {
-                  _54 = _120
-                  _55 = _121
+                  _54 = _136
+                  _55 = _137
                   _61.setAttribute(
                     "style",
                     "left: " + _54 + "px; top: "
@@ -4876,9 +5320,9 @@
                           _10 = 60
 
                           if (_2 == 26) {
-                            _11 = -25
+                            _11 = -20
                           } else {
-                            _11 = -50
+                            _11 = -40
                           }
 
                           _50.removeAttribute("reload")
@@ -4922,20 +5366,20 @@
           let _76 = 40
           let _77 = (
             _15
-            + ((_21 & 3) + 2) - (((_21 >> 2) & 3) + 2)
+            + ((_21 & 3) + 1) - (((_21 >> 2) & 3) + 1)
           ) * 0.4
           let _78 = (
             _16
-            + (((_21 >> 4) & 3) + 2) - (((_21 >> 6) & 3) + 2)
+            + (((_21 >> 4) & 3) + 1) - (((_21 >> 6) & 3) + 1)
           ) * 0.4
           let _79
             = (_77 * 3)
-            + (_120 & 7) - (_21 & 7)
+            + (_136 & 7) - (_21 & 7)
           let _80
             = (_78 * 3)
-            + (_121 & 7) - ((_21 >> 3) & 7)
-          let _81 = _120 + 1
-          let _82 = _121 + 1
+            + (_137 & 7) - ((_21 >> 3) & 7)
+          let _81 = _136 + 1
+          let _82 = _137 + 1
           let _83 = 8
           let _85 = 25
           const _86 = _81
@@ -5010,7 +5454,7 @@
                     let _99 = 10
 
                     _27(
-                      50,
+                      35,
                       _92,
                       _79,
                       _80
@@ -5112,7 +5556,7 @@
                     let _99 = 10
 
                     _27(
-                      50,
+                      35,
                       _92,
                       _79,
                       _80
@@ -5208,8 +5652,8 @@
             _85 = 50
           }
 
-          _70 = _120
-          _71 = _121
+          _70 = _136
+          _71 = _137
           _88.setAttribute(
             "style",
             "left: " + _70 + "px; top: "
@@ -5339,20 +5783,430 @@
         }
       },
       {
+        "delay_maximum": 6,
+        "destroy": function() {
+          let i = 0
+
+          while (i != 20) {
+            _19[i].remove()
+            i++
+          }
+        },
+        "initialize": function() {
+          let i = 0
+
+          _11 = 0
+          _50.setAttribute(
+            "class",
+            "element hunting-bow player-weapon"
+          )
+          _19 = Array(20)
+
+          while (i != 20) {
+            _19[i] = document.createElement("div")
+            _19[i].setAttribute(
+              "class",
+              "element hunting-bow player-weapon-projectile"
+            )
+            _19[i].setAttribute(
+              "style",
+              "display: none;"
+            )
+            _19[i] = _23.appendChild(
+              _19[i]
+            )
+            i++
+          }
+        },
+        "use": function() {
+          _135()
+
+          if (
+            _11 < _12 ||
+            _22 != 0
+          ) {
+            _11++
+            return
+          }
+
+          if (
+            _5 == true ||
+            (_49[133] + _49[141]
+              + _49[147] + _49[150]) == 0
+          ) {
+            return
+          }
+
+          _5 = true
+
+          let _63 = false
+          let _64 = false
+          let i = 0
+          let _76 = 40
+          let _77
+            = _15 * 0.37
+          let _78
+            = _16 * 0.37
+          let _79
+            = (_77 * 2)
+            + (_136 & 7) - (_21 & 7)
+          let _80
+            = (_78 * 2)
+            + (_137 & 7) - ((_21 >> 3) & 7)
+          let _81 = _136 + 3
+          let _82 = _137 + 3
+          let _83 = 8
+          let _131
+          let _84 = _21 & 3
+          let _85 = 25
+          let _132 = _16
+          let _60 = 10
+          const _89 = _19.pop()
+
+          const _90 = function(_105) {
+            if (_64 == true) {
+              return
+            }
+
+            _64 = true
+
+            if (_2 == 26) {
+              if (_76 == 20) {
+                _79 *= 2
+                _80 *= 2
+                _76 = 40
+                _77 *= 2
+                _78 *= 2
+              }
+            } else {
+              if (_76 == 40) {
+                _79 *= 0.5
+                _80 *= 0.5
+                _76 = 20
+                _77 *= 0.5
+                _78 *= 0.5
+              }
+            }
+
+            _81 += _77
+            _82 += _78
+            _89.setAttribute(
+              "style",
+              "left: " + _81 + "px; top: "
+                + _82 + "px; transform: rotate("
+                + _131 + "deg);"
+            )
+
+            if (
+              _81 >= 0 &&
+              _81 <= 672 &&
+              _82 >= 0 &&
+              _82 <= 378
+            ) {
+              if (_63 == true) {
+                const _91
+                  = _81 >> 4
+
+                for (const _92 in _3[
+                  _91
+                ]) {
+                  if (
+                    _81
+                      <= (_42[_92] + 28) &&
+                    (_81 + 8)
+                      >= _42[_92] &&
+                    _82
+                      <= (_43[_92] + 28) &&
+                    (_82 + 8)
+                      >= _43[_92]
+                  ) {
+                    let _96 = 60
+                    let _97
+
+                    _27(
+                      30,
+                      _92,
+                      _79,
+                      _80
+                    )
+
+                    _83--
+
+                    if (_83 == 0) {
+                      if (_2 == 28) {
+                        _77 *= 0.5
+                        _78 *= 0.5
+                        _97 = 20
+                      } else {
+                        _77 *= 0.25
+                        _78 *= 0.25
+                        _97 = 10
+                      }
+
+                      const _102 = setInterval(function() {
+                        if (_96 > 0) {
+                          _81 -= _77
+                          _82 -= _78
+                          _89.setAttribute(
+                            "style",
+                            "left: " + _81 + "px; opacity: 0."
+                              + _96 + "; top: "
+                              + _82 + "px; transform: rotate("
+                              + _131 + "deg);"
+                          )
+                          _96 -= _97
+                        } else {
+                          _89.setAttribute(
+                            "style",
+                            "display: none;"
+                          )
+                          _19.push(_89)
+                          clearInterval(_102)
+                        }
+                      }, 20)
+
+                      clearInterval(_105)
+                      break
+                    }
+                  }
+                }
+              } else {
+                const _91
+                  = _82 >> 3
+
+                for (const _92 in _4[
+                  _91
+                ]) {
+                  if (
+                    _81
+                      <= (_42[_92] + 28) &&
+                    (_81 + 8)
+                      >= _42[_92] &&
+                    _82
+                      <= (_43[_92] + 28) &&
+                    (_82 + 8)
+                      >= _43[_92]
+                  ) {
+                    let _96 = 60
+                    let _97
+
+                    _27(
+                      30,
+                      _92,
+                      _79,
+                      _80
+                    )
+
+                    _83--
+
+                    if (_83 == 0) {
+                      if (_2 == 28) {
+                        _77 *= 0.5
+                        _78 *= 0.5
+                        _97 = 20
+                      } else {
+                        _77 *= 0.25
+                        _78 *= 0.25
+                        _97 = 10
+                      }
+
+                      const _102 = setInterval(function() {
+                        if (_96 > 0) {
+                          _81 -= _77
+                          _82 -= _78
+                          _89.setAttribute(
+                            "style",
+                            "left: " + _81 + "px; opacity: 0."
+                              + _96 + "; top: "
+                              + _82 + "px; transform: rotate("
+                              + _131 + "deg);"
+                          )
+                          _96 -= _97
+                        } else {
+                          _89.setAttribute(
+                            "style",
+                            "display: none;"
+                          )
+                          _19.push(_89)
+                          clearInterval(_102)
+                        }
+                      }, 20)
+
+                      clearInterval(_105)
+                      break
+                    }
+                  }
+                }
+              }
+            }
+
+            _64 = false
+          }
+
+          if (_15 != 0) {
+            _63 = true
+          }
+
+          if (_2 != 26) {
+            _85 = 50
+            _60 = 20
+          }
+
+          if (_15 == 0) {
+            _131 = 90
+          } else {
+            if (_16 == 0) {
+              _131 = 0
+              _132 = 3
+            } else {
+              if (_15 == _16) {
+                _131 = 45
+              } else {
+                _131 = 135
+              }
+            }
+          }
+
+          const _106 = setInterval(function() {
+            _48.setAttribute(
+              "recoil_heavy",
+              _84
+            )
+            _50.setAttribute(
+              "recoil_heavy",
+              _84
+            )
+            i++
+
+            if (i < 5) {
+              _84 = (_84 + 1) & 3
+            } else {
+              _48.removeAttribute("recoil_heavy")
+              _50.removeAttribute("recoil_heavy")
+              clearInterval(_106)
+            }
+          }, _85)
+
+          if (_77 < 0) {
+            if (_78 < 0) {
+              const _105 = setInterval(function() {
+                if (
+                  _82 > -50 &&
+                  _81 > -50
+                ) {
+                  _90(_105)
+                } else {
+                  _19.push(_89)
+                  clearInterval(_105)
+                }
+              }, 10)
+            } else {
+              const _105 = setInterval(function() {
+                if (
+                  _81 > -50 &&
+                  _82 < 428
+                ) {
+                  _90(_105)
+                } else {
+                  _19.push(_89)
+                  clearInterval(_105)
+                }
+              }, 10)
+            }
+          } else {
+            if (_78 < 0) {
+              const _105 = setInterval(function() {
+                if (
+                  _81 < 722 &&
+                  _82 > -50
+                ) {
+                  _90(_105)
+                } else {
+                  _19.push(_89)
+                  clearInterval(_105)
+                }
+              }, 10)
+            } else {
+              const _105 = setInterval(function() {
+                if (
+                  _81 < 722 &&
+                  _82 < 428
+                ) {
+                  _90(_105)
+                } else {
+                  _19.push(_89)
+                  clearInterval(_105)
+                }
+              }, 10)
+            }
+          }
+
+          _50.setAttribute(
+            "reload",
+            _132 & 3
+          )
+
+          setTimeout(function() {
+            if (_2 == 26) {
+              _60 = 60
+            } else {
+              _60 = 120
+            }
+
+            _50.setAttribute(
+              "reload",
+              (_132 + 1) & 3
+            )
+
+            setTimeout(function() {
+              if (_2 == 26) {
+                _60 = 40
+              } else {
+                _60 = 80
+              }
+
+              _50.setAttribute(
+                "reload",
+                (_132 + 2) & 3
+              )
+
+              setTimeout(function() {
+                if (_2 == 26) {
+                  _60 = 35
+                } else {
+                  _60 = 70
+                }
+
+                _50.setAttribute(
+                  "reload",
+                  (_132 + 3) & 3
+                )
+
+                setTimeout(function() {
+                  _5 = false
+                  _11 = 0
+                  _50.removeAttribute("reload")
+                }, _60)
+              }, _60)
+            }, _60)
+          }, _60)
+        }
+      },
+      {
         "delay_maximum": 1,
         "destroy": function() {
           let i = 0
 
           _13.remove()
 
-          while (i != 90) {
+          while (i != 100) {
             _19[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 90) {
+          while (i != 100) {
             _18[i].remove()
             i++
           }
@@ -5371,10 +6225,10 @@
           _13 = _23.appendChild(
             _13
           )
-          _19 = Array(90)
-          _18 = Array(90)
+          _19 = Array(100)
+          _18 = Array(100)
 
-          while (i != 90) {
+          while (i != 100) {
             _19[i] = document.createElement("div")
             _19[i].setAttribute(
               "class",
@@ -5392,7 +6246,7 @@
 
           i = 0
 
-          while (i != 90) {
+          while (i != 100) {
             _18[i] = document.createElement("div")
             _18[i].setAttribute(
               "class",
@@ -5409,7 +6263,7 @@
           }
         },
         "use": function() {
-          _119()
+          _135()
 
           if (
             _11 < _12 ||
@@ -5454,11 +6308,11 @@
             + _84 - ((_21 >> 4) & 3)
           ) * 0.4
           let _79
-            = _77 * 0.25
+            = _77
           let _80
-            = _78 * 0.25
-          let _81 = _120 + 3
-          let _82 = _121 + 3
+            = _78
+          let _81 = _136 + 3
+          let _82 = _137 + 3
           let _116 = 1
           const _88 = _18.pop()
           const _89 = _19.pop()
@@ -5743,8 +6597,8 @@
             }, _65)
           }
 
-          _70 = _120
-          _71 = _121
+          _70 = _136
+          _71 = _137
           _88.setAttribute(
             "style",
             "left: " + _70 + "px; top: "
@@ -5787,20 +6641,20 @@
         }
       },
       {
-        "delay_maximum": 10,
+        "delay_maximum": 9,
         "destroy": function() {
           let i = 0
 
           _13.remove()
 
-          while (i != 15) {
+          while (i != 30) {
             _19[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             _18[i].remove()
             i++
           }
@@ -5820,10 +6674,10 @@
           _13 = _23.appendChild(
             _13
           )
-          _19 = Array(15)
-          _18 = Array(10)
+          _19 = Array(30)
+          _18 = Array(20)
 
-          while (i != 15) {
+          while (i != 30) {
             _19[i] = document.createElement("div")
             _19[i].setAttribute(
               "class",
@@ -5841,7 +6695,7 @@
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             _18[i] = document.createElement("div")
             _18[i].setAttribute(
               "class",
@@ -5858,7 +6712,7 @@
           }
         },
         "use": function() {
-          _119()
+          _135()
 
           if (
             _11 < _12 ||
@@ -5903,12 +6757,12 @@
           ) * 0.36
           let _79
             = (_77 * 2)
-            + (_120 & 7) - (_21 & 7)
+            + (_136 & 7) - (_21 & 7)
           let _80
             = (_78 * 2)
-            + (_121 & 7) - ((_21 >> 3) & 7)
-          let _81 = _120
-          let _82 = _121
+            + (_137 & 7) - ((_21 >> 3) & 7)
+          let _81 = _136
+          let _82 = _137
           let _83 = 2
           let _85 = 25
           const _86 = _81
@@ -6179,8 +7033,8 @@
             _85 = 50
           }
 
-          _70 = _120
-          _71 = _121
+          _70 = _136
+          _71 = _137
           _88.setAttribute(
             "style",
             "left: " + _70 + "px; top: "
@@ -6313,14 +7167,14 @@
 
           _13.remove()
 
-          while (i != 100) {
+          while (i != 150) {
             _19[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 30) {
+          while (i != 60) {
             _18[i].remove()
             i++
           }
@@ -6341,10 +7195,10 @@
           _13 = _23.appendChild(
             _13
           )
-          _19 = Array(100)
-          _18 = Array(30)
+          _19 = Array(150)
+          _18 = Array(60)
 
-          while (i != 100) {
+          while (i != 150) {
             _19[i] = document.createElement("div")
             _19[i].setAttribute(
               "class",
@@ -6362,7 +7216,7 @@
 
           i = 0
 
-          while (i != 30) {
+          while (i != 60) {
             _18[i] = document.createElement("div")
             _18[i].setAttribute(
               "class",
@@ -6379,7 +7233,7 @@
           }
         },
         "use": function() {
-          _119()
+          _135()
 
           if (
             _11 < _12 ||
@@ -6433,8 +7287,8 @@
             )
 
             setTimeout(function() {
-              _54 = _120
-              _55 = _121
+              _54 = _136
+              _55 = _137
               _61.setAttribute(
                 "style",
                 "left: " + _54 + "px; top: "
@@ -6543,12 +7397,12 @@
           ) * 0.4
           let _79
             = (_77 * 0.5)
-            + (_120 & 7) - (_21 & 7)
+            + (_136 & 7) - (_21 & 7)
           let _80
             = (_78 * 0.5)
-            + (_121 & 7) - ((_21 >> 3) & 7)
-          let _81 = _120 + 3
-          let _82 = _121 + 3
+            + (_137 & 7) - ((_21 >> 3) & 7)
+          let _81 = _136 + 3
+          let _82 = _137 + 3
           let _84 = _21 & 3
           let _85 = 25
           const _86 = _81
@@ -6753,8 +7607,8 @@
             _85 = 50
           }
 
-          _70 = _120
-          _71 = _121
+          _70 = _136
+          _71 = _137
           _88.setAttribute(
             "style",
             "left: " + _70 + "px; top: "
@@ -6885,17 +7739,17 @@
       }
     ]
 
-    const _117 = function(callback) {
+    const _133 = function(callback) {
       if (document.readyState != "complete") {
         setTimeout(function() {
-          _117(callback)
+          _133(callback)
         }, 10)
       } else {
         callback()
       }
     }
 
-    const _118 = function() {
+    const _134 = function() {
       if ((_49[97] + _49[100]
         + _49[115] + _49[119]) == 0) {
         return
@@ -6954,111 +7808,111 @@
       )
     }
 
-    const _119 = function() {
-      let _120 = _8 + 8
-      let _121 = _9 + 8
-      let _122 = 0
-      let _123 = 0
+    const _135 = function() {
+      let _136 = _8 + 8
+      let _137 = _9 + 8
+      let _138 = 0
+      let _139 = 0
 
       if (_49[150] == true) {
-        _123 = -23
+        _139 = -23
 
         if (_49[141] == true) {
-          _122 = -17
-          _123 = -17
+          _138 = -17
+          _139 = -17
         } else {
           if (_49[147] == true) {
-            _122 = 17
-            _123 = -17
+            _138 = 17
+            _139 = -17
           }
         }
 
-        _15 = _122
-        _16 = _123
+        _15 = _138
+        _16 = _139
       } else {
         if (_49[141] == true) {
-          _122 = -23
+          _138 = -23
 
           if (_49[150] == true) {
-            _122 = -17
-            _123 = -17
+            _138 = -17
+            _139 = -17
           } else {
             if (_49[133] == true) {
-              _122 = -17
-              _123 = 17
+              _138 = -17
+              _139 = 17
             }
           }
 
-          _15 = _122
-          _16 = _123
+          _15 = _138
+          _16 = _139
         } else {
           if (_49[133] == true) {
-            _123 = 23
+            _139 = 23
 
             if (_49[141] == true) {
-              _122 = -17
-              _123 = 17
+              _138 = -17
+              _139 = 17
             } else {
               if (_49[147] == true) {
-                _122 = 17
-                _123 = 17
+                _138 = 17
+                _139 = 17
               }
             }
 
-            _15 = _122
-            _16 = _123
+            _15 = _138
+            _16 = _139
           } else {
             if (_49[147] == true) {
-              _122 = 23
+              _138 = 23
 
               if (_49[150] == true) {
-                _122 = 17
-                _123 = -17
+                _138 = 17
+                _139 = -17
               } else {
                 if (_49[133] == true) {
-                  _122 = 17
-                  _123 = 17
+                  _138 = 17
+                  _139 = 17
                 }
               }
 
-              _15 = _122
-              _16 = _123
+              _15 = _138
+              _16 = _139
             }
           }
         }
       }
 
-      window._120 = _120
+      window._136 = _136
         + _15
-      window._121 = _121
+      window._137 = _137
         + _16
       _50.setAttribute(
         "style",
-        "left: " + window._120 + "px; top: "
-          + window._121 + "px;"
+        "left: " + window._136 + "px; top: "
+          + window._137 + "px;"
       )
     }
 
-    const _124 = function(selector, callback) {
-      const _125 = document.querySelectorAll(selector)
+    const _140 = function(selector, callback) {
+      const _141 = document.querySelectorAll(selector)
 
-      if (_125.length) {
-        for (const _126 in _125) {
-          if (_125.hasOwnProperty(_126)) {
-            callback(_125[_126])
+      if (_141.length) {
+        for (const _142 in _141) {
+          if (_141.hasOwnProperty(_142)) {
+            callback(_141[_142])
           }
         }
       }
     }
 
-    const _127 = function() {
+    const _143 = function() {
       let i = 0
       let j
-      let _128 = _21
-      let _129 = _21 & 65535
-      const _130 = ((_21 >> 5) & 15) + 20
+      let _144 = _21
+      let _145 = _21 & 65535
+      const _146 = ((_21 >> 5) & 15) + 20
 
-      _124(".bits, .pieces", function(selected_element) {
+      _140(".bits, .pieces", function(selected_element) {
         selected_element.remove()
       })
 
@@ -7111,31 +7965,31 @@
         _46[i] = false
         _47[i] = false
 
-        _128 = ((_128 << 13)
-          | (_128 >> 19)) ^ _129
+        _144 = ((_144 << 13)
+          | (_144 >> 19)) ^ _145
 
-        if (_128 < 0) {
-          _128 >>>= _129 & 15
+        if (_144 < 0) {
+          _144 >>>= _145 & 15
         }
 
-        _129 += 1111111
+        _145 += 1111111
 
-        if ((_128 & 1) == 0) {
-          if (((_128 >> 1) & 1) == 0) {
+        if ((_144 & 1) == 0) {
+          if (((_144 >> 1) & 1) == 0) {
             _42[i] = -50
           } else {
             _42[i] = 722
           }
 
-          _43[i] = _128 % 378
+          _43[i] = _144 % 378
         } else {
-          if (((_128 >> 2) & 1) == 0) {
+          if (((_144 >> 2) & 1) == 0) {
             _43[i] = -50
           } else {
             _43[i] = 428
           }
 
-          _42[i] = _128 % 672
+          _42[i] = _144 % 672
         }
 
         _25[i].setAttribute(
@@ -7157,7 +8011,7 @@
         10
       )
 
-      const _131 = setInterval(function() {
+      const _147 = setInterval(function() {
         if (
           _0 != 17 &&
           i != 51
@@ -7165,7 +8019,7 @@
           let _33 = _42[i]
           let _34 = _43[i]
 
-          if (i == _130) {
+          if (i == _146) {
             _23.classList.add("bullet-time")
             _2 = 52
             _7 = 1.5
@@ -7252,26 +8106,26 @@
           i++
         } else {
           if (_0 == 0) {
-            let _132 = 0
+            let _148 = 0
 
-            clearInterval(_131)
+            clearInterval(_147)
             _48.removeAttribute("recoil_heavy")
             _48.removeAttribute("recoil_light")
             _50.removeAttribute("recoil_heavy")
             _50.removeAttribute("recoil_light")
 
             _22 = setInterval(function() {
-              if (_132 != 680) {
-                _134.setAttribute(
+              if (_148 != 680) {
+                _150.setAttribute(
                   "style",
-                  "height: 378px; width: " + _132 + "px;"
+                  "height: 378px; width: " + _148 + "px;"
                 )
-                _132 += 4
+                _148 += 4
               } else {
                 clearInterval(_22)
                 i = 0
                 _22 = 0
-                _134.setAttribute(
+                _150.setAttribute(
                   "style",
                   "display:none; width: 0;"
                 )
@@ -7286,7 +8140,7 @@
                     % _51.length
                 }
 
-                _127()
+                _143()
               }
             }, 10)
           }
@@ -7294,11 +8148,11 @@
       }, 150)
     }
 
-    const _133 = document.querySelector(".prompt")
-    const _134 = document.createElement("div")
+    const _149 = document.querySelector(".prompt")
+    const _150 = document.createElement("div")
 
     onload = function() {
-      _117(function() {
+      _133(function() {
         _23.setAttribute(
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: "
@@ -7312,52 +8166,52 @@
         document.querySelector("body").addEventListener(
           "keydown",
           function(event) {
-            let _135 = event.key.charCodeAt(0)
+            let _151 = event.key.charCodeAt(0)
 
             if (
               event.key[0] == "A" &&
               event.key[1] == "r"
             ) {
               event.preventDefault()
-              _135 += event.key.charCodeAt(5)
+              _151 += event.key.charCodeAt(5)
             }
 
-            _49[_135] = 1
+            _49[_151] = 1
           }
         )
 
         document.querySelector("body").addEventListener(
           "keyup",
           function(event) {
-            let _135 = event.key.charCodeAt(0)
+            let _151 = event.key.charCodeAt(0)
 
             if (
               event.key[0] == "A" &&
               event.key[1] == "r"
             ) {
               event.preventDefault()
-              _135 += event.key.charCodeAt(5)
+              _151 += event.key.charCodeAt(5)
             }
 
-            _49[_135] = 0
+            _49[_151] = 0
           }
         )
 
-        const _136 = setInterval(function() {
+        const _152 = setInterval(function() {
           if ((_49[133] + _49[141]
             + _49[147] + _49[150]) != 0) {
             let __21 = 0
             let i = 0
             let j
 
-            clearInterval(_136)
-            clearInterval(_137)
-            _133.classList.add("hidden")
-            _134.setAttribute(
+            clearInterval(_152)
+            clearInterval(_153)
+            _149.classList.add("hidden")
+            _150.setAttribute(
               "class",
               "element wave-cleanup"
             )
-            _23.append(_134)
+            _23.append(_150)
             _48.setAttribute("class", "element player")
             _8 = 322
             _9 = 175
@@ -7375,7 +8229,7 @@
             _49[141] = 0
             _49[147] = 0
             _49[150] = 0
-            _6 = setInterval(_118, 20)
+            _6 = setInterval(_134, 20)
             _14 = Date.now() % _51.length
             _23.appendChild(_50)
 
@@ -7394,12 +8248,12 @@
               }
             }, 10)
 
-            _127()
+            _143()
           }
         }, 10)
 
-        const _137 = setInterval(function() {
-          _133.classList.toggle("hidden")
+        const _153 = setInterval(function() {
+          _149.classList.toggle("hidden")
         }, 500)
       })
     }
