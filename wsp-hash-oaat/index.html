@@ -6,7 +6,7 @@ uint32_t wsp_hash_oaat(unsigned long input_count, const uint8_t *input) {
   unsigned long i = 0;
 
   while (i != input_count) {
-    state += input[i];
+    state ^= input[i];
     state += state << 3;
     _state += state;
     _state = (_state << 27) | (_state >> 5);
