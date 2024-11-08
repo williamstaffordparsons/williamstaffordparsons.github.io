@@ -11,7 +11,7 @@ void wsp_hash_oaat_initialize(struct wsp_hash_oaat_s *s) {
 }
 
 void wsp_hash_oaat_transform(unsigned long i, unsigned long input_count,
-                             uint8_t *input, struct wsp_hash_oaat_s *s) {
+                             const uint8_t *input, struct wsp_hash_oaat_s *s) {
   while (i != input_count) {
     s->state ^= input[i];
     s->state += s->state << 3;
