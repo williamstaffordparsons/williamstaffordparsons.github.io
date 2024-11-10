@@ -17,19 +17,14 @@
     high--;
     gap = high - low;
 
-    while (haystack[high] > needle) {
-      high -= gap >> 1;
-      gap = (gap + 1) >> 1;
-    }
-
     while (haystack[high] != needle) {
-      while (haystack[high] < needle) {
-        high += gap >> 1;
+      while (haystack[high] > needle) {
+        high -= gap >> 1;
         gap = (gap + 1) >> 1;
       }
 
-      while (haystack[high] > needle) {
-        high -= gap >> 1;
+      while (haystack[high] < needle) {
+        high += gap >> 1;
         gap = (gap + 1) >> 1;
       }
     }
@@ -64,19 +59,14 @@ unsigned char wsp_search_sorted_descending(unsigned long low,
     high--;
     gap = high - low;
 
-    while (haystack[high] < needle) {
-      high -= gap >> 1;
-      gap = (gap + 1) >> 1;
-    }
-
     while (haystack[high] != needle) {
-      while (haystack[high] > needle) {
-        high += gap >> 1;
+      while (haystack[high] < needle) {
+        high -= gap >> 1;
         gap = (gap + 1) >> 1;
       }
 
-      while (haystack[high] < needle) {
-        high -= gap >> 1;
+      while (haystack[high] > needle) {
+        high += gap >> 1;
         gap = (gap + 1) >> 1;
       }
     }
@@ -114,36 +104,26 @@ unsigned char wsp_search_sorted_descending(unsigned long low,
     gap = high - low;
 
     if (haystack[low] < needle) {
-      while (haystack[high] > needle) {
-        high -= gap >> 1;
-        gap = (gap + 1) >> 1;
-      }
-
       while (haystack[high] != needle) {
-        while (haystack[high] < needle) {
-          high += gap >> 1;
+        while (haystack[high] > needle) {
+          high -= gap >> 1;
           gap = (gap + 1) >> 1;
         }
 
-        while (haystack[high] > needle) {
-          high -= gap >> 1;
+        while (haystack[high] < needle) {
+          high += gap >> 1;
           gap = (gap + 1) >> 1;
         }
       }
     } else {
-      while (haystack[high] < needle) {
-        high -= gap >> 1;
-        gap = (gap + 1) >> 1;
-      }
-
       while (haystack[high] != needle) {
-        while (haystack[high] > needle) {
-          high += gap >> 1;
+        while (haystack[high] < needle) {
+          high -= gap >> 1;
           gap = (gap + 1) >> 1;
         }
 
-        while (haystack[high] < needle) {
-          high -= gap >> 1;
+        while (haystack[high] > needle) {
+          high += gap >> 1;
           gap = (gap + 1) >> 1;
         }
       }
@@ -158,7 +138,7 @@ unsigned char wsp_search_sorted_descending(unsigned long low,
   }
 
   return 0;
-}</code><p>Beyond the common optimization of verifying the existence of <span class="code">needle</span> within <span class="code">haystack</span> before searching, it modifies the <span class="code">high</span> bound instead of initializing with a median pivot value.</p><p>Subtraction is always the first operation on the <span class="code">high</span> bound, so it decreases repeatedly in the same direction without either wasting CPU cycles on needless conditional statements or exceeding the <span class="code">low</span> bounds that were already verified to contain <span class="code">needle</span>. This drastically decreases the number of <span class="code">gap</span> calculations and comparisons in the average instance.</p><p>This process repeats in each iteration after the initial <span class="code">high</span> bound shrinks, but the direction alternates whenever the <span class="code">high</span> bound almost exceeds the position of the <span class="code">needle</span> element.</p><p>Compared to Binary Search, it's close to a lossless optimization with up to 890% faster speed on average in the best instances and 15% faster speed on average in most instances.</p><p>A specific best instance against Binary Search is demonstrated with the following code example.</p><code>#include &lt;stdio.h&gt;
+}</code><p>Beyond the common optimization of verifying the existence of <span class="code">needle</span> within <span class="code">haystack</span> before searching, it modifies the <span class="code">high</span> bound instead of initializing with a median pivot value.</p><p>Subtraction is always the first operation on the <span class="code">high</span> bound, so it decreases repeatedly in the same direction without either wasting CPU cycles on needless conditional statements or exceeding the <span class="code">low</span> bounds that were already verified to contain <span class="code">needle</span>. This drastically decreases the number of <span class="code">gap</span> calculations and comparisons in the average instance.</p><p>This process repeats in each iteration with alternating directions whenever the <span class="code">high</span> bound almost exceeds the position of the <span class="code">needle</span> element.</p><p>Compared to Binary Search, it's close to a lossless optimization with up to 890% faster speed on average in the best instances and 15% faster speed on average in most instances.</p><p>A specific best instance against Binary Search is demonstrated with the following code example.</p><code>#include &lt;stdio.h&gt;
 #include "wsp_search_sorted.h"
 
 int main(void) {
