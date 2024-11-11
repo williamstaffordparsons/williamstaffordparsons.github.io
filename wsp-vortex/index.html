@@ -6,7 +6,7 @@ void wsp_vortex_initialize(uint32_t seed, struct wsp_vortex_s *s) {
   s->a[0] = seed + 1111111111;
 
   while (i != 1024) {
-    s->a[i] = s->a[i - 1] + (i << 10);
+    s->a[i] = s->a[i - 1] + 1;
     i++;
   }
 
@@ -16,14 +16,14 @@ void wsp_vortex_initialize(uint32_t seed, struct wsp_vortex_s *s) {
 }
 
 uint32_t wsp_vortex_randomize(struct wsp_vortex_s *s) {
-  uint32_t a = s->a[s->d & 1023];
-  uint32_t b = s->b ^ s->c;
+  uint32_t _a = s->a[s->d & 1023];
+  uint32_t _b = s->b ^ s->c;
 
-  s->a[s->d & 1023] += b;
+  s->a[s->d & 1023] += _b;
   s->b = ((s->b << 14) | (s->b >> 18)) + s->c;
   s->c += 1111111111;
   s->d++;
-  a += s->c + b;
-  s->a[a & 1023] += s->d + a;
-  return a;
+  _a += s->c + _b;
+  s->a[_a & 1023] += s->d + _a;
+  return _a;
 }</code><h3>Reference</h3><p><span class="code no-margin-left">wsp_vortex_initialize()</span> is the initialization function that accepts the following 2 arguments.</p><p><span class="code no-margin-left">seed</span> is a 32-bit unsigned integer with any value that's used to initialize the state.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_vortex_s</span> pointer.</p><p><span class="code no-margin-left">wsp_vortex_randomize()</span> is the randomization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_vortex_s</span> pointer with 1 array of 1024 32-bit unsigned integers in <span class="code">s->a</span> and 3 32-bit unsigned integers in <span class="code">s->b</span>, <span class="code">s->c</span> and <span class="code">s->d</span>. These can be initialized manually with any seed values or automatically with <span class="code">wsp_vortex_initialize()</span>.</p><p>The return value data type is <span class="code">uint32_t</span>.</p><p>It returns the 32-bit unsigned integer pseudorandom number result.</p><h3>Requirements</h3><p>C compiler with C99 (ISO/IEC 9899:1999) standard compatibility.</p><p class="no-margin-bottom">CPU with single-threaded, instruction-level parallelism support.</p></div><div class="section"><h2>Explanation</h2><p class="no-margin-bottom">The explanation is coming soon.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.21</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
