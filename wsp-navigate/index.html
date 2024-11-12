@@ -102,12 +102,12 @@ void wsp_navigate(struct wsp_navigate_s *s) {
         }
       }
     }
-  } else {
-    s->source += s->source_step;
-    s->source_x += s->source_x_step;
-    s->source_y += s->source_y_step;
-    s->repetitions_count--;
   }
+
+  s->source += s->source_step;
+  s->source_x += s->source_x_step;
+  s->source_y += s->source_y_step;
+  s->repetitions_count--;
 }</code><h3>Reference</h3><p><span class="code no-margin-left">wsp_navigate()</span> is the step navigation function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is the <span class="code">struct wsp_navigate_s</span> pointer.</p><p>The following elements in <span class="code">s</span> must be initialized.</p><code>struct wsp_navigate_s s = {
   .grid_width = 10,
   .grid_height = 10,
@@ -381,12 +381,12 @@ void wsp_navigate(struct wsp_navigate_s *s) {
         }
       }
     }
-  } else {
-    s->source += s->source_step;
-    s->source_x += s->source_x_step;
-    s->source_y += s->source_y_step;
-    s->repetitions_count--;
   }
+
+  s->source += s->source_step;
+  s->source_x += s->source_x_step;
+  s->source_y += s->source_y_step;
+  s->repetitions_count--;
 }
 
 int main(void) {
