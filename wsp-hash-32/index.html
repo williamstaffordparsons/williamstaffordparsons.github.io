@@ -333,7 +333,6 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
 }</code><p>The following faster hashing algorithm with good statistical quality among practical collision tests is going to replace the aforementioned slower algorithm soon with a full explanation.</p><code>#include &lt;stdint.h&gt;
 #include &lt;string.h&gt;
 
-
 uint32_t wsp_hash_read_32(const uint8_t *input, unsigned long i) {
   uint32_t input_aligned;
 
@@ -416,15 +415,13 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
         }
       }
     } else {
-      if (input_count >= 1) {
-        a += input[i] + mix;
+      a += input[i] + mix;
 
-        if (input_count >= 2) {
-          a += input[i + 1] << 8;
+      if (input_count >= 2) {
+        a += input[i + 1] << 8;
 
-          if (input_count == 3) {
-            a += input[i + 2] << 16;
-          }
+        if (input_count == 3) {
+          a += input[i + 2] << 16;
         }
       }
     }
