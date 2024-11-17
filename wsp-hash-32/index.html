@@ -405,25 +405,26 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
       if (input_count != 4) {
         mix += (b << 10) | (b >> 22);
         mix_offset += a + b;
+        b += input[i + 4];
 
-        if (input_count == 7) {
-          b += input[i + 4] | (input[i + 5] << 8) | (input[i + 6] << 16);
-        } else {
-          if (input_count == 6) {
-            b += input[i + 4] | (input[i + 5] << 8);
-          } else {
-            b += input[i + 4];
+        if (input_count >= 6) {
+          b += input[i + 5] << 8;
+
+          if (input_count == 7) {
+            b += input[i + 6] << 16;
           }
         }
       }
     } else {
-      if (input_count == 3) {
-        a += (input[i] | (input[i + 1] << 8) | (input[i + 2] << 16)) + mix;
-      } else {
-        if (input_count == 2) {
-          a += (input[i] | (input[i + 1] << 8)) + mix;
-        } else {
-          a += input[i] + mix;
+      if (input_count >= 1) {
+        a += input[i] + mix;
+
+        if (input_count >= 2) {
+          a += input[i + 1] << 8;
+
+          if (input_count == 3) {
+            a += input[i + 2] << 16;
+          }
         }
       }
     }
