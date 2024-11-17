@@ -433,8 +433,7 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
   mix += (b << 23) | (b >> 9);
 
   if (input_count_capture >= 16) {
-    mix += (c << 22) | (c >> 10);
-    mix += (d << 11) | (d >> 21);
+    mix += ((c << 22) | (c >> 10)) + ((d << 11) | (d >> 21));
 
     if (input_count_capture >= 32) {
       mix_offset += ((e << 20) | (e >> 12)) ^ ((g << 18) | (g >> 14));
