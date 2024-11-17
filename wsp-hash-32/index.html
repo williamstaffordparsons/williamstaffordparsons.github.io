@@ -333,11 +333,13 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
 }</code><p>The following faster hashing algorithm with good statistical quality among practical collision tests is going to replace the aforementioned slower algorithm soon with a full explanation.</p><code>#include &lt;stdint.h&gt;
 #include &lt;string.h&gt;
 
-uint32_t wsp_hash_read_32(const uint8_t *input, unsigned long i) {
-  uint32_t _input;
 
-  memcpy(&_input, &input[i], sizeof(_input));
-  return _input;
+uint32_t wsp_hash_read_32(const uint8_t *input, unsigned long i) {
+  uint32_t input_aligned;
+
+  memcpy(&input_aligned, &input[i], sizeof(input_aligned));
+  input_aligned = (input_aligned >> 24) | ((input_aligned & 0x00FF0000) >> 8) | ((input_aligned & 0x0000FF00) << 8) | (input_aligned << 24);
+  return input_aligned;
 }
 
 uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
@@ -349,17 +351,17 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
   uint32_t f = 111111;
   uint32_t g = 1111111;
   uint32_t h = 11111111;
+  uint32_t mix = 1111111111;
+  uint32_t mix_offset = 111111111;
+  unsigned long input_count_capture = input_count;
   unsigned long i = 0;
-  uint32_t _state = 111111111;
-  uint32_t state = 1111111111;
-  unsigned long _input_count = input_count;
 
   if (input_count >= 32) {
     i = 31;
 
     while (i < input_count) {
-      state += a + b + c + d + e + f + g + h;
-      a += wsp_hash_read_32(input, i - 3) + ((a << 8) | (a >> 24)) + state;
+      mix += a + b + c + d + e + f + g + h;
+      a += wsp_hash_read_32(input, i - 3) + ((a << 8) | (a >> 24)) + mix;
       b += wsp_hash_read_32(input, i - 7) + ((b << 23) | (b >> 9));
       c += wsp_hash_read_32(input, i - 11) + ((c << 10) | (c >> 22));
       d += wsp_hash_read_32(input, i - 15) + ((d << 21) | (d >> 11));
@@ -374,13 +376,13 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
       i -= 32;
     }
 
+    mix_offset += a + b + c + d + e + f + g + h;
     i++;
-    _state += a + b + c + d + e + f + g + h;
   }
 
   if ((input_count - i) >= 16) {
+    mix += a + b + c + d;
     i += 16;
-    state += a + b + c + d;
     a += wsp_hash_read_32(input, i - 16) + ((a << 8) | (a >> 24));
     b += wsp_hash_read_32(input, i - 12) + ((b << 23) | (b >> 9));
     c += wsp_hash_read_32(input, i - 8) + ((c << 10) | (c >> 22));
@@ -388,28 +390,28 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
   }
 
   if ((input_count - i) >= 8) {
+    mix += a + b;
     i += 8;
-    state += a + b;
     a += wsp_hash_read_32(input, i - 8) + ((a << 8) | (a >> 24));
     b += wsp_hash_read_32(input, i - 4) + ((b << 23) | (b >> 9));
   }
 
   if (i != input_count) {
-    state += ((a << 8) | (a >> 24));
+    mix += (a << 8) | (a >> 24);
     input_count -= i;
 
     if (input_count >= 4) {
       a += wsp_hash_read_32(input, i) + ((a << 23) | (a >> 9));
 
       if (input_count != 4) {
-        _state += a + b;
-        state += ((b << 10) | (b >> 22));
+        mix += (b << 10) | (b >> 22);
+        mix_offset += a + b;
 
         if (input_count == 7) {
-          b += (input[i + 4] | (input[i + 5] << 8) | (input[i + 6] << 16));
+          b += input[i + 4] | (input[i + 5] << 8) | (input[i + 6] << 16);
         } else {
           if (input_count == 6) {
-            b += (input[i + 4] | (input[i + 5] << 8));
+            b += input[i + 4] | (input[i + 5] << 8);
           } else {
             b += input[i + 4];
           }
@@ -417,46 +419,48 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
       }
     } else {
       if (input_count == 3) {
-        a += (input[i] | (input[i + 1] << 8) | (input[i + 2] << 16)) + state;
+        a += (input[i] | (input[i + 1] << 8) | (input[i + 2] << 16)) + mix;
       } else {
         if (input_count == 2) {
-          a += (input[i] | (input[i + 1] << 8)) + state;
+          a += (input[i] | (input[i + 1] << 8)) + mix;
         } else {
-          a += input[i] + state;
+          a += input[i] + mix;
         }
       }
     }
   }
 
-  a += _state;
-  state += (a << 8) | (a >> 24);
-  b += state ^ _state;
-  state += (b << 23) | (b >> 9);
+  a += mix_offset;
+  mix += (a << 8) | (a >> 24);
+  b += mix ^ mix_offset;
+  mix += (b << 23) | (b >> 9);
 
-  if (_input_count >= 16) {
-    state += (c << 22) | (c >> 10);
-    state += (d << 11) | (d >> 21);
+  if (input_count_capture >= 16) {
+    mix += (c << 22) | (c >> 10);
+    mix += (d << 11) | (d >> 21);
 
-    if (_input_count >= 32) {
-      _state += (e << 20) | (e >> 12);
-      state += (f << 19) | (f >> 13);
-      _state += (g << 18) | (g >> 14);
-      state += ((h << 15) | (h >> 17));
+    if (input_count_capture >= 32) {
+      mix_offset += ((e << 20) | (e >> 12)) ^ ((g << 18) | (g >> 14));
+      mix += (h << 15) | (h >> 17);
     }
   }
 
-  _state += state + _input_count;
-  state += ((a << 13) | (a >> 19)) ^ h;
-  b += _state;
-  state += a ^ ((b << 14) | (b >> 18));
-  c += state;
-  state += b ^ ((c << 15) | (c >> 17));
-  d += _state;
-  state += c ^ ((d << 17) | (d >> 15));
-  e += _state;
-  _state += d ^ ((e << 18) | (e >> 14));
-  f ^= state;
-  _state += e ^ ((f << 19) | (f >> 13));
-  state += f ^ ((g << 20) | (g >> 12));
-  return state + _state;
+  mix_offset += mix + input_count_capture;
+  mix += ((a << 13) | (a >> 19)) ^ h;
+  b ^= mix_offset;
+  mix += a ^ ((b << 14) | (b >> 18));
+  c ^= mix;
+  mix += b ^ ((c << 15) | (c >> 17));
+  d ^= mix_offset;
+  mix += c ^ ((d << 17) | (d >> 15));
+  e ^= mix_offset;
+  mix_offset += d ^ ((e << 18) | (e >> 14));
+
+  if (input_count_capture >= 16) {
+    f ^= mix;
+    mix_offset += e ^ ((f << 19) | (f >> 13));
+    mix += f ^ ((g << 20) | (g >> 12));
+  }
+
+  return mix + mix_offset;
 }</code><p class="no-margin-bottom">All speed tests were performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.21</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
