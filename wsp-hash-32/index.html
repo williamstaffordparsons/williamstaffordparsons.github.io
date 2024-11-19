@@ -44,22 +44,22 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
 
     mix_offset += a + b + c + d + e + f + g + h;
     i++;
-    }
+  }
 
   if ((input_count - i) >= 16) {
-    mix += a + b + c + d;
     i += 16;
     a += wsp_hash_read_32(input, i - 16) + ((a << 8) | (a >> 24));
     b += wsp_hash_read_32(input, i - 12) + ((b << 23) | (b >> 9));
     c += wsp_hash_read_32(input, i - 8) + ((c << 10) | (c >> 22));
     d += wsp_hash_read_32(input, i - 4) + ((d << 21) | (d >> 11));
+    mix += a + b + c + d;
   }
 
   if ((input_count - i) >= 8) {
-    mix += a + b;
     i += 8;
     a += wsp_hash_read_32(input, i - 8) + ((a << 8) | (a >> 24));
     b += wsp_hash_read_32(input, i - 4) + ((b << 23) | (b >> 9));
+    mix += a + b;
   }
 
   if (i != input_count) {
@@ -70,37 +70,33 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
       a += wsp_hash_read_32(input, i) + ((a << 23) | (a >> 9));
 
       if (input_count != 4) {
-        mix += (b << 10) | (b >> 22);
         mix_offset += a + b;
-        b += input[i + 4];
 
-        if (input_count >= 6) {
-          b += input[i + 5] << 8;
-
-          if (input_count == 7) {
+        switch (input_count) {
+          case 7:
             b += input[i + 6] << 16;
-          }
-        }
-      }
-    } else {
-      a += input[i] + mix;
-
-      if (input_count >= 2) {
-        a += input[i + 1] << 8;
-
-        if (input_count == 3) {
-          a += input[i + 2] << 16;
+          case 6:
+            b += input[i + 5] << 8;
+          case 5:
+            b += input[i + 4];
         }
       }
     }
+
+    switch (input_count) {
+      case 3:
+        a ^= input[i + 2] << 16;
+      case 2:
+        a ^= input[i + 1] << 8;
+      case 1:
+        a ^= input[i];
+    }
   }
 
-  a += mix_offset;
+  a += b + mix_offset;
   mix += (a << 8) | (a >> 24);
-  b += mix ^ mix_offset;
-  mix += (b << 23) | (b >> 9);
 
-  if (input_count_capture >= 16) {
+  if (input_count_capture > 12) {
     mix += ((c << 22) | (c >> 10)) + ((d << 11) | (d >> 21));
 
     if (input_count_capture >= 32) {
@@ -112,18 +108,20 @@ uint32_t wsp_hash_32(unsigned long input_count, const uint8_t *input) {
   mix_offset += mix + input_count_capture;
   mix += ((a << 13) | (a >> 19)) ^ h;
   b ^= mix_offset;
-  mix += a ^ ((b << 14) | (b >> 18));
-  c ^= mix;
-  mix += b ^ ((c << 15) | (c >> 17));
-  d ^= mix_offset;
-  mix += c ^ ((d << 17) | (d >> 15));
-  e ^= mix_offset;
-  mix_offset += d ^ ((e << 18) | (e >> 14));
+  mix_offset += a ^ ((b << 18) | (b >> 14));
 
-  if (input_count_capture >= 16) {
-    f ^= mix;
-    mix_offset += e ^ ((f << 19) | (f >> 13));
-    mix += f ^ ((g << 20) | (g >> 12));
+  if (input_count_capture >= 8) {
+    c ^= mix;
+    mix += b ^ ((c << 15) | (c >> 17));
+    e ^= mix_offset;
+    mix_offset += d ^ ((e << 18) | (e >> 14));
+
+    if (input_count_capture >= 32) {
+      f ^= ((e << 18) | (e >> 14)) + mix;
+      mix_offset += e ^ ((f << 19) | (f >> 13));
+      g ^= mix_offset;
+      mix += f ^ ((g << 21) | (g >> 11));
+    }
   }
 
   return mix + mix_offset;
@@ -173,19 +171,19 @@ void wsp_hash_32_transform(unsigned long i, unsigned long input_count,
   }
 
   if ((input_count - i) >= 16) {
-    s->mix += s->a + s->b + s->c + s->d;
     i += 16;
     s->a += wsp_hash_read_32(input, i - 16) + ((s->a << 8) | (s->a >> 24));
     s->b += wsp_hash_read_32(input, i - 12) + ((s->b << 23) | (s->b >> 9));
     s->c += wsp_hash_read_32(input, i - 8) + ((s->c << 10) | (s->c >> 22));
     s->d += wsp_hash_read_32(input, i - 4) + ((s->d << 21) | (s->d >> 11));
+    s->mix += s->a + s->b + s->c + s->d;
   }
 
   if ((input_count - i) >= 8) {
-    s->mix += s->a + s->b;
     i += 8;
     s->a += wsp_hash_read_32(input, i - 8) + ((s->a << 8) | (s->a >> 24));
     s->b += wsp_hash_read_32(input, i - 4) + ((s->b << 23) | (s->b >> 9));
+    s->mix += s->a + s->b;
   }
 
   if (i != input_count) {
@@ -196,44 +194,39 @@ void wsp_hash_32_transform(unsigned long i, unsigned long input_count,
       s->a += wsp_hash_read_32(input, i) + ((s->a << 23) | (s->a >> 9));
 
       if (input_count != 4) {
-        s->mix += (s->b << 10) | (s->b >> 22);
         s->mix_offset += s->a + s->b;
-        s->b += input[i + 4];
 
-        if (input_count >= 6) {
-          s->b += input[i + 5] << 8;
-
-          if (input_count == 7) {
+        switch (input_count) {
+          case 7:
             s->b += input[i + 6] << 16;
-          }
+          case 6:
+            s->b += input[i + 5] << 8;
+          case 5:
+            s->b += input[i + 4];
         }
       }
-    } else {
-      s->a += input[i] + s->mix;
+    }
 
-      if (input_count >= 2) {
-        s->a += input[i + 1] << 8;
-
-        if (input_count == 3) {
-          s->a += input[i + 2] << 16;
-        }
-      }
+    switch (input_count) {
+      case 3:
+        s->a ^= input[i + 2] << 16;
+      case 2:
+        s->a ^= input[i + 1] << 8;
+      case 1:
+        s->a ^= input[i];
     }
   }
 }
 
 void wsp_hash_32_finalize(struct wsp_hash_32_s *s) {
-  s->a += s->mix_offset;
+  s->a += s->b + s->mix_offset;
   s->mix += (s->a << 8) | (s->a >> 24);
-  s->b += s->mix ^ s->mix_offset;
-  s->mix += (s->b << 23) | (s->b >> 9);
 
-  if (s->input_count_capture >= 16) {
+  if (s->input_count_capture > 12) {
     s->mix += ((s->c << 22) | (s->c >> 10)) + ((s->d << 11) | (s->d >> 21));
 
     if (s->input_count_capture >= 32) {
-      s->mix_offset += ((s->e << 20) | (s->e >> 12))
-        ^ ((s->g << 18) | (s->g >> 14));
+      s->mix_offset += ((s->e << 20) | (s->e >> 12)) ^ ((s->g << 18) | (s->g >> 14));
       s->mix += (s->h << 15) | (s->h >> 17);
     }
   }
@@ -241,22 +234,24 @@ void wsp_hash_32_finalize(struct wsp_hash_32_s *s) {
   s->mix_offset += s->mix + s->input_count_capture;
   s->mix += ((s->a << 13) | (s->a >> 19)) ^ s->h;
   s->b ^= s->mix_offset;
-  s->mix += s->a ^ ((s->b << 14) | (s->b >> 18));
-  s->c ^= s->mix;
-  s->mix += s->b ^ ((s->c << 15) | (s->c >> 17));
-  s->d ^= s->mix_offset;
-  s->mix += s->c ^ ((s->d << 17) | (s->d >> 15));
-  s->e ^= s->mix_offset;
-  s->mix_offset += s->d ^ ((s->e << 18) | (s->e >> 14));
+  s->mix_offset += s->a ^ ((s->b << 18) | (s->b >> 14));
 
-  if (s->input_count_capture >= 16) {
-    s->f ^= s->mix;
-    s->mix_offset += s->e ^ ((s->f << 19) | (s->f >> 13));
-    s->mix += s->f ^ ((s->g << 20) | (s->g >> 12));
+  if (s->input_count_capture >= 8) {
+    s->c ^= s->mix;
+    s->mix += s->b ^ ((s->c << 15) | (s->c >> 17));
+    s->e ^= s->mix_offset;
+    s->mix_offset += s->d ^ ((s->e << 18) | (s->e >> 14));
+
+    if (s->input_count_capture >= 32) {
+      s->f ^= ((s->e << 18) | (s->e >> 14)) + s->mix;
+      s->mix_offset += s->e ^ ((s->f << 19) | (s->f >> 13));
+      s->g ^= s->mix_offset;
+      s->mix += s->f ^ ((s->g << 21) | (s->g >> 11));
+    }
   }
 
   s->mix += s->mix_offset;
-}</code><h3>Reference</h3><p><span class="code">wsp_hash_32()</span> is the all-at-once hashing function that accepts the 2 following arguments.</p><p><span class="code">input_count</span> is the count of elements in the <span class="code">input</span> array.</p><p><span class="code">input</span> is the <span class="code">const uint8_t</span> array to hash.</p><p>The return value data type is <span class="code">uint32_t</span>.</p><p>It returns the 32-bit unsigned integer hash digest result.</p><p><span class="code no-margin-left">wsp_hash_32_initialize()</span> is the initialization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_32_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_32_transform()</span> is the core hashing loop function that accepts the 4 following arguments.</p><p><span class="code no-margin-left">i</span> is the starting index position of elements in the <span class="code">input</span> array.</p><p><span class="code no-margin-left">input_count</span> is the count of elements in the <span class="code">input</span> array. When hashing in split segments, the value must be a multiple of 32, with the exception of the end segment.</p><p><span class="code no-margin-left">input</span> is the <span class="code">const uint8_t</span> array to hash.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_32_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_32_finalize()</span> is the finalization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_32_s</span> pointer. <span class="code">s.mix</span> contains the finalized hash digest result.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Requirements</h3><p>C compiler with C99 (ISO/IEC 9899:1999) standard compatibility.</p><p class="no-margin-bottom">CPU with single-threaded, instruction-level parallelism support.</p></div><div class="section"><h2>Explanation</h2><p>This 32-bit non-cryptographic hashing algorithm is designed to hash keys of all sizes as quickly as possible with minimal collisions across all truncated bit sizes.</p><p>It's the fastest 32-bit hashing algorithm with good statistical quality relevant to non-cryptographic hashing.<p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and security requirements.</p><p>Memory reading is designed for systems with little-endian byte order, although big-endian memory reading is functional with similar results.</p><p>In the rare case when hash table states must be saved after program termination and re-used in multiple systems with varying endianness, keys should be re-hashed during initialization instead of slowing down runtime hashing with byte order alignment.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>It supports unlimited input length by splitting <span class="code">input</span> bits into descending segments of 256, 128, 64 and the remaining 8–63 bits. All-at-once hashing isn't required and the digest results are consistent when hashing in partial segments.</p><p>Single-threaded, instruction-level parallelism with low-cost addition and bitwise instructions work well on a wide range of CPU queue loads and devices.</p><p>Not allowing a seed prevents issues from 2³² additional hashing algorithms, so all seed-based tests are omitted.</p><p>It passes relevant SMHasher differential tests and key set tests including Cyclic, Permutation, Sparse, Text, Two-Byte, Windowed and Zeroes.</p><p>The strict avalanche test in SMHasher is omitted as it's only relevant to the analysis of cryptographic hash function properties where the worst instance exposes a critical cryptographic vulnerability.</p><p>Furthermore, the following code tests collision counts for truncated digests against each of the 8 bits flipped within a single input byte ranging from 1 to 255 at all positions for all <span class="code">input_count</span> values ranging from 1 to 256.</p><code>#include &lt;stdio.h&gt;
+}</code><h3>Reference</h3><p><span class="code">wsp_hash_32()</span> is the all-at-once hashing function that accepts the 2 following arguments.</p><p><span class="code">input_count</span> is the count of elements in the <span class="code">input</span> array.</p><p><span class="code">input</span> is the <span class="code">const uint8_t</span> array to hash.</p><p>The return value data type is <span class="code">uint32_t</span>.</p><p>It returns the 32-bit unsigned integer hash digest result.</p><p><span class="code no-margin-left">wsp_hash_32_initialize()</span> is the initialization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_32_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_32_transform()</span> is the core hashing loop function that accepts the 4 following arguments.</p><p><span class="code no-margin-left">i</span> is the starting index position of elements in the <span class="code">input</span> array.</p><p><span class="code no-margin-left">input_count</span> is the count of elements in the <span class="code">input</span> array. When hashing in split segments, the value must be a multiple of 32, with the exception of the end segment.</p><p><span class="code no-margin-left">input</span> is the <span class="code">const uint8_t</span> array to hash.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_32_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_32_finalize()</span> is the finalization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_32_s</span> pointer. <span class="code">s.mix</span> contains the finalized hash digest result.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Requirements</h3><p>C compiler with C99 (ISO/IEC 9899:1999) standard compatibility.</p><p class="no-margin-bottom">CPU with single-threaded, instruction-level parallelism support.</p></div><div class="section"><h2>Explanation</h2><p>This 32-bit non-cryptographic hashing algorithm is designed to hash keys of all sizes as quickly as possible with minimal collisions across all truncated bit sizes.</p><p>It's the fastest 32-bit hashing algorithm with good statistical quality relevant to non-cryptographic hashing.<p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and security requirements.</p><p>Memory reading is designed for systems with little-endian byte order, although big-endian memory reading is functional with similar results.</p><p>In the rare case when hash table states must be saved after program termination and re-used in multiple systems with varying endianness, keys should be re-hashed during initialization instead of slowing down runtime hashing with byte order alignment.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>It supports unlimited input length by splitting <span class="code">input</span> bits into descending segments of 256, 128, 64 and the remaining 8–63 bits. All-at-once hashing is the faster option, but it isn't required and the digest results are consistent when hashing in partial segments.</p><p>Single-threaded, instruction-level parallelism with low-cost addition and bitwise instructions work well on a wide range of CPU queue loads and devices.</p><p>Not allowing a seed prevents issues from 2³² additional hashing algorithms, so all seed-based tests are omitted.</p><p>It passes relevant SMHasher differential tests and key set collision tests including Cyclic, Permutation, Sparse, Text, Two-Byte, Windowed and Zeroes. There aren't any bit distribution calculation percentages exceeding 10%, which suggests there aren't any critical distribution issues in the worst instances among these tests.</p><p>The strict avalanche test in SMHasher is omitted as it's only relevant to the analysis of cryptographic hash function properties where the worst instance exposes a critical cryptographic vulnerability.</p><p>Furthermore, the following code tests collision counts for truncated digests against each of the 8 bits flipped within a single input byte ranging from 1 to 255 at all positions for all <span class="code">input_count</span> values ranging from 1 to 256.</p><code>#include &lt;stdio.h&gt;
 #include "wsp_hash_32.h"
 
 int main(void) {
@@ -376,34 +371,34 @@ int main(void) {
   return 0;
 }</code><p>The following collision results demonstrate a sufficient collision-based avalanche effect in the worst instance with non-cryptographic, universal hashing relevance and results within a range close to 32-bit Murmur3 using <span class="code">0</span> as the seed.</p><code>Avalanche Collision Results Among 1 Billion 1-Bit Sparse Keys at Varying Lengths
 
- 2-Bit Segmented Collisions [Murmur3: 265347481] [WSP-Hash-32: 273053737]
- 3-Bit Segmented Collisions [Murmur3: 132693335] [WSP-Hash-32: 139966186]
- 4-Bit Segmented Collisions [Murmur3:  66353592] [WSP-Hash-32:  71921826]
- 5-Bit Segmented Collisions [Murmur3:  33173990] [WSP-Hash-32:  37643363]
- 6-Bit Segmented Collisions [Murmur3:  16584515] [WSP-Hash-32:  19810347]
- 7-Bit Segmented Collisions [Murmur3:   8288382] [WSP-Hash-32:  10473393]
- 8-Bit Segmented Collisions [Murmur3:   4144134] [WSP-Hash-32:   5565567]
- 9-Bit Segmented Collisions [Murmur3:   2071838] [WSP-Hash-32:   2919578]
-10-Bit Segmented Collisions [Murmur3:   1036510] [WSP-Hash-32:   1474544]
-11-Bit Segmented Collisions [Murmur3:    517987] [WSP-Hash-32:    758384]
-12-Bit Segmented Collisions [Murmur3:    258805] [WSP-Hash-32:    391183]
-13-Bit Segmented Collisions [Murmur3:    129656] [WSP-Hash-32:    197159]
-14-Bit Segmented Collisions [Murmur3:     64691] [WSP-Hash-32:    100383]
-15-Bit Segmented Collisions [Murmur3:     32376] [WSP-Hash-32:     50588]
-16-Bit Segmented Collisions [Murmur3:     16281] [WSP-Hash-32:     26036]
-17-Bit Segmented Collisions [Murmur3:      8243] [WSP-Hash-32:     13599]
-18-Bit Segmented Collisions [Murmur3:      4236] [WSP-Hash-32:      7220]
-19-Bit Segmented Collisions [Murmur3:      2041] [WSP-Hash-32:      3680]
-20-Bit Segmented Collisions [Murmur3:      1046] [WSP-Hash-32:      1948]
-21-Bit Segmented Collisions [Murmur3:       520] [WSP-Hash-32:      1131]
-22-Bit Segmented Collisions [Murmur3:       241] [WSP-Hash-32:       680]
-23-Bit Segmented Collisions [Murmur3:       129] [WSP-Hash-32:       263]
-24-Bit Segmented Collisions [Murmur3:        72] [WSP-Hash-32:       122]
-25-Bit Segmented Collisions [Murmur3:        44] [WSP-Hash-32:        56]
-26-Bit Segmented Collisions [Murmur3:        30] [WSP-Hash-32:        32]
-27-Bit Segmented Collisions [Murmur3:        24] [WSP-Hash-32:        10]
-28-Bit Segmented Collisions [Murmur3:        10] [WSP-Hash-32:         0]
-29-Bit Segmented Collisions [Murmur3:         6] [WSP-Hash-32:         0]
-30-Bit Segmented Collisions [Murmur3:         0] [WSP-Hash-32:         0]
-31-Bit Segmented Collisions [Murmur3:         0] [WSP-Hash-32:         0]
-32-Bit Segmented Collisions [Murmur3:         0] [WSP-Hash-32:         0]</code><p>Compared to CityHash32 v1.1, the speed's approximately 28% faster on average for small keys and 71% faster on average for large keys.</p><p>Compared to Lookup3, the speed's approximately 4% faster on average for small keys and 300% faster on average for large keys.</p><p>Compared to 32-bit Murmur3, the speed's approximately 25% faster on average for small keys and 300% faster on average for large keys.</p><p>Compared to XXHash32, the speed's at least 24% faster on average for small keys and 30% faster for large keys.</p><p class="no-margin-bottom">All speed tests were performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.21</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
+ 2-Bit Segmented Avalanche Collisions [Murmur3: 265347481] [WSP-Hash-32: 267930841]
+ 3-Bit Segmented Avalanche Collisions [Murmur3: 132693335] [WSP-Hash-32: 135013310]
+ 4-Bit Segmented Avalanche Collisions [Murmur3:  66353592] [WSP-Hash-32:  67964843]
+ 5-Bit Segmented Avalanche Collisions [Murmur3:  33173990] [WSP-Hash-32:  34162986]
+ 6-Bit Segmented Avalanche Collisions [Murmur3:  16584515] [WSP-Hash-32:  17250096]
+ 7-Bit Segmented Avalanche Collisions [Murmur3:   8288382] [WSP-Hash-32:   8699038]
+ 8-Bit Segmented Avalanche Collisions [Murmur3:   4144134] [WSP-Hash-32:   4354013]
+ 9-Bit Segmented Avalanche Collisions [Murmur3:   2071838] [WSP-Hash-32:   2208362]
+10-Bit Segmented Avalanche Collisions [Murmur3:   1036510] [WSP-Hash-32:   1131627]
+11-Bit Segmented Avalanche Collisions [Murmur3:    517987] [WSP-Hash-32:    586244]
+12-Bit Segmented Avalanche Collisions [Murmur3:    258805] [WSP-Hash-32:    299872]
+13-Bit Segmented Avalanche Collisions [Murmur3:    129656] [WSP-Hash-32:    154559]
+14-Bit Segmented Avalanche Collisions [Murmur3:     64691] [WSP-Hash-32:     83441]
+15-Bit Segmented Avalanche Collisions [Murmur3:     32376] [WSP-Hash-32:     47000]
+16-Bit Segmented Avalanche Collisions [Murmur3:     16281] [WSP-Hash-32:     29634]
+17-Bit Segmented Avalanche Collisions [Murmur3:      8243] [WSP-Hash-32:     20410]
+18-Bit Segmented Avalanche Collisions [Murmur3:      4236] [WSP-Hash-32:      4062]
+19-Bit Segmented Avalanche Collisions [Murmur3:      2041] [WSP-Hash-32:      2080]
+20-Bit Segmented Avalanche Collisions [Murmur3:      1046] [WSP-Hash-32:      1015]
+21-Bit Segmented Avalanche Collisions [Murmur3:       520] [WSP-Hash-32:       493]
+22-Bit Segmented Avalanche Collisions [Murmur3:       241] [WSP-Hash-32:       237]
+23-Bit Segmented Avalanche Collisions [Murmur3:       129] [WSP-Hash-32:       132]
+24-Bit Segmented Avalanche Collisions [Murmur3:        72] [WSP-Hash-32:        60]
+25-Bit Segmented Avalanche Collisions [Murmur3:        44] [WSP-Hash-32:        31]
+26-Bit Segmented Avalanche Collisions [Murmur3:        30] [WSP-Hash-32:        19]
+27-Bit Segmented Avalanche Collisions [Murmur3:        24] [WSP-Hash-32:         7]
+28-Bit Segmented Avalanche Collisions [Murmur3:        10] [WSP-Hash-32:         4]
+29-Bit Segmented Avalanche Collisions [Murmur3:         6] [WSP-Hash-32:         4]
+30-Bit Segmented Avalanche Collisions [Murmur3:         0] [WSP-Hash-32:         2]
+31-Bit Segmented Avalanche Collisions [Murmur3:         0] [WSP-Hash-32:         2]
+32-Bit Segmented Avalanche Collisions [Murmur3:         0] [WSP-Hash-32:         2]</code><p>The 2 32-bit collisions out of 125 million groups of 8 single-bit flip tests proves the worst instances are rare enough to be considered random occurrences in practical implementations.</p><p>Compared to CityHash32 v1.1, the speed's approximately 28% faster on average for small keys and 71% faster on average for large keys.</p><p>Compared to Lookup3, the speed's approximately 4% faster on average for small keys and 300% faster on average for large keys.</p><p>Compared to 32-bit Murmur3, the speed's approximately 25% faster on average for small keys and 300% faster on average for large keys.</p><p>Compared to XXHash32, the speed's at least 24% faster on average for small keys and 30% faster for large keys.</p><p class="no-margin-bottom">All speed tests were performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.21</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
