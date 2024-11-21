@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>WSP-Vortex: An Improvement to 32-Bit, Long-Period PRNGs</title><link href="https://williamstaffordparsons.github.io/wsp-vortex/" rel="canonical"><link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.1px;text-decoration:none;transition:opacity 0.2s ease;}a:hover{opacity:0.9;}body,html{background:#fafafa;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:23px;margin:0;overflow-x:hidden;width:100%;}code{background:#f3f3f3 !important;border:2px solid #bcbcbc !important;border-radius:4px;box-sizing:border-box !important;color:#222;display:inline-block;font-family:monospace !important;font-size:11px;font-weight:normal;height:auto;line-height:18px !important;margin:6px 0 16px;max-height:800px;overflow-x:scroll;padding:30px 31px 25px !important;white-space:pre;width:100% !important;}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.7px;line-height:32px;margin:-6px 0 29px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 16px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.2px;margin:13px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 15px;width:100%;}p .code,ul .code{background:#f3f3f3;border:2px solid #bcbcbc;border-radius:4px;color:#222;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;line-height:16px;margin:2px 1px;padding:4px 5px 0;}ul{list-style:none;margin:0;padding:0;}ul li{color:#555;margin-bottom:15px;}.game{background:#000;border-radius:5px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;transition:opacity 0.2s ease;}.game:hover {opacity:0.9;}.game.no-margin-top{margin-top:5px !important;}.game a{border-radius:5px;height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game img{display:block;height:32px;margin:12px 0 0;width:32px;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game p{color:#999;margin-bottom:0;}.game .version{color:#555;display:block;font-size:12px;margin:5px 0 3px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}.william-stafford-parsons-icon{float:left;margin:0 15px 9px 0;}.william-stafford-parsons-icon img{float:left;height:32px !important;margin:-3px 0 0;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="william-stafford-parsons-icon" href="/"><img src="/icon-william-stafford-parsons.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Vortex: A Fast, Non-Multiplicative, Tiny 32-Bit PRNG as an Improvement to Mersenne Twister With Better Statistical Test Results and Flexible State Sizes</h1><div class="section"><p><a href="/about/">William Stafford Parsons</a> is developing a 32-bit pseudorandom number generator algorithm as a significant improvement to Mersenne Twister.</p><p class="no-margin-bottom">It's currently being reviewed and tested extensively for statistical quality issues across multiple period sizes before finalizing the <span class="code">s->increment_offset</span> shift values.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><code>#include &lt;stdint.h&gt;
+<!DOCTYPE html><html lang="en"><head><title>WSP-Vortex: An Improvement to Mersenne Twister</title><link href="https://williamstaffordparsons.github.io/wsp-vortex/" rel="canonical"><link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.1px;text-decoration:none;transition:opacity 0.2s ease;}a:hover{opacity:0.9;}body,html{background:#fafafa;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:23px;margin:0;overflow-x:hidden;width:100%;}code{background:#f3f3f3 !important;border:2px solid #bcbcbc !important;border-radius:4px;box-sizing:border-box !important;color:#222;display:inline-block;font-family:monospace !important;font-size:11px;font-weight:normal;height:auto;line-height:18px !important;margin:6px 0 16px;max-height:800px;overflow-x:scroll;padding:30px 31px 25px !important;white-space:pre;width:100% !important;}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.7px;line-height:32px;margin:-6px 0 29px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 16px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.2px;margin:13px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 15px;width:100%;}p .code,ul .code{background:#f3f3f3;border:2px solid #bcbcbc;border-radius:4px;color:#222;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;line-height:16px;margin:2px 1px;padding:4px 5px 0;}ul{list-style:none;margin:0;padding:0;}ul li{color:#555;margin-bottom:15px;}.game{background:#000;border-radius:5px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;transition:opacity 0.2s ease;}.game:hover {opacity:0.9;}.game.no-margin-top{margin-top:5px !important;}.game a{border-radius:5px;height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game img{display:block;height:32px;margin:12px 0 0;width:32px;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game p{color:#999;margin-bottom:0;}.game .version{color:#555;display:block;font-size:12px;margin:5px 0 3px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}.william-stafford-parsons-icon{float:left;margin:0 15px 9px 0;}.william-stafford-parsons-icon img{float:left;height:32px !important;margin:-3px 0 0;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="william-stafford-parsons-icon" href="/"><img src="/icon-william-stafford-parsons.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Vortex: A Fast, Non-Multiplicative, Tiny 32-Bit PRNG as an Improvement to Mersenne Twister With Good Statistical Quality, Flexible State and a Larger Full Cycle</h1><div class="section"><p class="no-margin-bottom"><a href="/about/">William Stafford Parsons</a> developed a 32-bit pseudorandom number generator algorithm as a substantial improvement to MRG32k3a, 32-bit Mersenne Twister, WELL and other long-period PRNGs.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><code>#include &lt;stdint.h&gt;
 
 struct wsp_vortex_s {
   uint32_t blocks[1024];
@@ -34,4 +34,139 @@ uint32_t wsp_vortex_randomize(struct wsp_vortex_s *s) {
   block += s->increment + increment_offset_capture;
   s->blocks[block & 1023] += s->blocks_selector + block;
   return block;
-}</code><h3>Reference</h3><p><span class="code no-margin-left">wsp_vortex_initialize()</span> is the initialization function that accepts the following 2 arguments.</p><p><span class="code no-margin-left">seed</span> is a 32-bit unsigned integer with any value that's used to initialize the state.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_vortex_s</span> pointer.</p><p><span class="code no-margin-left">wsp_vortex_randomize()</span> is the randomization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_vortex_s</span> pointer with 1 array of 1024 32-bit unsigned integers in <span class="code">s->blocks</span> and 3 32-bit unsigned integers in <span class="code">s->blocks_selector</span>, <span class="code">s->increment</span> and <span class="code">s->increment_offset</span>. These can be initialized manually with any seed values or automatically with <span class="code">wsp_vortex_initialize()</span>.</p><p>The return value data type is <span class="code">uint32_t</span>.</p><p>It returns the 32-bit unsigned integer pseudorandom number result.</p><h3>Requirements</h3><p>C compiler with C99 (ISO/IEC 9899:1999) standard compatibility.</p><p class="no-margin-bottom">CPU with single-threaded, instruction-level parallelism support.</p></div><div class="section"><h2>Explanation</h2><p class="no-margin-bottom">The explanation is coming soon.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.21</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
+}</code><h3>Reference</h3><p><span class="code no-margin-left">wsp_vortex_initialize()</span> is the initialization function that accepts the following 2 arguments.</p><p><span class="code no-margin-left">seed</span> is a 32-bit unsigned integer with any value that's used to initialize the state.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_vortex_s</span> pointer.</p><p>The return value data type is <span class="code">void</span>.</p><p><span class="code no-margin-left">wsp_vortex_randomize()</span> is the randomization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_vortex_s</span> pointer with 1 array of 1024 32-bit unsigned integers in <span class="code">s->blocks</span> and 3 32-bit unsigned integers in <span class="code">s->blocks_selector</span>, <span class="code">s->increment</span> and <span class="code">s->increment_offset</span>. These can be initialized manually with any seed values or automatically with <span class="code">wsp_vortex_initialize()</span>.</p><p>The return value data type is <span class="code">uint32_t</span>.</p><p>It returns the 32-bit unsigned integer pseudorandom number result.</p><h3>Requirements</h3><p>C compiler with C99 (ISO/IEC 9899:1999) standard compatibility.</p><p class="no-margin-bottom">CPU with single-threaded, instruction-level parallelism support.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Vortex is designed to pass statistical tests with efficient resource usage, fast speed and a huge period.</p><p>It has faster speed with more flexibility, simplicity and consistent statistical quality than the optimized SIMD version of Mersenne Twister.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and security requirements, although it's a PRNG that isn't suitable for cryptographic purposes.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>32-bit deterministic randomness is generated with a 32864-bit auxiliary state.</p><p>The period is adjustable to any halved amount by adjusting the 1024 state blocks, meaning the additional possible state sizes are 512, 256, 128, 64, 32, 16, 8, 4 and 2. If the blocks count is adjusted, the <span class="code">& 1023</span> mask instances must be adjusted accordingly. These varying state sizes may result in better or worse statistical quality by a small margin.</p><p>The estimated full cycle is 2³²⁷⁶⁸ numbers at almost double the period of Mersenne Twister, so re-seeding the initial state isn't required in most applications.</p><p>Furthermore, when all state bits are <span class="code">0</span>, the next pseudorandom number escapes zeroland quickly, making it impossible to have a broken state with any combination of numbers.</p><p>A round-robin number selector is incremented before assigning an additive XOR state to the selected <span class="code">s->blocks</span> number, ensuring the closest thing to equal distribution across all possible cycles.</p><p>32 bits of state are summed with <span class="code">1111111111</span> after each random number generation result and mixed in with the bit shuffling sequence. All state variable assignments are additive to emulate the properties of minimal rolling hash functions.</p><p>After 4294967295 random numbers are generated, the aforementioned 32 bits of state in <span class="code">s->increment</span> completes a full cycle and the <span class="code">s->blocks</span> bits avoid a full cycle, as demonstrated in the first 10 instances with the following code example.</p><code>#include &lt;stdio.h&gt;
+#include "wsp_vortex.h"
+
+int main(void) {
+  struct wsp_vortex_s s;
+  uint32_t increment_capture;
+  unsigned long i = 0;
+
+  wsp_vortex_initialize(0, &s);
+
+  while (i != 10) {
+    wsp_vortex_randomize(&s);
+    increment_capture = s.increment;
+    wsp_vortex_randomize(&s);
+
+    while (s.increment != increment_capture) {
+      wsp_vortex_randomize(&s);
+    }
+
+    printf("%10lu %10lu %10lu %10lu %10lu %10lu %10lu %10lu\n",
+           s.blocks[0], s.blocks[1], s.blocks[2], s.blocks[3],
+           s.blocks[4], s.blocks[5], s.blocks[6], s.blocks[7]);
+    i++;
+  }
+}</code><p>The following output demonstrates a visual confirmation of good distribution among the first 10 blocks in <span class="code">s->blocks</span> after each full cycle of <span class="code">s->increment</span>.</p><code>1931670853  967474844 3204854229 2297737264  958724792  508251158 1917101692 1258244746
+2259690551 4122786801 2410051447 3906545033 3573745922 3108943746 1201682761 3865852611
+ 153394324 4157848476  202758678 2677176753 1789614556 2873019368 2245855390 3544256983
+ 223943109 3022691432 4014387472 1018169394 1860617740  799206424 1592935145 1859279649
+1724810327 3246408868 4121707259 3864350218 4260793370  142047299 1995115525 2047468367
+3502436365 2317565887 2867908436 4088128258 2488419653 3415013884 3996268131  830607531
+1464330330 1450551438   62390379   35092001 1868424005 1506189108  484545187 3479225524
+ 912727297 4182834878 2458234510 1595581299 1071517920 2725654470 4084524253 4197250444
+ 500651350 3220839128 4039281244 2017724102 3187710418  634166192 4087932823 2474619014
+3408077749 1837105558  295384354 4244450864 1796861749  550264166  751506001 1282052450</code><p>A wrapping additive constant added to each state block isn't enough to ensure a 2³²⁷⁶⁸ period, so each previous state block value is used as an offset to assign a combined pseudorandom value to a secondary state block.</p><p>The following code example demonstrates good distribution across <span class="code">s->blocks</span> instead of brute-forcing millions of statistical tests.</p><code>#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+
+struct wsp_vortex_s {
+  uint32_t blocks[1024];
+  uint32_t blocks_offset_assignment_counts[1024];
+  uint32_t blocks_selector;
+  uint32_t increment;
+  uint32_t increment_offset;
+};
+
+uint32_t wsp_vortex_blocks_distribution_test(struct wsp_vortex_s *s) {
+  uint32_t block = s->blocks[s->blocks_selector & 1023];
+  uint32_t increment_offset_capture = s->increment_offset ^ s->increment;
+
+  s->blocks[s->blocks_selector & 1023] += increment_offset_capture;
+  s->increment_offset = ((s->increment_offset << 17)
+    | (s->increment_offset >> 15)) + s->increment;
+  s->increment += 1111111111;
+  s->blocks_selector++;
+  block += s->increment + increment_offset_capture;
+  s->blocks[block & 1023] += s->blocks_selector + block;
+  s->blocks_offset_assignment_counts[block & 1023]++;
+  return block;
+}
+
+int main(void) {
+  struct wsp_vortex_s s;
+  unsigned char is_blocks_offset_assignment_duplicates[1024];
+  unsigned long blocks_offset_assignment_duplicates_counts = 0;
+  unsigned long i = 0;
+  unsigned short j = 0;
+
+  while (i != 1024) {
+    s.blocks[i] = 0;
+    s.blocks_offset_assignment_counts[i] = 0;
+    is_blocks_offset_assignment_duplicates[i] = 0;
+    i++;
+  }
+
+  s.blocks_selector = 0;
+  s.increment = 0;
+  s.increment_offset = 0;
+
+  while (i != 1111111111) {
+    wsp_vortex_blocks_distribution_test(&s);
+    i++;
+  }
+
+  i = 0;
+
+  while (i != 1024) {
+    j = 0;
+
+    while (j != 1024) {
+      if (
+        i != j &&
+        s.blocks_offset_assignment_counts[i]
+          == s.blocks_offset_assignment_counts[j] &&
+        is_blocks_offset_assignment_duplicates[i] != 1
+      ) {
+        is_blocks_offset_assignment_duplicates[j] = 1;
+        blocks_offset_assignment_duplicates_counts++;
+      }
+
+      j++;
+    }
+
+    i++;
+  }
+
+  i = 0;
+
+  while (i != 1024) {
+    printf("Block %lu was assigned by an offset of %lu times.\n",
+           i + 1,
+           s.blocks_offset_assignment_counts[i]);
+    i++;
+  }
+
+  printf("\nThere were %lu duplicate offset block assignment counts.\n",
+         blocks_offset_assignment_duplicates_counts);
+  return 0;
+}</code><p>The following first 20 offset assignment counts demonstrate the semi-linear, yet semi-randomized offset assignments distributed throughout the state in <span class="code">s->blocks</span>.</p><code>Block 1 was assigned by an offset of 1083842 times.
+Block 2 was assigned by an offset of 1083792 times.
+Block 3 was assigned by an offset of 1086149 times.
+Block 4 was assigned by an offset of 1085322 times.
+Block 5 was assigned by an offset of 1085457 times.
+Block 6 was assigned by an offset of 1086610 times.
+Block 7 was assigned by an offset of 1084757 times.
+Block 8 was assigned by an offset of 1086702 times.
+Block 9 was assigned by an offset of 1085031 times.
+Block 10 was assigned by an offset of 1085576 times.
+Block 11 was assigned by an offset of 1083659 times.
+Block 12 was assigned by an offset of 1085423 times.
+Block 13 was assigned by an offset of 1086734 times.
+Block 14 was assigned by an offset of 1084253 times.
+Block 15 was assigned by an offset of 1084380 times.
+Block 16 was assigned by an offset of 1083285 times.
+Block 17 was assigned by an offset of 1085566 times.
+Block 18 was assigned by an offset of 1085682 times.
+Block 19 was assigned by an offset of 1083464 times.
+Block 20 was assigned by an offset of 1085869 times.</code><p>Furthermore, there are 145 colliding offset block increments in the aforementioned instance out of 1024 total blocks.</p><p>As the count of generated numbers increases, the number of blocks with the same amount of offset increments decreases.</p><p>There were 93 collisions after generating <span class="code">2222222222</span> numbers, then 78 collisions after generating <span class="code">3333333333</span> numbers.</p><p>The following test results were performed with all state bits initialized to <span class="code">0</span>.</p><p>It passes all TestU01 BigCrush battery tests as the fastest long-period Mersenne Twister alternative that passes BigCrush.</p><p>It was tested with <span class="code">seed</span> initialized to <span class="code">0</span> both with and without <span class="code">wsp_vortex_initialize()</span>.</p><p>It can be seeded with any values and yield similar results due to the proven distribution properties.</p><p>When initializing using 1024 random numbers from <a href="/wsp-trng/">WSP-TRNG</a> manually assigned to <span class="code">s->blocks</span>, the results were similar with between 98% to 100% of BigCrush tests passed consistently with varying anomalies due to randomness.</p><p>Furthermore, Mersenne Twister is known to exhibit multiple consistent 32-bit test failures with small and large random number tests.</p><p>Compared to MRG32k3a, the average speed is 1370% faster.</p><p>Compared to 32-bit Mersenne Twister, the average speed is at least 40% faster than the unoptimized variant and 25% faster than the SIMD-optimized variant.</p><p>Compared to WELL, the average speed is 81% faster.</p><p>Compared to all Xoroshiro and Xorshift algorithms, it's at least 3% faster.</p><p>Furthermore, most of these compared PRNGs are vulnerable to several confirmed broken cycles when seeded with specific values, including <span class="code">0</span>.</p><p>If efficient memory usage and faster speed are required for 32-bit PRNG usage within a large number of processes, <a href="/wsp-prng-32/">WSP-PRNG-32</a> is the fastest 32-bit one-at-a-time PRNG that passes BigCrush tests with a small period.</p><p class="no-margin-bottom">All speed tests were performed locally by generating 1 billion numbers on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.21</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
