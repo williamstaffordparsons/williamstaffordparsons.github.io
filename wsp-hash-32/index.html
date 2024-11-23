@@ -273,14 +273,7 @@ int main(void) {
   uint8_t input[256];
   uint32_t result = 0;
   uint32_t result_flipped = 1;
-  unsigned char bit_collisions_segmented_low_counts[256][256][32];
   unsigned long bit_collisions_counts[32];
-  uint32_t bit_collisions_murmur3_counts[31] = {
-    265347481, 132693335, 66353592, 33173990, 16584515, 8288382, 4144134, 2071838,
-    1036510,   517987,    258805,   129656,   64691,    32376,   16281,   8243,
-    4236,      2041,      1046,     520,      241,      129,     72,      44,
-    30,        24,        10,       6,        0,        0,       0
-  };
   unsigned short sparse_byte = 0;
   unsigned short i = 0;
   unsigned short j = 0;
@@ -291,23 +284,6 @@ int main(void) {
   while (i != 32) {
     bit_collisions_counts[i] = 0;
     i++;
-  }
-
-  i = 0;
-
-  while (i != 256) {
-    while (j != 256) {
-      while (k != 32) {
-        bit_collisions_segmented_low_counts[i][j][k] = 0;
-        k++;
-      }
-
-      j++;
-      k = 0;
-    }
-
-    i++;
-    j = 0;
   }
 
   i = 1;
@@ -346,7 +322,6 @@ int main(void) {
                 (result & ((2 << m) - 1)) == (result_flipped & ((2 << m) - 1))
               ) {
                 bit_collisions_counts[m - 1]++;
-                bit_collisions_segmented_low_counts[j][k][m - 1]++;
               }
 
               m++;
@@ -375,45 +350,44 @@ int main(void) {
   j = 0;
 
   while (i != 33) {
-    printf("%2u-Bit Segmented Collisions [Murmur3: %9u] [WSP-Hash-32: %9lu]\n",
+    printf("%2u-Bit Segmented Collisions: %9lu\n",
            i,
-           bit_collisions_murmur3_counts[j],
            bit_collisions_counts[i - 2]);
     i++;
     j++;
   }
 
   return 0;
-}</code><p>The following collision results demonstrate a sufficient collision-based avalanche effect in the worst instance with non-cryptographic, universal hashing relevance and results within a range close to 32-bit Murmur3 using <span class="code">0</span> as the seed.</p><code>Avalanche Collision Results Among 1 Billion 1-Bit Sparse Keys at Varying Lengths
+}</code><p>The following collision results demonstrate a sufficient collision-based avalanche effect in the worst instance with non-cryptographic, universal hashing relevance.</p><code>Avalanche Collision Results Among 1 Billion 1-Bit Sparse Keys at Varying Lengths
 
- 2-Bit Segmented Avalanche Collisions [Murmur3: 265347481] [WSP-Hash-32: 267930841]
- 3-Bit Segmented Avalanche Collisions [Murmur3: 132693335] [WSP-Hash-32: 135013310]
- 4-Bit Segmented Avalanche Collisions [Murmur3:  66353592] [WSP-Hash-32:  67964843]
- 5-Bit Segmented Avalanche Collisions [Murmur3:  33173990] [WSP-Hash-32:  34162986]
- 6-Bit Segmented Avalanche Collisions [Murmur3:  16584515] [WSP-Hash-32:  17250096]
- 7-Bit Segmented Avalanche Collisions [Murmur3:   8288382] [WSP-Hash-32:   8699038]
- 8-Bit Segmented Avalanche Collisions [Murmur3:   4144134] [WSP-Hash-32:   4354013]
- 9-Bit Segmented Avalanche Collisions [Murmur3:   2071838] [WSP-Hash-32:   2208362]
-10-Bit Segmented Avalanche Collisions [Murmur3:   1036510] [WSP-Hash-32:   1131627]
-11-Bit Segmented Avalanche Collisions [Murmur3:    517987] [WSP-Hash-32:    586244]
-12-Bit Segmented Avalanche Collisions [Murmur3:    258805] [WSP-Hash-32:    299872]
-13-Bit Segmented Avalanche Collisions [Murmur3:    129656] [WSP-Hash-32:    154559]
-14-Bit Segmented Avalanche Collisions [Murmur3:     64691] [WSP-Hash-32:     83441]
-15-Bit Segmented Avalanche Collisions [Murmur3:     32376] [WSP-Hash-32:     47000]
-16-Bit Segmented Avalanche Collisions [Murmur3:     16281] [WSP-Hash-32:     29634]
-17-Bit Segmented Avalanche Collisions [Murmur3:      8243] [WSP-Hash-32:     20410]
-18-Bit Segmented Avalanche Collisions [Murmur3:      4236] [WSP-Hash-32:      4062]
-19-Bit Segmented Avalanche Collisions [Murmur3:      2041] [WSP-Hash-32:      2080]
-20-Bit Segmented Avalanche Collisions [Murmur3:      1046] [WSP-Hash-32:      1015]
-21-Bit Segmented Avalanche Collisions [Murmur3:       520] [WSP-Hash-32:       493]
-22-Bit Segmented Avalanche Collisions [Murmur3:       241] [WSP-Hash-32:       237]
-23-Bit Segmented Avalanche Collisions [Murmur3:       129] [WSP-Hash-32:       132]
-24-Bit Segmented Avalanche Collisions [Murmur3:        72] [WSP-Hash-32:        60]
-25-Bit Segmented Avalanche Collisions [Murmur3:        44] [WSP-Hash-32:        31]
-26-Bit Segmented Avalanche Collisions [Murmur3:        30] [WSP-Hash-32:        19]
-27-Bit Segmented Avalanche Collisions [Murmur3:        24] [WSP-Hash-32:         7]
-28-Bit Segmented Avalanche Collisions [Murmur3:        10] [WSP-Hash-32:         4]
-29-Bit Segmented Avalanche Collisions [Murmur3:         6] [WSP-Hash-32:         4]
-30-Bit Segmented Avalanche Collisions [Murmur3:         0] [WSP-Hash-32:         2]
-31-Bit Segmented Avalanche Collisions [Murmur3:         0] [WSP-Hash-32:         2]
-32-Bit Segmented Avalanche Collisions [Murmur3:         0] [WSP-Hash-32:         2]</code><p>The 2 32-bit collisions out of 125 million groups of 8 single-bit flip tests proves the worst instances are rare enough to be considered random occurrences in practical implementations.</p><p>The collision increments after each truncation are within an acceptable range compared to MurmurHash3 without any major increases in collisions beyond the 400% increase from 18 to 17 bits.</p> <p>Compared to CityHash32 v1.1, the speed's approximately 68% faster on average for small keys and 71% faster on average for large keys.</p><p>Compared to Lookup3, the speed's approximately 20% faster on average for small keys and 300% faster on average for large keys.</p><p>Furthermore, Lookup3 relies on direct pointer type conversions and unaligned memory reading.</p><p>Compared to 32-bit Murmur3, the speed's approximately 45% faster on average for small keys and 300% faster on average for large keys.</p><p>Compared to XXHash32, the speed's at least 46% faster on average for small keys and 30% faster for large keys.</p><p class="no-margin-bottom">All speed tests were performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.21</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
+ 2-Bit Segmented Collisions: 267930841
+ 3-Bit Segmented Collisions: 135013310
+ 4-Bit Segmented Collisions:  67964843
+ 5-Bit Segmented Collisions:  34162986
+ 6-Bit Segmented Collisions:  17250096
+ 7-Bit Segmented Collisions:   8699038
+ 8-Bit Segmented Collisions:   4354013
+ 9-Bit Segmented Collisions:   2208362
+10-Bit Segmented Collisions:   1131627
+11-Bit Segmented Collisions:    586244
+12-Bit Segmented Collisions:    299872
+13-Bit Segmented Collisions:    154559
+14-Bit Segmented Collisions:     83441
+15-Bit Segmented Collisions:     47000
+16-Bit Segmented Collisions:     29634
+17-Bit Segmented Collisions:     20410
+18-Bit Segmented Collisions:      4062
+19-Bit Segmented Collisions:      2080
+20-Bit Segmented Collisions:      1015
+21-Bit Segmented Collisions:       493
+22-Bit Segmented Collisions:       237
+23-Bit Segmented Collisions:       132
+24-Bit Segmented Collisions:        60
+25-Bit Segmented Collisions:        31
+26-Bit Segmented Collisions:        19
+27-Bit Segmented Collisions:         7
+28-Bit Segmented Collisions:         4
+29-Bit Segmented Collisions:         4
+30-Bit Segmented Collisions:         2
+31-Bit Segmented Collisions:         2
+32-Bit Segmented Collisions:         2</code><p>The 2 32-bit collisions out of 125 million groups of 8 single-bit flip tests proves the worst instances are rare enough to be considered random occurrences in practical implementations.</p><p>The semi-linear collision increments after each truncation are within an acceptable range based on the probability of collisions at each bit size. For example, 200-300 million collisions in the lower 2 bits are expected out of 1 billion total keys, but only up to a few are expected in the full 32 bits.</p><p>Compared to CityHash32 v1.1, the speed's approximately 68% faster on average for small keys and 71% faster on average for large keys.</p><p>Compared to Lookup3, the speed's approximately 20% faster on average for small keys and 300% faster on average for large keys.</p><p>Furthermore, Lookup3 relies on direct pointer type conversions and unaligned memory reading.</p><p>Compared to 32-bit Murmur3, the speed's approximately 45% faster on average for small keys and 300% faster on average for large keys.</p><p>Compared to XXHash32, the speed's at least 46% faster on average for small keys and 30% faster for large keys.</p><p class="no-margin-bottom">All speed tests were performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations.</p><span class="version">v1.0.21</span></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li><li><a href="https://www.instagram.com/williamstaffordparsons" target="_blank"><img src="/icon-instagram.jpg"></a></li></ul><p style="color:#777;font-size:12px;line-height:19px;margin:52px 0 0;">All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only. Some of the aforementioned games may have frantic animations which may cause discomfort and seizures for players with epilepsy or other sensitivity disorders. Prolongued periods of looking at a computer screen and typing on a keyboard are discouraged to prevent health issues such as carpal tunnel syndrome.</p></div></footer></div></body></html>
