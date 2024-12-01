@@ -765,13 +765,16 @@
         .bit-hidden div {
           background-color: #ddd;
         }
-      .bounds {
-        background-color: #000;
-        border-radius: 5px;
+      .bounds,
+      .bounds-container {
         height: 378px;
-        overflow: hidden;
         position: absolute;
         width: 672px;
+      }
+      .bounds-container {
+        background-color: #000;
+        border-radius: 5px;
+        overflow: hidden;
       }
       .element {
         display: block;
@@ -2365,9 +2368,11 @@
     </style>
   </head>
   <body>
-    <div class="bounds">
-      <div class="title-screen">
-        <p class="prompt">Press an Arrow Key To Play</p>
+    <div class="bounds-container">
+      <div class="bounds">
+        <div class="title-screen">
+          <p class="prompt">Press an Arrow Key To Play Contrivity</p>
+        </div>
       </div>
     </div>
   </body>
@@ -2391,54 +2396,63 @@
     let _14 = -17
     let _15 = -17
     let _16
-    let _17 = Array(300)
-    let _18 = Array(300)
-    let _19
-    let _20 = Date.now() >>> 1
-    let _21 = 0
-    const _22 = document.querySelector(".bounds")
+    let _17
+    let _18 = Date.now() >>> 1
+    let _19 = 0
+    const _20 = document.querySelector(".bounds")
+    const _21 = document.querySelector(".bounds-container")
+    const _22 = Array(51)
     const _23 = Array(51)
     const _24 = Array(51)
-    const _25 = Array(51)
 
-    const _26 = function(
+    const _25 = function(
       enemy_damage,
-      _89,
-      _85,
-      _86
+      _92,
+      _88,
+      _89
     ) {
       if (
-        _85 != 0 ||
-        _86 != 0
+        _88 != 0 ||
+        _89 != 0
       ) {
-        _48[_89] = true
+        _49[_92] = true
       }
 
-      _24[_89].classList.add("hit")
+      _23[_92].classList.add("hit")
 
       setTimeout(function() {
-        _24[_89].classList.remove("hit")
+        _23[_92].classList.remove("hit")
       }, 40)
 
-      _25[_89] -= enemy_damage
+      _24[_92] -= enemy_damage
 
-      if (_25[_89] > 0) {
-        let _27 = _43[_89]
-        let _28 = (_27
-          + _85)
-          + ((_20 & 3) - ((_20 >> 2) & 3))
-        let _29 = _44[_89]
-        let _30 = (_29
-          + _86)
-          + (((_20 >> 4) & 3) - ((_20 >> 6) & 3))
+      if (_24[_92] > 0) {
+        let _26 = _44[_92]
+        let _27 = (_26
+          + _88)
+          + ((_18 & 3) - ((_18 >> 2) & 3))
+        let _28 = _45[_92]
+        let _29 = (_28
+          + _89)
+          + (((_18 >> 4) & 3) - ((_18 >> 6) & 3))
 
-        _24[_89].setAttribute(
+        _23[_92].setAttribute(
           "style",
-          "left: " + _28 + "px; top: "
-            + _30 + "px;"
+          "left: " + _27 + "px; top: "
+            + _29 + "px;"
         )
-        _43[_89] = _28
-        _44[_89] = _30
+        _44[_92] = _27
+        _45[_92] = _29
+
+        if (_26 > 0) {
+          _26 >>= 4
+
+          if (_26 > 49) {
+            _26 = 49
+          }
+        } else {
+          _26 = 0
+        }
 
         if (_27 > 0) {
           _27 >>= 4
@@ -2451,7 +2465,7 @@
         }
 
         if (_28 > 0) {
-          _28 >>= 4
+          _28 >>= 3
 
           if (_28 > 49) {
             _28 = 49
@@ -2470,204 +2484,212 @@
           _29 = 0
         }
 
-        if (_30 > 0) {
-          _30 >>= 3
-
-          if (_30 > 49) {
-            _30 = 49
-          }
-        } else {
-          _30 = 0
-        }
-
-        if (_27 != _28) {
-          if (_27 == 0) {
-            _2[_28 - 1][_89] = null
-            _2[_28][_89] = null
-            _2[_28 + 1][_89] = null
-            delete _2[_27][_89]
+        if (_26 != _27) {
+          if (_26 == 0) {
+            _2[_27 - 1][_92] = null
+            _2[_27][_92] = null
+            _2[_27 + 1][_92] = null
+            delete _2[_26][_92]
 
             if (
-              (_27 + 1) != (_28 - 1) &&
-              (_27 + 1) != _28
+              (_26 + 1) != (_27 - 1) &&
+              (_26 + 1) != _27
             ) {
-              delete _2[_27 + 1][_89]
+              delete _2[_26 + 1][_92]
             }
           } else {
-            if (_28 == 0) {
-              _2[_28][_89] = null
-              _2[_28 + 1][_89] = null
+            if (_27 == 0) {
+              _2[_27][_92] = null
+              _2[_27 + 1][_92] = null
 
               if (
-                (_27 - 1) != _28 &&
-                (_27 - 1) != (_28 + 1)
+                (_26 - 1) != _27 &&
+                (_26 - 1) != (_27 + 1)
               ) {
-                delete _2[_27 - 1][_89]
+                delete _2[_26 - 1][_92]
               }
 
-              if (_27 != (_28 + 1)) {
-                delete _2[_27][_89]
+              if (_26 != (_27 + 1)) {
+                delete _2[_26][_92]
               }
 
-              delete _2[_27 + 1][_89]
+              delete _2[_26 + 1][_92]
             } else {
-              _2[_28 - 1][_89] = null
-              _2[_28][_89] = null
-              _2[_28 + 1][_89] = null
+              _2[_27 - 1][_92] = null
+              _2[_27][_92] = null
+              _2[_27 + 1][_92] = null
 
-              if (_27 > _28) {
+              if (_26 > _27) {
                 if (
-                  (_27 - 1) != _28 &&
-                  (_27 - 1) != (_28 + 1)
+                  (_26 - 1) != _27 &&
+                  (_26 - 1) != (_27 + 1)
                 ) {
-                  delete _2[_27 - 1][_89]
+                  delete _2[_26 - 1][_92]
                 }
 
-                if (_27 != (_28 + 1)) {
-                  delete _2[_27][_89]
+                if (_26 != (_27 + 1)) {
+                  delete _2[_26][_92]
                 }
 
-                delete _2[_27 + 1][_89]
+                delete _2[_26 + 1][_92]
               } else {
-                delete _2[_27 - 1][_89]
+                delete _2[_26 - 1][_92]
 
-                if (_27 != (_28 - 1)) {
-                  delete _2[_27][_89]
+                if (_26 != (_27 - 1)) {
+                  delete _2[_26][_92]
                 }
 
                 if (
-                  (_27 + 1) != (_28 - 1) &&
-                  (_27 + 1) != _28
+                  (_26 + 1) != (_27 - 1) &&
+                  (_26 + 1) != _27
                 ) {
-                  delete _2[_27 + 1][_89]
+                  delete _2[_26 + 1][_92]
                 }
               }
             }
           }
         }
 
-        if (_29 != _30) {
-          if (_29 == 0) {
-            _3[_30 - 1][_89] = null
-            _3[_30][_89] = null
-            _3[_30 + 1][_89] = null
-            delete _3[_29][_89]
+        if (_28 != _29) {
+          if (_28 == 0) {
+            _3[_29 - 1][_92] = null
+            _3[_29][_92] = null
+            _3[_29 + 1][_92] = null
+            delete _3[_28][_92]
 
             if (
-              (_29 + 1) != (_30 - 1) &&
-              (_29 + 1) != _30
+              (_28 + 1) != (_29 - 1) &&
+              (_28 + 1) != _29
             ) {
-              delete _3[_29 + 1][_89]
+              delete _3[_28 + 1][_92]
             }
           } else {
-            if (_30 == 0) {
-              _3[_30][_89] = null
-              _3[_30 + 1][_89] = null
+            if (_29 == 0) {
+              _3[_29][_92] = null
+              _3[_29 + 1][_92] = null
 
               if (
-                (_29 - 1) != _30 &&
-                (_29 - 1) != (_30 + 1)
+                (_28 - 1) != _29 &&
+                (_28 - 1) != (_29 + 1)
               ) {
-                delete _3[_29 - 1][_89]
+                delete _3[_28 - 1][_92]
               }
 
-              if (_29 != (_30 + 1)) {
-                delete _3[_29][_89]
+              if (_28 != (_29 + 1)) {
+                delete _3[_28][_92]
               }
 
-              delete _3[_29 + 1][_89]
+              delete _3[_28 + 1][_92]
             } else {
-              _3[_30 - 1][_89] = null
-              _3[_30][_89] = null
-              _3[_30 + 1][_89] = null
+              _3[_29 - 1][_92] = null
+              _3[_29][_92] = null
+              _3[_29 + 1][_92] = null
 
-              if (_29 > _30) {
+              if (_28 > _29) {
                 if (
-                  (_29 - 1) != _30 &&
-                  (_29 - 1) != (_30 + 1)
+                  (_28 - 1) != _29 &&
+                  (_28 - 1) != (_29 + 1)
                 ) {
-                  delete _3[_29 - 1][_89]
+                  delete _3[_28 - 1][_92]
                 }
 
-                if (_29 != (_30 + 1)) {
-                  delete _3[_29][_89]
+                if (_28 != (_29 + 1)) {
+                  delete _3[_28][_92]
                 }
 
-                delete _3[_29 + 1][_89]
+                delete _3[_28 + 1][_92]
               } else {
-                delete _3[_29 - 1][_89]
+                delete _3[_28 - 1][_92]
 
-                if (_29 != (_30 - 1)) {
-                  delete _3[_29][_89]
+                if (_28 != (_29 - 1)) {
+                  delete _3[_28][_92]
                 }
 
                 if (
-                  (_29 + 1) != (_30 - 1) &&
-                  (_29 + 1) != _30
+                  (_28 + 1) != (_29 - 1) &&
+                  (_28 + 1) != _29
                 ) {
-                  delete _3[_29 + 1][_89]
+                  delete _3[_28 + 1][_92]
                 }
               }
             }
           }
         }
       } else {
-        const _31 = _23.pop()
-        const _32 = _43[_89]
-        const _33 = _44[_89]
-        const _34 = _45.pop()
-        const _35 = _89 & 15
-        const _36 = _46.pop()
+        let _30 = _18 & 3
+        let i = 0
+        const _31 = _22.pop()
+        const _32 = _44[_92]
+        const _33 = _45[_92]
+        const _34 = _46.pop()
+        const _35 = _92 & 15
+        const _36 = _47.pop()
         const _37 = _35 + 1
 
-        clearInterval(_41[_89])
+        const _38 = setInterval(function() {
+          _20.setAttribute(
+            "recoil_light",
+            _30
+          )
+
+          i++
+
+          if (i < 3) {
+            _30 = (_30 + 1) & 3
+          } else {
+            clearInterval(_38)
+            _20.removeAttribute("recoil_light")
+          }
+        }, 15)
+
+        clearInterval(_42[_92])
 
         if (_32 > 0) {
-          const _38 = _32 >> 4
+          const _39 = _32 >> 4
 
-          if (_38 > 49) {
-            delete _2[48][_89]
-            delete _2[49][_89]
-            delete _2[50][_89]
+          if (_39 > 49) {
+            delete _2[48][_92]
+            delete _2[49][_92]
+            delete _2[50][_92]
           } else {
-            if (_38 != 0) {
-              delete _2[_38 - 1][_89]
+            if (_39 != 0) {
+              delete _2[_39 - 1][_92]
             }
 
-            delete _2[_38][_89]
-            delete _2[_38 + 1][_89]
+            delete _2[_39][_92]
+            delete _2[_39 + 1][_92]
           }
         } else {
-          delete _2[0][_89]
-          delete _2[1][_89]
+          delete _2[0][_92]
+          delete _2[1][_92]
         }
 
         if (_33 > 0) {
-          const _38 = _33 >> 3
+          const _39 = _33 >> 3
 
-          if (_38 > 49) {
-            delete _3[48][_89]
-            delete _3[49][_89]
-            delete _3[50][_89]
+          if (_39 > 49) {
+            delete _3[48][_92]
+            delete _3[49][_92]
+            delete _3[50][_92]
           } else {
-            if (_38 != 0) {
-              delete _3[_38 - 1][_89]
+            if (_39 != 0) {
+              delete _3[_39 - 1][_92]
             }
 
-            delete _3[_38][_89]
-            delete _3[_38 + 1][_89]
+            delete _3[_39][_92]
+            delete _3[_39 + 1][_92]
           }
         } else {
-          delete _3[0][_89]
-          delete _3[1][_89]
+          delete _3[0][_92]
+          delete _3[1][_92]
         }
 
-        _24[_89].setAttribute(
+        _23[_92].setAttribute(
           "style",
           "display: none;"
         )
         _0--
-        _25[_89] = 0
+        _24[_92] = 0
         _31.setAttribute(
           "style",
           "left: " + _32 + "px; top: "
@@ -2699,56 +2721,66 @@
         )
       }
 
-      clearTimeout(_47[_89])
+      clearTimeout(_48[_92])
 
-      _47[_89] = setTimeout(function() {
-        _48[_89] = false
+      _48[_92] = setTimeout(function() {
+        _49[_92] = false
       }, 100)
     }
 
-    const _39 = function(_89) {
+    const _40 = function(_92) {
       if (
-        _40[_89] < 26 ||
-        _48[_89] == true
+        _41[_92] < 26 ||
+        _49[_92] == true
       ) {
-        _40[_89]++
+        _41[_92]++
         return
       }
 
-      if (_49[_89] == true) {
+      if (_50[_92] == true) {
         return
       }
 
-      _49[_89] = true
+      _50[_92] = true
 
-      let _27 = _43[_89]
-      let _28 = _27
-      let _29 = _44[_89]
-      let _30 = _29
+      let _26 = _44[_92]
+      let _27 = _26
+      let _28 = _45[_92]
+      let _29 = _28
 
-      if (_28 < _7) {
-        _28 += _42[_89]
-          + (_20 & 15)
+      if (_27 < _7) {
+        _27 += _43[_92]
+          + (_18 & 15)
       } else {
-        _28 -= _42[_89]
-          + (_20 & 15)
+        _27 -= _43[_92]
+          + (_18 & 15)
       }
 
-      if (_30 < _8) {
-        _30 += _42[_89]
-          + ((_20 >> 3) & 15)
+      if (_29 < _8) {
+        _29 += _43[_92]
+          + ((_18 >> 3) & 15)
       } else {
-        _30 -= _42[_89]
-          + ((_20 >> 3) & 15)
+        _29 -= _43[_92]
+          + ((_18 >> 3) & 15)
       }
 
-      _24[_89].setAttribute(
+      _23[_92].setAttribute(
         "style",
-        "left: " + _28 + "px; top: "
-          + _30 + "px;"
+        "left: " + _27 + "px; top: "
+          + _29 + "px;"
       )
-      _43[_89] = _28
-      _44[_89] = _30
+      _44[_92] = _27
+      _45[_92] = _29
+
+      if (_26 > 0) {
+        _26 >>= 4
+
+        if (_26 > 49) {
+          _26 = 49
+        }
+      } else {
+        _26 = 0
+      }
 
       if (_27 > 0) {
         _27 >>= 4
@@ -2761,7 +2793,7 @@
       }
 
       if (_28 > 0) {
-        _28 >>= 4
+        _28 >>= 3
 
         if (_28 > 49) {
           _28 = 49
@@ -2780,153 +2812,142 @@
         _29 = 0
       }
 
-      if (_30 > 0) {
-        _30 >>= 3
-
-        if (_30 > 49) {
-          _30 = 49
-        }
-      } else {
-        _30 = 0
-      }
-
-      if (_27 != _28) {
-        if (_27 == 0) {
-          _2[_28 - 1][_89] = null
-          _2[_28][_89] = null
-          _2[_28 + 1][_89] = null
-          delete _2[_27][_89]
+      if (_26 != _27) {
+        if (_26 == 0) {
+          _2[_27 - 1][_92] = null
+          _2[_27][_92] = null
+          _2[_27 + 1][_92] = null
+          delete _2[_26][_92]
 
           if (
-            (_27 + 1) != (_28 - 1) &&
-            (_27 + 1) != _28
+            (_26 + 1) != (_27 - 1) &&
+            (_26 + 1) != _27
           ) {
-            delete _2[_27 + 1][_89]
+            delete _2[_26 + 1][_92]
           }
         } else {
-          if (_28 == 0) {
-            _2[_28][_89] = null
-            _2[_28 + 1][_89] = null
+          if (_27 == 0) {
+            _2[_27][_92] = null
+            _2[_27 + 1][_92] = null
 
             if (
-              (_27 - 1) != _28 &&
-              (_27 - 1) != (_28 + 1)
+              (_26 - 1) != _27 &&
+              (_26 - 1) != (_27 + 1)
             ) {
-              delete _2[_27 - 1][_89]
+              delete _2[_26 - 1][_92]
             }
 
-            if (_27 != (_28 + 1)) {
-              delete _2[_27][_89]
+            if (_26 != (_27 + 1)) {
+              delete _2[_26][_92]
             }
 
-            delete _2[_27 + 1][_89]
+            delete _2[_26 + 1][_92]
           } else {
-            _2[_28 - 1][_89] = null
-            _2[_28][_89] = null
-            _2[_28 + 1][_89] = null
+            _2[_27 - 1][_92] = null
+            _2[_27][_92] = null
+            _2[_27 + 1][_92] = null
 
-            if (_27 > _28) {
+            if (_26 > _27) {
               if (
-                (_27 - 1) != _28 &&
-                (_27 - 1) != (_28 + 1)
+                (_26 - 1) != _27 &&
+                (_26 - 1) != (_27 + 1)
               ) {
-                delete _2[_27 - 1][_89]
+                delete _2[_26 - 1][_92]
               }
 
-              if (_27 != (_28 + 1)) {
-                delete _2[_27][_89]
+              if (_26 != (_27 + 1)) {
+                delete _2[_26][_92]
               }
 
-              delete _2[_27 + 1][_89]
+              delete _2[_26 + 1][_92]
             } else {
-              delete _2[_27 - 1][_89]
+              delete _2[_26 - 1][_92]
 
-              if (_27 != (_28 - 1)) {
-                delete _2[_27][_89]
+              if (_26 != (_27 - 1)) {
+                delete _2[_26][_92]
               }
 
               if (
-                (_27 + 1) != (_28 - 1) &&
-                (_27 + 1) != _28
+                (_26 + 1) != (_27 - 1) &&
+                (_26 + 1) != _27
               ) {
-                delete _2[_27 + 1][_89]
+                delete _2[_26 + 1][_92]
               }
             }
           }
         }
       }
 
-      if (_29 != _30) {
-        if (_29 == 0) {
-          _3[_30 - 1][_89] = null
-          _3[_30][_89] = null
-          _3[_30 + 1][_89] = null
-          delete _3[_29][_89]
+      if (_28 != _29) {
+        if (_28 == 0) {
+          _3[_29 - 1][_92] = null
+          _3[_29][_92] = null
+          _3[_29 + 1][_92] = null
+          delete _3[_28][_92]
 
           if (
-            (_29 + 1) != (_30 - 1) &&
-            (_29 + 1) != _30
+            (_28 + 1) != (_29 - 1) &&
+            (_28 + 1) != _29
           ) {
-            delete _3[_29 + 1][_89]
+            delete _3[_28 + 1][_92]
           }
         } else {
-          if (_30 == 0) {
-            _3[_30][_89] = null
-            _3[_30 + 1][_89] = null
+          if (_29 == 0) {
+            _3[_29][_92] = null
+            _3[_29 + 1][_92] = null
 
             if (
-              (_29 - 1) != _30 &&
-              (_29 - 1) != (_30 + 1)
+              (_28 - 1) != _29 &&
+              (_28 - 1) != (_29 + 1)
             ) {
-              delete _3[_29 - 1][_89]
+              delete _3[_28 - 1][_92]
             }
 
-            if (_29 != (_30 + 1)) {
-              delete _3[_29][_89]
+            if (_28 != (_29 + 1)) {
+              delete _3[_28][_92]
             }
 
-            delete _3[_29 + 1][_89]
+            delete _3[_28 + 1][_92]
           } else {
-            _3[_30 - 1][_89] = null
-            _3[_30][_89] = null
-            _3[_30 + 1][_89] = null
+            _3[_29 - 1][_92] = null
+            _3[_29][_92] = null
+            _3[_29 + 1][_92] = null
 
-            if (_29 > _30) {
+            if (_28 > _29) {
               if (
-                (_29 - 1) != _30 &&
-                (_29 - 1) != (_30 + 1)
+                (_28 - 1) != _29 &&
+                (_28 - 1) != (_29 + 1)
               ) {
-                delete _3[_29 - 1][_89]
+                delete _3[_28 - 1][_92]
               }
 
-              if (_29 != (_30 + 1)) {
-                delete _3[_29][_89]
+              if (_28 != (_29 + 1)) {
+                delete _3[_28][_92]
               }
 
-              delete _3[_29 + 1][_89]
+              delete _3[_28 + 1][_92]
             } else {
-              delete _3[_29 - 1][_89]
+              delete _3[_28 - 1][_92]
 
-              if (_29 != (_30 - 1)) {
-                delete _3[_29][_89]
+              if (_28 != (_29 - 1)) {
+                delete _3[_28][_92]
               }
 
               if (
-                (_29 + 1) != (_30 - 1) &&
-                (_29 + 1) != _30
+                (_28 + 1) != (_29 - 1) &&
+                (_28 + 1) != _29
               ) {
-                delete _3[_29 + 1][_89]
+                delete _3[_28 + 1][_92]
               }
             }
           }
         }
       }
 
-      _40[_89] = 0
-      _49[_89] = false
+      _41[_92] = 0
+      _50[_92] = false
     }
 
-    const _40 = Array(51)
     const _41 = Array(51)
     const _42 = Array(51)
     const _43 = Array(51)
@@ -2936,21 +2957,24 @@
     const _47 = Array(51)
     const _48 = Array(51)
     const _49 = Array(51)
-    const _50 = document.createElement("div")
-    const _51 = Array(151)
-    const _52 = document.createElement("div")
-    const _53 = [
+    const _50 = Array(51)
+    const _51 = document.createElement("div")
+    const _52 = Array(151)
+    const _53 = document.createElement("div")
+    const _54 = Array(300)
+    const _55 = Array(300)
+    const _56 = [
       {
         "initialize": function() {
           let i = 0
-          const _54
-            = _18.length
+          const _57
+            = _55.length
 
           _9 = 30
           _11 = 8
 
-          while (i != _54) {
-            _18[i].setAttribute(
+          while (i != _57) {
+            _55[i].setAttribute(
               "class",
               "assault-rifle element player-weapon-projectile"
             )
@@ -2958,11 +2982,11 @@
           }
         },
         "use": function() {
-          _110()
+          _113()
 
           if (
             _10 < _11 ||
-            _21 != 0
+            _19 != 0
           ) {
             _10++
             return
@@ -2970,8 +2994,8 @@
 
           if (
             _4 == true ||
-            (_51[133] + _51[141]
-              + _51[147] + _51[150]) == 0
+            (_52[133] + _52[141]
+              + _52[147] + _52[150]) == 0
           ) {
             return
           }
@@ -2982,89 +3006,89 @@
             _4 == false &&
             _9 == 0
           ) {
-            let _55
-              = (_20 & 3) + 4
-            let _56
-              = ((_20 >> 2) & 3) + 4
-            let _57
             let _58
-            let _59 = 98
-            let _60 = _20 & 255
-            let _61 = 5
-            const _62 = _17.pop()
+              = (_18 & 3) + 4
+            let _59
+              = ((_18 >> 2) & 3) + 4
+            let _60
+            let _61
+            let _62 = 98
+            let _63 = _18 & 255
+            let _64 = 5
+            const _65 = _54.pop()
 
             _4 = true
 
-            if ((_20 & 1) == 0) {
-              _55
-                = -_55
+            if ((_18 & 1) == 0) {
+              _58
+                = -_58
             }
 
-            if (((_20 >> 1) & 1) == 0) {
-              _56
-                = -_56
+            if (((_18 >> 1) & 1) == 0) {
+              _59
+                = -_59
             }
 
-            _52.setAttribute(
+            _53.setAttribute(
               "reload",
-              _20 & 3
+              _18 & 3
             )
 
             setTimeout(function() {
-              _57 = _111
-              _58 = _112
-              _62.setAttribute(
+              _60 = _114
+              _61 = _115
+              _65.setAttribute(
                 "style",
-                "left: " + _57 + "px; top: "
-                  + _58 + "px; transform: rotate("
-                  + _60 + "deg); transition: none; width: 12px;"
+                "left: " + _60 + "px; top: "
+                  + _61 + "px; transform: rotate("
+                  + _63 + "deg); transition: none; width: 12px;"
               )
 
-              const _63 = setInterval(function() {
-                if (_59 != 10) {
-                  if (_59 > 70) {
-                    _57 += _55
-                    _58 += _56
-                    _60 -= 3
+              const _66 = setInterval(function() {
+                if (_62 != 10) {
+                  if (_62 > 70) {
+                    _60 += _58
+                    _61 += _59
+                    _63 -= 3
                   } else {
-                    _61 = 3
+                    _64 = 3
                   }
 
-                  _62.setAttribute(
+                  _65.setAttribute(
                     "style",
-                    "left: " + _57 + "px; opacity: 0."
-                      + _59 + "; top: "
-                      + _58 + "px; transform: rotate("
-                      + _60 + "deg); width: 12px; z-index:"
-                      + _61 + ";"
+                    "left: " + _60 + "px; opacity: 0."
+                      + _62 + "; top: "
+                      + _61 + "px; transform: rotate("
+                      + _63 + "deg); width: 12px; z-index:"
+                      + _64 + ";"
                   )
-                  _59 -= 2
+                  _62 -= 2
                 } else {
-                  clearInterval(_63)
-                  _62.setAttribute(
+                  clearInterval(_66)
+                  _65.setAttribute(
                     "style",
                     "display: none;"
                   )
-                  _17.push(_62)
+                  _54.push(_65)
                 }
               }, 50)
 
-              _52.setAttribute(
+              _53.setAttribute(
                 "reload",
-                _20 & 3
+                _18 & 3
               )
 
               setTimeout(function() {
-                _52.setAttribute(
+                _53.setAttribute(
                   "reload",
-                  _20 & 3
+                  _18 & 3
                 )
 
                 setTimeout(function() {
                   _4 = false
                   _9 = 30
                   _10 = -40
-                  _52.removeAttribute("reload")
+                  _53.removeAttribute("reload")
                 }, 100)
               }, 100)
             }, 100)
@@ -3072,241 +3096,241 @@
             return
           }
 
-          let _64 = false
-          let _65 = false
+          let _67 = false
+          let _68 = false
           let i = 0
-          let _66 = 0
-          let _67 = 8
-          let _68
-          let _69
-          let _70 = 96
-          let _71 = _20 & 255
-          let _72 = 5
-          let _73 = _111 + 3
-          let _74 = _112 + 3
-          let _75 = 3
-          let _76 = _20 & 3
-          const _77 = _73
-          const _78 = _74
-          const _79 = _17.pop()
-          const _80
-            = (_7 & 7) - (_20 & 7)
-          const _81
-            = (_8 & 7) - ((_20 >> 3) & 7)
-          const _82 = _18.pop()
-          const _83 = (
+          let _69 = 0
+          let _70 = 8
+          let _71
+          let _72
+          let _73 = 96
+          let _74 = _18 & 255
+          let _75 = 5
+          let _76 = _114 + 3
+          let _77 = _115 + 3
+          let _78 = 3
+          let _79 = _18 & 3
+          const _80 = _76
+          const _81 = _77
+          const _82 = _54.pop()
+          const _83
+            = (_7 & 7) - (_18 & 7)
+          const _84
+            = (_8 & 7) - ((_18 >> 3) & 7)
+          const _85 = _55.pop()
+          const _86 = (
             _14
-            + (_20 & 1) - ((_20 >> 1) & 1)
+            + (_18 & 1) - ((_18 >> 1) & 1)
           ) * 0.5
-          const _84 = (
+          const _87 = (
             _15
-            + ((_20 >> 2) & 1) - ((_20 >> 3) & 1)
+            + ((_18 >> 2) & 1) - ((_18 >> 3) & 1)
           ) * 0.5
-          const _85
-            = (_83 * 0.5)
-            + (_111 & 7) - (_20 & 7)
-          const _86
-            = (_84 * 0.5)
-            + (_112 & 7) - ((_20 >> 3) & 7)
+          const _88
+            = (_86 * 0.5)
+            + (_114 & 7) - (_18 & 7)
+          const _89
+            = (_87 * 0.5)
+            + (_115 & 7) - ((_18 >> 3) & 7)
 
-          const _87 = function(_99) {
-            if (_65 == true) {
+          const _90 = function(_102) {
+            if (_68 == true) {
               return
             }
 
-            _65 = true
-            _73 += _83
-            _74 += _84
-            _82.setAttribute(
+            _68 = true
+            _76 += _86
+            _77 += _87
+            _85.setAttribute(
               "style",
-              "left: " + _73 + "px; top: "
-                + _74 + "px;"
+              "left: " + _76 + "px; top: "
+                + _77 + "px;"
             )
 
             if (
-              _73 >= 0 &&
-              _73 <= 672 &&
-              _74 >= 0 &&
-              _74 <= 378
+              _76 >= 0 &&
+              _76 <= 672 &&
+              _77 >= 0 &&
+              _77 <= 378
             ) {
-              if (_64 == true) {
-                const _88
-                  = _73 >> 4
+              if (_67 == true) {
+                const _91
+                  = _76 >> 4
 
-                for (const _89 in _2[
-                  _88
+                for (const _92 in _2[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 8)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 8)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 8)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 8)
+                      >= _45[_92]
                   ) {
-                    let _90 = 8
-                    let _91
-                    let _92 = 40
                     let _93 = 8
+                    let _94
+                    let _95 = 40
+                    let _96 = 8
 
-                    _26(
+                    _25(
                       40,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
-                    _75--
+                    _78--
 
-                    if (_75 != 0) {
-                      let _94 = _73
-                      let _95 = _74
+                    if (_78 != 0) {
+                      let _97 = _76
+                      let _98 = _77
 
-                      _91 = _18.pop()
+                      _94 = _55.pop()
 
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _94 -= 5
-                          _95 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _91.setAttribute(
+                          _97 -= 5
+                          _98 -= 5
+                          _96 += 10
+                          _94.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _94 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _95 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _97 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _98 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _91.setAttribute(
+                          clearInterval(_99)
+                          _94.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_91)
+                          _55.push(_94)
                         }
                       }, 20)
                     } else {
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _73 -= 5
-                          _74 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _82.setAttribute(
+                          _76 -= 5
+                          _77 -= 5
+                          _96 += 10
+                          _85.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _73 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _74 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _76 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _77 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _82.setAttribute(
+                          clearInterval(_99)
+                          _85.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_82)
+                          _55.push(_85)
                         }
                       }, 20)
 
-                      clearInterval(_99)
+                      clearInterval(_102)
                       break
                     }
                   }
                 }
               } else {
-                const _88
-                  = _74 >> 3
+                const _91
+                  = _77 >> 3
 
-                for (const _89 in _3[
-                  _88
+                for (const _92 in _3[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 8)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 8)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 8)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 8)
+                      >= _45[_92]
                   ) {
-                    let _90 = 8
-                    let _91
-                    let _92 = 40
                     let _93 = 8
+                    let _94
+                    let _95 = 40
+                    let _96 = 8
 
-                    _26(
+                    _25(
                       40,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
-                    _75--
+                    _78--
 
-                    if (_75 != 0) {
-                      let _94 = _73
-                      let _95 = _74
+                    if (_78 != 0) {
+                      let _97 = _76
+                      let _98 = _77
 
-                      _91 = _18.pop()
+                      _94 = _55.pop()
 
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _94 -= 5
-                          _95 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _91.setAttribute(
+                          _97 -= 5
+                          _98 -= 5
+                          _96 += 10
+                          _94.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _94 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _95 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _97 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _98 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _91.setAttribute(
+                          clearInterval(_99)
+                          _94.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_91)
+                          _55.push(_94)
                         }
                       }, 20)
                     } else {
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _73 -= 5
-                          _74 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _82.setAttribute(
+                          _76 -= 5
+                          _77 -= 5
+                          _96 += 10
+                          _85.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _73 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _74 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _76 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _77 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _82.setAttribute(
+                          clearInterval(_99)
+                          _85.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_82)
+                          _55.push(_85)
                         }
                       }, 20)
 
-                      clearInterval(_99)
+                      clearInterval(_102)
                       break
                     }
                   }
@@ -3314,65 +3338,65 @@
               }
             }
 
-            _65 = false
+            _68 = false
           }
 
           if (_14 != 0) {
-            _64 = true
+            _67 = true
           }
 
-          _68 = _111
-          _69 = _112
-          _79.setAttribute(
+          _71 = _114
+          _72 = _115
+          _82.setAttribute(
             "style",
-            "left: " + _68 + "px; top: "
-              + _69 + "px; transition: none;"
+            "left: " + _71 + "px; top: "
+              + _72 + "px; transition: none;"
           )
 
-          const _97 = setInterval(function() {
-            if (_70 != 10) {
-              if (_70 > 70) {
-                _68 += _80
-                _69 += _81
-                _71--
+          const _100 = setInterval(function() {
+            if (_73 != 10) {
+              if (_73 > 70) {
+                _71 += _83
+                _72 += _84
+                _74--
               } else {
-                _72 = 3
+                _75 = 3
               }
 
-              _79.setAttribute(
+              _82.setAttribute(
                 "style",
-                "left: " + _68 + "px; opacity: 0."
-                  + _70 + "; top: "
-                  + _69 + "px; transform: rotate("
-                  + _71 + "deg); width: 7px; z-index: "
-                  + _72 + ";"
+                "left: " + _71 + "px; opacity: 0."
+                  + _73 + "; top: "
+                  + _72 + "px; transform: rotate("
+                  + _74 + "deg); width: 7px; z-index: "
+                  + _75 + ";"
               )
-              _70 -= 2
+              _73 -= 2
             } else {
-              clearInterval(_97)
-              _79.setAttribute(
+              clearInterval(_100)
+              _82.setAttribute(
                 "style",
                 "display: none;"
               )
-              _17.push(_79)
+              _54.push(_82)
             }
           }, 50)
 
-          const _98 = setInterval(function() {
-            if (_67 != 64) {
-              _66 -= 4
-              _67 += 8
+          const _101 = setInterval(function() {
+            if (_70 != 64) {
+              _69 -= 4
+              _70 += 8
               _12.setAttribute(
                 "style",
-                "height: " + _67 + "px; left: "
-                  + _77 + "px; margin: "
-                  + _66 + "px 0 0 "
-                  + _66 + "px; top: "
-                  + _78 + "px; width: "
-                  + _67 + "px;"
+                "height: " + _70 + "px; left: "
+                  + _80 + "px; margin: "
+                  + _69 + "px 0 0 "
+                  + _69 + "px; top: "
+                  + _81 + "px; width: "
+                  + _70 + "px;"
               )
             } else {
-              clearInterval(_98)
+              clearInterval(_101)
               _12.setAttribute(
                 "style",
                 "display: none;"
@@ -3380,77 +3404,77 @@
             }
           }, 10)
 
-          if (_83 < 0) {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+          if (_86 < 0) {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _74 > -50 &&
-                  _73 > -50
+                  _77 > -50 &&
+                  _76 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 > -50 &&
-                  _74 < 428
+                  _76 > -50 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           } else {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 > -50
+                  _76 < 722 &&
+                  _77 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 < 428
+                  _76 < 722 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           }
 
-          const _100 = setInterval(function() {
-            _50.setAttribute(
+          const _103 = setInterval(function() {
+            _51.setAttribute(
               "recoil_light",
-              _76
+              _79
             )
-            _52.setAttribute(
+            _53.setAttribute(
               "recoil_light",
-              _76
+              _79
             )
             i++
 
             if (i < 5) {
-              _76 = (_76 + 1) & 3
+              _79 = (_79 + 1) & 3
             } else {
-              _50.removeAttribute("recoil_light")
-              _52.removeAttribute("recoil_light")
-              clearInterval(_100)
+              _51.removeAttribute("recoil_light")
+              _53.removeAttribute("recoil_light")
+              clearInterval(_103)
             }
           }, 25)
 
@@ -3460,14 +3484,14 @@
       {
         "initialize": function() {
           let i = 0
-          const _54
-            = _18.length
+          const _57
+            = _55.length
 
           _9 = 20
           _11 = 20
 
-          while (i != _54) {
-            _18[i].setAttribute(
+          while (i != _57) {
+            _55[i].setAttribute(
               "class",
               "automatic-shotgun element player-weapon-projectile"
             )
@@ -3475,11 +3499,11 @@
           }
         },
         "use": function() {
-          _110()
+          _113()
 
           if (
             _10 < _11 ||
-            _21 != 0
+            _19 != 0
           ) {
             _10++
             return
@@ -3489,92 +3513,92 @@
             _4 == false &&
             _9 == 0
           ) {
-            let _55
-              = (_20 & 3) + 3
-            let _56
-              = ((_20 >> 2) & 3) + 3
-            let _57
             let _58
-            let _59 = 100
-            let _61 = 5
-            const _62 = _17.pop()
+              = (_18 & 3) + 3
+            let _59
+              = ((_18 >> 2) & 3) + 3
+            let _60
+            let _61
+            let _62 = 100
+            let _64 = 5
+            const _65 = _54.pop()
 
             _4 = true
 
-            if ((_20 & 1) == 0) {
-              _55
-                = -_55
+            if ((_18 & 1) == 0) {
+              _58
+                = -_58
             }
 
-            if (((_20 >> 1) & 1) == 0) {
-              _56
-                = -_56
+            if (((_18 >> 1) & 1) == 0) {
+              _59
+                = -_59
             }
 
-            _52.setAttribute(
+            _53.setAttribute(
               "reload",
-              _20 & 3
+              _18 & 3
             )
 
             setTimeout(function() {
-              _57 = _111
-              _58 = _112
-              _62.setAttribute(
+              _60 = _114
+              _61 = _115
+              _65.setAttribute(
                 "style",
-                "left: " + _57 + "px; top: "
-                  + _58 + "px; transition: none;"
+                "left: " + _60 + "px; top: "
+                  + _61 + "px; transition: none;"
               )
 
-              const _63 = setInterval(function() {
-                if (_59 != 10) {
-                  if (_59 > 70) {
-                    _57 += _55
-                    _58 += _56
+              const _66 = setInterval(function() {
+                if (_62 != 10) {
+                  if (_62 > 70) {
+                    _60 += _58
+                    _61 += _59
                   } else {
-                    _61 = 3
+                    _64 = 3
                   }
 
-                  _62.setAttribute(
+                  _65.setAttribute(
                     "style",
                     "border-radius: 22px; height: 11px; left: "
-                      + _57 + "px; opacity: 0."
-                      + _59 + "; top: "
-                      + _58 + "px; width: 11px; z-index: "
-                      + _61 + ";"
+                      + _60 + "px; opacity: 0."
+                      + _62 + "; top: "
+                      + _61 + "px; width: 11px; z-index: "
+                      + _64 + ";"
                   )
-                  _59 -= 2
+                  _62 -= 2
                 } else {
-                  clearInterval(_63)
-                  _62.setAttribute(
+                  clearInterval(_66)
+                  _65.setAttribute(
                     "style",
                     "display: none;"
                   )
-                  _17.push(_62)
+                  _54.push(_65)
                 }
               }, 50)
 
-              _52.setAttribute(
+              _53.setAttribute(
                 "reload",
-                _20 & 3
+                _18 & 3
               )
 
               setTimeout(function() {
-                _52.setAttribute(
+                _53.setAttribute(
                   "reload",
-                  _20 & 3
+                  _18 & 3
                 )
 
                 setTimeout(function() {
-                  _52.setAttribute(
+                  _53.setAttribute(
                     "reload",
-                    _20 & 3
+                    _18 & 3
                   )
 
                   setTimeout(function() {
                     _4 = false
                     _9 = 20
                     _10 = -15
-                    _52.removeAttribute("reload")
+                    _53.removeAttribute("reload")
                   }, 100)
                 }, 100)
               }, 100)
@@ -3585,8 +3609,8 @@
 
           if (
             _4 == true ||
-            (_51[133] + _51[141]
-              + _51[147] + _51[150]) == 0
+            (_52[133] + _52[141]
+              + _52[147] + _52[150]) == 0
           ) {
             return
           }
@@ -3594,272 +3618,272 @@
           _10 = 0
 
           let i = 0
-          let _66 = 0
-          let _67 = 8
-          let _68
-          let _69
-          let _70 = 96
-          let _71 = _20 & 255
-          let _72 = 5
-          let _101 = 5
-          let _76 = _20 & 3
-          const _102 = _14
-          const _103 = _15
-          const _104 = _111 + 3
-          const _105 = _112 + 3
-          const _79 = _17.pop()
-          const _80
-            = (_7 & 7) - (_20 & 7)
-          const _81
-            = (_8 & 7) - ((_20 >> 3) & 7)
+          let _69 = 0
+          let _70 = 8
+          let _71
+          let _72
+          let _73 = 96
+          let _74 = _18 & 255
+          let _75 = 5
+          let _104 = 5
+          let _79 = _18 & 3
+          const _105 = _14
+          const _106 = _15
+          const _107 = _114 + 3
+          const _108 = _115 + 3
+          const _82 = _54.pop()
+          const _83
+            = (_7 & 7) - (_18 & 7)
+          const _84
+            = (_8 & 7) - ((_18 >> 3) & 7)
 
-          const _106 = function() {
-            let _64 = false
-            let _65 = false
-            let _73 = _111 + 3
-            let _74 = _112 + 3
-            const _82 = _18.pop()
-            const _83 = (
-              _102
-              + _76 - ((_20 >> 2) & 3)
+          const _109 = function() {
+            let _67 = false
+            let _68 = false
+            let _76 = _114 + 3
+            let _77 = _115 + 3
+            const _85 = _55.pop()
+            const _86 = (
+              _105
+              + _79 - ((_18 >> 2) & 3)
             ) * 0.5
-            const _84 = (
-              _103
-              + _76 - ((_20 >> 6) & 3)
+            const _87 = (
+              _106
+              + _79 - ((_18 >> 6) & 3)
             ) * 0.5
-            const _85
-              = _83
-              + (_111 & 7) - (_20 & 7)
-            const _86
-              = _84
-              + (_112 & 7) - ((_20 >> 3) & 7)
+            const _88
+              = _86
+              + (_114 & 7) - (_18 & 7)
+            const _89
+              = _87
+              + (_115 & 7) - ((_18 >> 3) & 7)
 
-            const _87 = function(_99) {
-              if (_65 == true) {
+            const _90 = function(_102) {
+              if (_68 == true) {
                 return
               }
 
-              _65 = true
-              _73
-                += _83
-              _74
-                += _84
-              _82.setAttribute(
+              _68 = true
+              _76
+                += _86
+              _77
+                += _87
+              _85.setAttribute(
                 "style",
-                "left: " + _73 + "px; top: "
-                  + _74 + "px;"
+                "left: " + _76 + "px; top: "
+                  + _77 + "px;"
               )
 
               if (
-                _73 >= 0 &&
-                _73 <= 672 &&
-                _74 >= 0 &&
-                _74 <= 378
+                _76 >= 0 &&
+                _76 <= 672 &&
+                _77 >= 0 &&
+                _77 <= 378
               ) {
-                if (_64 == true) {
-                  const _88
-                    = _73 >> 4
+                if (_67 == true) {
+                  const _91
+                    = _76 >> 4
 
-                  for (const _89 in _2[
-                    _88
+                  for (const _92 in _2[
+                    _91
                   ]) {
                     if (
-                      _73
-                        <= (_43[_89] + 28) &&
-                      (_73 + 8)
-                        >= _43[_89] &&
-                      _74
-                        <= (_44[_89] + 28) &&
-                      (_74 + 8)
-                        >= _44[_89]
+                      _76
+                        <= (_44[_92] + 28) &&
+                      (_76 + 8)
+                        >= _44[_92] &&
+                      _77
+                        <= (_45[_92] + 28) &&
+                      (_77 + 8)
+                        >= _45[_92]
                     ) {
-                      let _90 = 8
-                      let _91
-                      let _92 = 60
                       let _93 = 8
+                      let _94
+                      let _95 = 60
+                      let _96 = 8
 
-                      _26(
+                      _25(
                         40,
-                        _89,
-                        _85,
-                        _86
+                        _92,
+                        _88,
+                        _89
                       )
-                      let _94 = _73
-                      let _95 = _74
+                      let _97 = _76
+                      let _98 = _77
 
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _73 -= 5
-                          _74 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _82.setAttribute(
+                          _76 -= 5
+                          _77 -= 5
+                          _96 += 10
+                          _85.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _73 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _74 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _76 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _77 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _82.setAttribute(
+                          clearInterval(_99)
+                          _85.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_82)
+                          _55.push(_85)
                         }
                       }, 20)
 
-                      clearInterval(_99)
+                      clearInterval(_102)
                       break
                     }
                   }
                 } else {
-                  const _88
-                    = _74 >> 3
+                  const _91
+                    = _77 >> 3
 
-                  for (const _89 in _3[
-                    _88
+                  for (const _92 in _3[
+                    _91
                   ]) {
                     if (
-                      _73
-                        <= (_43[_89] + 28) &&
-                      (_73 + 8)
-                        >= _43[_89] &&
-                      _74
-                        <= (_44[_89] + 28) &&
-                      (_74 + 8)
-                        >= _44[_89]
+                      _76
+                        <= (_44[_92] + 28) &&
+                      (_76 + 8)
+                        >= _44[_92] &&
+                      _77
+                        <= (_45[_92] + 28) &&
+                      (_77 + 8)
+                        >= _45[_92]
                     ) {
-                      let _90 = 8
-                      let _91
-                      let _92 = 60
                       let _93 = 8
+                      let _94
+                      let _95 = 60
+                      let _96 = 8
 
-                      _26(
+                      _25(
                         40,
-                        _89,
-                        _85,
-                        _86
+                        _92,
+                        _88,
+                        _89
                       )
-                      let _94 = _73
-                      let _95 = _74
+                      let _97 = _76
+                      let _98 = _77
 
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _73 -= 5
-                          _74 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _82.setAttribute(
+                          _76 -= 5
+                          _77 -= 5
+                          _96 += 10
+                          _85.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _73 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _74 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _76 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _77 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _82.setAttribute(
+                          clearInterval(_99)
+                          _85.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_82)
+                          _55.push(_85)
                         }
                       }, 20)
 
-                      clearInterval(_99)
+                      clearInterval(_102)
                       break
                     }
                   }
                 }
               }
 
-              _65 = false
+              _68 = false
             }
 
             if (_14 != 0) {
-              _64 = true
+              _67 = true
             }
 
-            if (_20 > 3) {
-              _20 -= 3
+            if (_18 > 3) {
+              _18 -= 3
             } else {
-              _20 += 3
+              _18 += 3
             }
 
-            if (_83 < 0) {
-              if (_84 < 0) {
-                const _99 = setInterval(function() {
+            if (_86 < 0) {
+              if (_87 < 0) {
+                const _102 = setInterval(function() {
                   if (
-                    _74 > -50 &&
-                    _73 > -50
+                    _77 > -50 &&
+                    _76 > -50
                   ) {
-                    _87(_99)
+                    _90(_102)
                   } else {
-                    clearInterval(_99)
+                    clearInterval(_102)
 
                     if (_0 == 0) {
-                      _82.remove()
+                      _85.remove()
                     } else {
-                      _18.push(_82)
+                      _55.push(_85)
                     }
                   }
                 }, 10)
               } else {
-                const _99 = setInterval(function() {
+                const _102 = setInterval(function() {
                   if (
-                    _73 > -50 &&
-                    _74 < 428
+                    _76 > -50 &&
+                    _77 < 428
                   ) {
-                    _87(_99)
+                    _90(_102)
                   } else {
-                    clearInterval(_99)
+                    clearInterval(_102)
 
                     if (_0 == 0) {
-                      _82.remove()
+                      _85.remove()
                     } else {
-                      _18.push(_82)
+                      _55.push(_85)
                     }
                   }
                 }, 10)
               }
             } else {
-              if (_84 < 0) {
-                const _99 = setInterval(function() {
+              if (_87 < 0) {
+                const _102 = setInterval(function() {
                   if (
-                    _73 < 722 &&
-                    _74 > -50
+                    _76 < 722 &&
+                    _77 > -50
                   ) {
-                    _87(_99)
+                    _90(_102)
                   } else {
-                    clearInterval(_99)
+                    clearInterval(_102)
 
                     if (_0 == 0) {
-                      _82.remove()
+                      _85.remove()
                     } else {
-                      _18.push(_82)
+                      _55.push(_85)
                     }
                   }
                 }, 10)
               } else {
-                const _99 = setInterval(function() {
+                const _102 = setInterval(function() {
                   if (
-                    _73 < 722 &&
-                    _74 < 428
+                    _76 < 722 &&
+                    _77 < 428
                   ) {
-                    _87(_99)
+                    _90(_102)
                   } else {
-                    clearInterval(_99)
+                    clearInterval(_102)
 
                     if (_0 == 0) {
-                      _82.remove()
+                      _85.remove()
                     } else {
-                      _18.push(_82)
+                      _55.push(_85)
                     }
                   }
                 }, 10)
@@ -3867,21 +3891,21 @@
             }
           }
 
-          const _98 = setInterval(function() {
-            if (_67 != 64) {
-              _66 -= 4
-              _67 += 8
+          const _101 = setInterval(function() {
+            if (_70 != 64) {
+              _69 -= 4
+              _70 += 8
               _12.setAttribute(
                 "style",
-                "height: " + _67 + "px; left: "
-                  + _104 + "px; margin: "
-                  + _66 + "px 0 0 "
-                  + _66 + "px; top: "
-                  + _105 + "px; width: "
-                  + _67 + "px;"
+                "height: " + _70 + "px; left: "
+                  + _107 + "px; margin: "
+                  + _69 + "px 0 0 "
+                  + _69 + "px; top: "
+                  + _108 + "px; width: "
+                  + _70 + "px;"
               )
             } else {
-              clearInterval(_98)
+              clearInterval(_101)
               _12.setAttribute(
                 "style",
                 "display: none;"
@@ -3889,69 +3913,69 @@
             }
           }, 10)
 
-          _68 = _111
-          _69 = _112
-          _79.setAttribute(
+          _71 = _114
+          _72 = _115
+          _82.setAttribute(
             "style",
-            "left: " + _68 + "px; top: "
-              + _69 + "px; transform: rotate("
-              + _71 + "deg); transition: none; width: 9px;"
+            "left: " + _71 + "px; top: "
+              + _72 + "px; transform: rotate("
+              + _74 + "deg); transition: none; width: 9px;"
           )
 
-          const _97 = setInterval(function() {
-            if (_70 != 9) {
-              if (_70 > 70) {
-                _68 += _80
-                _69 += _81
-                _71 -= 2
+          const _100 = setInterval(function() {
+            if (_73 != 9) {
+              if (_73 > 70) {
+                _71 += _83
+                _72 += _84
+                _74 -= 2
               } else {
-                _72 = 3
+                _75 = 3
               }
 
-              _79.setAttribute(
+              _82.setAttribute(
                 "style",
-                "left: " + _68 + "px; opacity: 0."
-                  + _70 + "; top: "
-                  + _69 + "px; transform: rotate("
-                  + _71 + "deg); width: 9px; z-index: "
-                  + _72 + ";"
+                "left: " + _71 + "px; opacity: 0."
+                  + _73 + "; top: "
+                  + _72 + "px; transform: rotate("
+                  + _74 + "deg); width: 9px; z-index: "
+                  + _75 + ";"
               )
-              _70 -= 3
+              _73 -= 3
             } else {
-              clearInterval(_97)
-              _79.setAttribute(
+              clearInterval(_100)
+              _82.setAttribute(
                 "style",
                 "display: none;"
               )
-              _17.push(_79)
+              _54.push(_82)
             }
           }, 50)
 
-          while (_101 != 40) {
+          while (_104 != 40) {
             setTimeout(function() {
-              _106()
-            }, _101)
+              _109()
+            }, _104)
 
-            _101 += 5
+            _104 += 5
           }
 
-          const _100 = setInterval(function() {
-            _50.setAttribute(
+          const _103 = setInterval(function() {
+            _51.setAttribute(
               "recoil_heavy",
-              _76
+              _79
             )
-            _52.setAttribute(
+            _53.setAttribute(
               "recoil_heavy",
-              _76
+              _79
             )
             i++
 
             if (i < 5) {
-              _76 = (_76 + 1) & 3
+              _79 = (_79 + 1) & 3
             } else {
-              clearInterval(_100)
-              _50.removeAttribute("recoil_heavy")
-              _52.removeAttribute("recoil_heavy")
+              clearInterval(_103)
+              _51.removeAttribute("recoil_heavy")
+              _53.removeAttribute("recoil_heavy")
             }
           }, 25)
 
@@ -3961,14 +3985,14 @@
       {
         "initialize": function() {
           let i = 0
-          const _54
-            = _18.length
+          const _57
+            = _55.length
 
           _9 = 60
           _11 = 9
 
-          while (i != _54) {
-            _18[i].setAttribute(
+          while (i != _57) {
+            _55[i].setAttribute(
               "class",
               "element heavy-machine-gun player-weapon-projectile"
             )
@@ -3976,129 +4000,129 @@
           }
         },
         "use": function() {
-          _110()
+          _113()
 
           if (
             _10 < _11 ||
-            _21 != 0
+            _19 != 0
           ) {
             _10++
             return
           }
 
-          let _76 = _20 & 3
+          let _79 = _18 & 3
 
           if (
             _4 == false &&
             _9 == 0
           ) {
-            let _55
-              = (_20 & 3) + 3
-            let _56
-              = ((_20 >> 2) & 3) + 3
-            let _57
             let _58
-            let _59 = 98
-            let _60 = _20 & 255
-            let _61 = 5
-            const _62 = _17.pop()
+              = (_18 & 3) + 3
+            let _59
+              = ((_18 >> 2) & 3) + 3
+            let _60
+            let _61
+            let _62 = 98
+            let _63 = _18 & 255
+            let _64 = 5
+            const _65 = _54.pop()
 
             _4 = true
 
-            if ((_20 & 1) == 0) {
-              _55
-                = -_55
+            if ((_18 & 1) == 0) {
+              _58
+                = -_58
             }
 
-            if (((_20 >> 1) & 1) == 0) {
-              _56
-                = -_56
+            if (((_18 >> 1) & 1) == 0) {
+              _59
+                = -_59
             }
 
-            _52.setAttribute(
+            _53.setAttribute(
               "reload",
-              _76
+              _79
             )
 
             setTimeout(function() {
-              _52.setAttribute(
+              _53.setAttribute(
                 "reload",
-                (_76 + 1) & 3
+                (_79 + 1) & 3
               )
 
               setTimeout(function() {
-                _52.setAttribute(
+                _53.setAttribute(
                   "reload",
-                  (_76 + 2) & 3
+                  (_79 + 2) & 3
                 )
 
                 setTimeout(function() {
-                  _57 = _111
-                  _58 = _112
-                  _62.setAttribute(
+                  _60 = _114
+                  _61 = _115
+                  _65.setAttribute(
                     "style",
-                    "left: " + _57 + "px; top: "
-                      + _58 + "px; transform: rotate("
-                      + _60 + "deg); transition: none; width: 12px;"
+                    "left: " + _60 + "px; top: "
+                      + _61 + "px; transform: rotate("
+                      + _63 + "deg); transition: none; width: 12px;"
                   )
 
-                  const _63 = setInterval(function() {
-                    if (_59 != 10) {
-                      if (_59 > 70) {
-                        _57 += _55
-                        _58 += _56
-                        _60 -= 3
+                  const _66 = setInterval(function() {
+                    if (_62 != 10) {
+                      if (_62 > 70) {
+                        _60 += _58
+                        _61 += _59
+                        _63 -= 3
                       } else {
-                        _61 = 3
+                        _64 = 3
                       }
 
-                      _62.setAttribute(
+                      _65.setAttribute(
                         "style",
-                        "left: " + _57 + "px; opacity: 0."
-                          + _59 + "; top: "
-                          + _58 + "px; transform: rotate("
-                          + _60 + "deg); width: 20px; z-index: "
-                          + _61 + ";"
+                        "left: " + _60 + "px; opacity: 0."
+                          + _62 + "; top: "
+                          + _61 + "px; transform: rotate("
+                          + _63 + "deg); width: 20px; z-index: "
+                          + _64 + ";"
                       )
-                      _59 -= 2
+                      _62 -= 2
                     } else {
-                      clearInterval(_63)
-                      _62.setAttribute(
+                      clearInterval(_66)
+                      _65.setAttribute(
                         "style",
                         "display: none;"
                       )
-                      _17.push(_62)
+                      _54.push(_65)
                     }
                   }, 50)
 
-                  _52.setAttribute(
+                  _53.setAttribute(
                     "reload",
-                    (_76 + 3) & 3
+                    (_79 + 3) & 3
                   )
 
                   setTimeout(function() {
-                    _52.setAttribute(
+                    _53.setAttribute(
                       "reload",
-                      _76
+                      _79
                     )
 
                     setTimeout(function() {
-                      _52.setAttribute(
+                      _53.setAttribute(
                         "reload",
-                        (_76 + 2) & 3
+                        (_79 + 2) & 3
                       )
 
                       setTimeout(function() {
-                        _52.setAttribute(
+                        _53.setAttribute(
                           "reload",
-                          (_76 + 1) & 3
+                          (_79 + 1) & 3
                         )
 
                         setTimeout(function() {
                           _4 = false
                           _9 = 60
                           _10 = -15
-                          _52.removeAttribute("reload")
+                          _53.removeAttribute("reload")
                         }, 30)
                       }, 200)
                     }, 200)
@@ -4112,250 +4136,250 @@
 
           if (
             _4 == true ||
-            (_51[133] + _51[141]
-              + _51[147] + _51[150]) == 0
+            (_52[133] + _52[141]
+              + _52[147] + _52[150]) == 0
           ) {
             return
           }
 
           _10 = 0
 
-          let _64 = false
-          let _65 = false
+          let _67 = false
+          let _68 = false
           let i = 0
-          let _66 = 0
-          let _67 = 8
-          let _68
-          let _69
-          let _70 = 96
-          let _71 = _20 & 255
-          let _72 = 5
-          let _73 = _111 + 1
-          let _74 = _112 + 1
-          let _75 = 8
-          const _77 = _73
-          const _78 = _74
-          const _79 = _17.pop()
-          const _80
-            = (_7 & 7) - (_20 & 7)
-          const _81
-            = (_8 & 7) - ((_20 >> 3) & 7)
-          const _82 = _18.pop()
-          const _83 = (
+          let _69 = 0
+          let _70 = 8
+          let _71
+          let _72
+          let _73 = 96
+          let _74 = _18 & 255
+          let _75 = 5
+          let _76 = _114 + 1
+          let _77 = _115 + 1
+          let _78 = 8
+          const _80 = _76
+          const _81 = _77
+          const _82 = _54.pop()
+          const _83
+            = (_7 & 7) - (_18 & 7)
+          const _84
+            = (_8 & 7) - ((_18 >> 3) & 7)
+          const _85 = _55.pop()
+          const _86 = (
             _14
-            + ((_20 & 3) + 1) - (((_20 >> 2) & 3) + 1)
+            + ((_18 & 3) + 1) - (((_18 >> 2) & 3) + 1)
           ) * 0.5
-          const _84 = (
+          const _87 = (
             _15
-            + (((_20 >> 4) & 3) + 1) - (((_20 >> 6) & 3) + 1)
+            + (((_18 >> 4) & 3) + 1) - (((_18 >> 6) & 3) + 1)
           ) * 0.5
-          const _85
-            = (_83 * 3)
-            + (_111 & 7) - (_20 & 7)
-          const _86
-            = (_84 * 3)
-            + (_112 & 7) - ((_20 >> 3) & 7)
+          const _88
+            = (_86 * 3)
+            + (_114 & 7) - (_18 & 7)
+          const _89
+            = (_87 * 3)
+            + (_115 & 7) - ((_18 >> 3) & 7)
 
-          const _87 = function(_99) {
-            if (_65 == true) {
+          const _90 = function(_102) {
+            if (_68 == true) {
               return
             }
 
-            _65 = true
-            _73 += _83
-            _74 += _84
-            _82.setAttribute(
+            _68 = true
+            _76 += _86
+            _77 += _87
+            _85.setAttribute(
               "style",
-              "left: " + _73 + "px; top: "
-                + _74 + "px;"
+              "left: " + _76 + "px; top: "
+                + _77 + "px;"
             )
 
             if (
-              _73 >= 0 &&
-              _73 <= 672 &&
-              _74 >= 0 &&
-              _74 <= 378
+              _76 >= 0 &&
+              _76 <= 672 &&
+              _77 >= 0 &&
+              _77 <= 378
             ) {
-              if (_64 == true) {
-                const _88
-                  = _73 >> 4
+              if (_67 == true) {
+                const _91
+                  = _76 >> 4
 
-                for (const _89 in _2[
-                  _88
+                for (const _92 in _2[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 10)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 10)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 10)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 10)
+                      >= _45[_92]
                   ) {
-                    let _90 = 10
-                    let _91
-                    let _94 = _73
-                    let _95 = _74
-                    let _92 = 40
                     let _93 = 10
+                    let _94
+                    let _97 = _76
+                    let _98 = _77
+                    let _95 = 40
+                    let _96 = 10
 
-                    _26(
+                    _25(
                       35,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
-                    _75--
+                    _78--
 
-                    if (_75 != 0) {
-                      let _94 = _73
-                      let _95 = _74
+                    if (_78 != 0) {
+                      let _97 = _76
+                      let _98 = _77
 
-                      _91 = _18.pop()
+                      _94 = _55.pop()
 
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _94 -= 5
-                          _95 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _91.setAttribute(
+                          _97 -= 5
+                          _98 -= 5
+                          _96 += 10
+                          _94.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _94 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _95 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _97 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _98 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _91.setAttribute(
+                          clearInterval(_99)
+                          _94.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_91)
+                          _55.push(_94)
                         }
                       }, 20)
                     } else {
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _73 -= 5
-                          _74 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _82.setAttribute(
+                          _76 -= 5
+                          _77 -= 5
+                          _96 += 10
+                          _85.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _73 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _74 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _76 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _77 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _82.setAttribute(
+                          clearInterval(_99)
+                          _85.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_82)
+                          _55.push(_85)
                         }
                       }, 20)
 
-                      clearInterval(_99)
+                      clearInterval(_102)
                       break
                     }
                   }
                 }
               } else {
-                const _88
-                  = _74 >> 3
+                const _91
+                  = _77 >> 3
 
-                for (const _89 in _3[
-                  _88
+                for (const _92 in _3[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 10)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 10)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 10)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 10)
+                      >= _45[_92]
                   ) {
-                    let _90 = 10
-                    let _91
-                    let _92 = 40
                     let _93 = 10
+                    let _94
+                    let _95 = 40
+                    let _96 = 10
 
-                    _26(
+                    _25(
                       35,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
-                    _75--
+                    _78--
 
-                    if (_75 != 0) {
-                      let _94 = _73
-                      let _95 = _74
+                    if (_78 != 0) {
+                      let _97 = _76
+                      let _98 = _77
 
-                      _91 = _18.pop()
+                      _94 = _55.pop()
 
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _94 -= 5
-                          _95 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _91.setAttribute(
+                          _97 -= 5
+                          _98 -= 5
+                          _96 += 10
+                          _94.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _94 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _95 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _97 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _98 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _91.setAttribute(
+                          clearInterval(_99)
+                          _94.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_91)
+                          _55.push(_94)
                         }
                       }, 20)
                     } else {
-                      const _96 = setInterval(function() {
-                        if (_92 > 0) {
-                          _90 += 10
-                          _73 -= 5
-                          _74 -= 5
+                      const _99 = setInterval(function() {
+                        if (_95 > 0) {
                           _93 += 10
-                          _82.setAttribute(
+                          _76 -= 5
+                          _77 -= 5
+                          _96 += 10
+                          _85.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _73 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _74 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _76 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _77 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 20
+                          _95 -= 20
                         } else {
-                          clearInterval(_96)
-                          _82.setAttribute(
+                          clearInterval(_99)
+                          _85.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_82)
+                          _55.push(_85)
                         }
                       }, 20)
 
-                      clearInterval(_99)
+                      clearInterval(_102)
                       break
                     }
                   }
@@ -4363,65 +4387,65 @@
               }
             }
 
-            _65 = false
+            _68 = false
           }
 
           if (_14 != 0) {
-            _64 = true
+            _67 = true
           }
 
-          _68 = _111
-          _69 = _112
-          _79.setAttribute(
+          _71 = _114
+          _72 = _115
+          _82.setAttribute(
             "style",
-            "left: " + _68 + "px; top: "
-              + _69 + "px; transition: none;"
+            "left: " + _71 + "px; top: "
+              + _72 + "px; transition: none;"
           )
 
-          const _97 = setInterval(function() {
-            if (_70 != 9) {
-              if (_70 > 70) {
-                _68 += _80
-                _69 += _81
-                _71--
+          const _100 = setInterval(function() {
+            if (_73 != 9) {
+              if (_73 > 70) {
+                _71 += _83
+                _72 += _84
+                _74--
               } else {
-                _72 = 3
+                _75 = 3
               }
 
-              _79.setAttribute(
+              _82.setAttribute(
                 "style",
-                "left: " + _68 + "px; opacity: 0."
-                  + _70 + "; top: "
-                  + _69 + "px; transform: rotate("
-                  + _71 + "deg); width: 11px; z-index: "
-                  + _72 + ";"
+                "left: " + _71 + "px; opacity: 0."
+                  + _73 + "; top: "
+                  + _72 + "px; transform: rotate("
+                  + _74 + "deg); width: 11px; z-index: "
+                  + _75 + ";"
               )
-              _70 -= 3
+              _73 -= 3
             } else {
-              clearInterval(_97)
-              _79.setAttribute(
+              clearInterval(_100)
+              _82.setAttribute(
                 "style",
                 "display: none;"
               )
-              _17.push(_79)
+              _54.push(_82)
             }
           }, 50)
 
-          const _98 = setInterval(function() {
-            if (_67 != 64) {
-              _66 -= 4
-              _67 += 8
+          const _101 = setInterval(function() {
+            if (_70 != 64) {
+              _69 -= 4
+              _70 += 8
               _12.setAttribute(
                 "style",
-                "height: " + _67 + "px; left: "
-                  + _77 + "px; margin: "
-                  + _66 + "px 0 0 "
-                  + _66 + "px; top: "
-                  + _78 + "px; width: "
-                  + _67 + "px;"
+                "height: " + _70 + "px; left: "
+                  + _80 + "px; margin: "
+                  + _69 + "px 0 0 "
+                  + _69 + "px; top: "
+                  + _81 + "px; width: "
+                  + _70 + "px;"
               )
             } else {
-              clearInterval(_98)
+              clearInterval(_101)
               _12.setAttribute(
                 "style",
                 "display: none;"
@@ -4429,77 +4453,77 @@
             }
           }, 10)
 
-          if (_83 < 0) {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+          if (_86 < 0) {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _74 > -50 &&
-                  _73 > -50
+                  _77 > -50 &&
+                  _76 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 > -50 &&
-                  _74 < 428
+                  _76 > -50 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           } else {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 > -50
+                  _76 < 722 &&
+                  _77 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 < 428
+                  _76 < 722 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           }
 
-          const _100 = setInterval(function() {
-            _50.setAttribute(
+          const _103 = setInterval(function() {
+            _51.setAttribute(
               "recoil_heavy",
-              _76
+              _79
             )
-            _52.setAttribute(
+            _53.setAttribute(
               "recoil_heavy",
-              _76
+              _79
             )
             i++
 
             if (i < 3) {
-              _76 = (_76 + 1) & 3
+              _79 = (_79 + 1) & 3
             } else {
-              clearInterval(_100)
-              _50.removeAttribute("recoil_heavy")
-              _52.removeAttribute("recoil_heavy")
+              clearInterval(_103)
+              _51.removeAttribute("recoil_heavy")
+              _53.removeAttribute("recoil_heavy")
             }
           }, 25)
 
@@ -4509,13 +4533,13 @@
       {
         "initialize": function() {
           let i = 0
-          const _54
-            = _18.length
+          const _57
+            = _55.length
 
           _11 = 1
 
-          while (i != _54) {
-            _18[i].setAttribute(
+          while (i != _57) {
+            _55[i].setAttribute(
               "class",
               "element minigun player-weapon-projectile"
             )
@@ -4523,277 +4547,277 @@
           }
         },
         "use": function() {
-          _110()
+          _113()
 
           if (
             _10 < _11 ||
-            _21 != 0
+            _19 != 0
           ) {
             _10++
             return
           }
 
-          if (_50.hasAttribute("recoil_heavy")) {
-            _50.removeAttribute("recoil_heavy")
-            _52.removeAttribute("recoil_heavy")
+          if (_51.hasAttribute("recoil_heavy")) {
+            _51.removeAttribute("recoil_heavy")
+            _53.removeAttribute("recoil_heavy")
           }
 
-          if ((_51[133] + _51[141]
-            + _51[147] + _51[150]) == 0) {
+          if ((_52[133] + _52[141]
+            + _52[147] + _52[150]) == 0) {
             return
           }
 
           _10 = 0
 
-          let _64 = false
-          let _65 = false
-          let _68
-          let _69
-          let _70 = 98
-          let _71 = _20 & 255
-          let _72 = 5
-          let _73 = _111 + 3
-          let _74 = _112 + 3
-          const _79 = _17.pop()
-          const _80
-            = (_7 & 7) - (_20 & 7)
-          const _81
-            = (_8 & 7) - ((_20 >> 3) & 7)
-          const _82 = _18.pop()
-          const _76 = _20 & 3
-          const _83 = (
+          let _67 = false
+          let _68 = false
+          let _71
+          let _72
+          let _73 = 98
+          let _74 = _18 & 255
+          let _75 = 5
+          let _76 = _114 + 3
+          let _77 = _115 + 3
+          const _82 = _54.pop()
+          const _83
+            = (_7 & 7) - (_18 & 7)
+          const _84
+            = (_8 & 7) - ((_18 >> 3) & 7)
+          const _85 = _55.pop()
+          const _79 = _18 & 3
+          const _86 = (
             _14
-            + _76 - ((_20 >> 2) & 3)
+            + _79 - ((_18 >> 2) & 3)
           ) * 0.5
-          const _84 = (
+          const _87 = (
             _15
-            + _76 - ((_20 >> 4) & 3)
+            + _79 - ((_18 >> 4) & 3)
           ) * 0.5
-          const _107 = (_20 & 15) + 70
-          const _85
-            = _83
-          const _86
-            = _84
+          const _110 = (_18 & 15) + 70
+          const _88
+            = _86
+          const _89
+            = _87
 
-          const _87 = function(_99) {
-            if (_65 == true) {
+          const _90 = function(_102) {
+            if (_68 == true) {
               return
             }
 
-            _65 = true
-            _73 += _83
-            _74 += _84
-            _82.setAttribute(
+            _68 = true
+            _76 += _86
+            _77 += _87
+            _85.setAttribute(
               "style",
-              "left: " + _73 + "px; top: "
-                + _74 + "px;"
+              "left: " + _76 + "px; top: "
+                + _77 + "px;"
             )
 
             if (
-              _73 >= 0 &&
-              _73 <= 672 &&
-              _74 >= 0 &&
-              _74 <= 378
+              _76 >= 0 &&
+              _76 <= 672 &&
+              _77 >= 0 &&
+              _77 <= 378
             ) {
-              if (_64 == true) {
-                const _88
-                  = _73 >> 4
+              if (_67 == true) {
+                const _91
+                  = _76 >> 4
 
-                for (const _89 in _2[
-                  _88
+                for (const _92 in _2[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 8)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 8)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 8)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 8)
+                      >= _45[_92]
                   ) {
-                    let _90 = 8
-                    let _92 = 40
                     let _93 = 8
+                    let _95 = 40
+                    let _96 = 8
 
-                    _26(
+                    _25(
                       35,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
 
-                    const _96 = setInterval(function() {
-                      if (_92 > 0) {
-                        _90 += 10
-                        _73 -= 5
-                        _74 -= 5
+                    const _99 = setInterval(function() {
+                      if (_95 > 0) {
                         _93 += 10
-                        _82.setAttribute(
+                        _76 -= 5
+                        _77 -= 5
+                        _96 += 10
+                        _85.setAttribute(
                           "style",
-                          "height: " + _90 + "px; left: "
-                            + _73 + "px; opacity: 0."
-                            + _92 + "; top: "
-                            + _74 + "px; width: "
-                            + _93 + "px;"
+                          "height: " + _93 + "px; left: "
+                            + _76 + "px; opacity: 0."
+                            + _95 + "; top: "
+                            + _77 + "px; width: "
+                            + _96 + "px;"
                         )
-                        _92 -= 20
+                        _95 -= 20
                       } else {
-                        clearInterval(_96)
-                        _82.setAttribute(
+                        clearInterval(_99)
+                        _85.setAttribute(
                           "style",
                           "display: none;"
                         )
-                        _18.push(_82)
+                        _55.push(_85)
                       }
                     }, 20)
 
-                    clearInterval(_99)
+                    clearInterval(_102)
                     break
                   }
                 }
               } else {
-                const _88
-                  = _74 >> 3
+                const _91
+                  = _77 >> 3
 
-                for (const _89 in _3[
-                  _88
+                for (const _92 in _3[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 8)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 8)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 8)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 8)
+                      >= _45[_92]
                   ) {
-                    let _90 = 8
-                    let _92 = 40
                     let _93 = 8
+                    let _95 = 40
+                    let _96 = 8
 
-                    _26(
+                    _25(
                       35,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
 
-                    const _96 = setInterval(function() {
-                      if (_92 > 0) {
-                        _90 += 10
-                        _73 -= 5
-                        _74 -= 5
+                    const _99 = setInterval(function() {
+                      if (_95 > 0) {
                         _93 += 10
-                        _82.setAttribute(
+                        _76 -= 5
+                        _77 -= 5
+                        _96 += 10
+                        _85.setAttribute(
                           "style",
-                          "height: " + _90 + "px; left: "
-                            + _73 + "px; opacity: 0."
-                            + _92 + "; top: "
-                            + _74 + "px; width: "
-                            + _93 + "px;"
+                          "height: " + _93 + "px; left: "
+                            + _76 + "px; opacity: 0."
+                            + _95 + "; top: "
+                            + _77 + "px; width: "
+                            + _96 + "px;"
                         )
-                        _92 -= 20
+                        _95 -= 20
                       } else {
-                        clearInterval(_96)
-                        _82.setAttribute(
+                        clearInterval(_99)
+                        _85.setAttribute(
                           "style",
                           "display: none;"
                         )
-                        _18.push(_82)
+                        _55.push(_85)
                       }
                     }, 20)
 
-                    clearInterval(_99)
+                    clearInterval(_102)
                     break
                   }
                 }
               }
             }
 
-            _65 = false
+            _68 = false
           }
 
           if (_14 != 0) {
-            _64 = true
+            _67 = true
           }
 
-          if (_83 < 0) {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+          if (_86 < 0) {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _74 > -50 &&
-                  _73 > -50
+                  _77 > -50 &&
+                  _76 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 > -50 &&
-                  _74 < 428
+                  _76 > -50 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           } else {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 > -50
+                  _76 < 722 &&
+                  _77 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 < 428
+                  _76 < 722 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           }
 
-          if (_76 == 0) {
-            let _66 = 0
-            let _67 = 8
-            const _77 = _73
-            const _78 = _74
+          if (_79 == 0) {
+            let _69 = 0
+            let _70 = 8
+            const _80 = _76
+            const _81 = _77
 
-            const _98 = setInterval(function() {
-              if (_67 != 64) {
-                _66 -= 4
-                _67 += 8
+            const _101 = setInterval(function() {
+              if (_70 != 64) {
+                _69 -= 4
+                _70 += 8
                 _12.setAttribute(
                   "style",
-                  "height: " + _67 + "px; left: "
-                    + _77 + "px; margin: "
-                    + _66 + "px 0 0 "
-                    + _66 + "px; top: "
-                    + _78 + "px; width: "
-                    + _67 + "px;"
+                  "height: " + _70 + "px; left: "
+                    + _80 + "px; margin: "
+                    + _69 + "px 0 0 "
+                    + _69 + "px; top: "
+                    + _81 + "px; width: "
+                    + _70 + "px;"
                 )
               } else {
-                clearInterval(_98)
+                clearInterval(_101)
                 _12.setAttribute(
                   "style",
                   "display: none;"
@@ -4802,51 +4826,51 @@
             }, 10)
           }
 
-          _68 = _111
-          _69 = _112
-          _79.setAttribute(
+          _71 = _114
+          _72 = _115
+          _82.setAttribute(
             "style",
-            "left: " + _68 + "px; top: "
-              + _69 + "px; transition: none;"
+            "left: " + _71 + "px; top: "
+              + _72 + "px; transition: none;"
           )
 
-          const _97 = setInterval(function() {
-            if (_70 != 10) {
-              if (_70 > _107) {
-                _68 += _80
-                _69 += _81
-                _71 -= 2
+          const _100 = setInterval(function() {
+            if (_73 != 10) {
+              if (_73 > _110) {
+                _71 += _83
+                _72 += _84
+                _74 -= 2
               } else {
-                _72 = 3
+                _75 = 3
               }
 
-              _79.setAttribute(
+              _82.setAttribute(
                 "style",
-                "left: " + _68 + "px; opacity: 0."
-                  + _70 + "; top: "
-                  + _69 + "px; transform: rotate("
-                  + _71 + "deg); width: 6px; z-index: "
-                  + _72 + ";"
+                "left: " + _71 + "px; opacity: 0."
+                  + _73 + "; top: "
+                  + _72 + "px; transform: rotate("
+                  + _74 + "deg); width: 6px; z-index: "
+                  + _75 + ";"
               )
-              _70 -= 2
+              _73 -= 2
             } else {
-              clearInterval(_97)
-              _79.setAttribute(
+              clearInterval(_100)
+              _82.setAttribute(
                 "style",
                 "display: none;"
               )
-              _17.push(_79)
+              _54.push(_82)
             }
           }, 50)
 
           setTimeout(function() {
-            _50.setAttribute(
+            _51.setAttribute(
               "recoil_heavy",
-              _76
+              _79
             )
-            _52.setAttribute(
+            _53.setAttribute(
               "recoil_heavy",
-              _76
+              _79
             )
           }, 1)
         }
@@ -4854,13 +4878,13 @@
       {
         "initialize": function() {
           let i = 0
-          const _54
-            = _18.length
+          const _57
+            = _55.length
 
           _11 = 7
 
-          while (i != _54) {
-            _18[i].setAttribute(
+          while (i != _57) {
+            _55[i].setAttribute(
               "class",
               "element player-weapon-projectile pulse-rifle"
             )
@@ -4868,257 +4892,257 @@
           }
         },
         "use": function() {
-          _110()
+          _113()
 
           if (
             _10 < _11 ||
-            _21 != 0
+            _19 != 0
           ) {
             _10++
             return
           }
 
-          if ((_51[133] + _51[141]
-            + _51[147] + _51[150]) == 0) {
+          if ((_52[133] + _52[141]
+            + _52[147] + _52[150]) == 0) {
             return
           }
 
           _10 = 0
 
-          let _64 = false
-          let _65 = false
+          let _67 = false
+          let _68 = false
           let i = 0
-          let _66 = 0
-          let _67 = 8
-          let _68
-          let _69
-          let _70 = 96
-          let _71 = _20 & 255
-          let _76 = _20 & 3
-          let _73 = _111
-          let _74 = _112
-          let _75 = 2
-          const _77 = _73
-          const _78 = _74
-          const _79 = _17.pop()
-          const _80
-            = (_7 & 7) - (_20 & 7)
-          const _81
-            = (_8 & 7) - ((_20 >> 3) & 7)
-          const _82 = _18.pop()
-          const _83 = (
+          let _69 = 0
+          let _70 = 8
+          let _71
+          let _72
+          let _73 = 96
+          let _74 = _18 & 255
+          let _79 = _18 & 3
+          let _76 = _114
+          let _77 = _115
+          let _78 = 2
+          const _80 = _76
+          const _81 = _77
+          const _82 = _54.pop()
+          const _83
+            = (_7 & 7) - (_18 & 7)
+          const _84
+            = (_8 & 7) - ((_18 >> 3) & 7)
+          const _85 = _55.pop()
+          const _86 = (
             _14
-            + _76 - ((_20 >> 2) & 3)
+            + _79 - ((_18 >> 2) & 3)
           ) * 0.45
-          const _84 = (
+          const _87 = (
             _15
-            + _76 - ((_20 >> 4) & 3)
+            + _79 - ((_18 >> 4) & 3)
           ) * 0.45
-          const _85
-            = (_83 * 2)
-            + (_111 & 7) - (_20 & 7)
-          const _86
-            = (_84 * 2)
-            + (_112 & 7) - ((_20 >> 3) & 7)
+          const _88
+            = (_86 * 2)
+            + (_114 & 7) - (_18 & 7)
+          const _89
+            = (_87 * 2)
+            + (_115 & 7) - ((_18 >> 3) & 7)
 
-          const _87 = function(_99) {
-            if (_65 == true) {
+          const _90 = function(_102) {
+            if (_68 == true) {
               return
             }
 
-            _65 = true
-            _73 += _83
-            _74 += _84
-            _82.setAttribute(
+            _68 = true
+            _76 += _86
+            _77 += _87
+            _85.setAttribute(
               "style",
-              "left: " + _73 + "px; top: "
-                + _74 + "px;"
+              "left: " + _76 + "px; top: "
+                + _77 + "px;"
             )
 
             if (
-              _73 >= 0 &&
-              _73 <= 672 &&
-              _74 >= 0 &&
-              _74 <= 378
+              _76 >= 0 &&
+              _76 <= 672 &&
+              _77 >= 0 &&
+              _77 <= 378
             ) {
-              if (_64 == true) {
-                const _88
-                  = _73 >> 4
+              if (_67 == true) {
+                const _91
+                  = _76 >> 4
 
-                for (const _89 in _2[
-                  _88
+                for (const _92 in _2[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 12)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 12)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 12)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 12)
+                      >= _45[_92]
                   ) {
-                    let _90 = 12
-                    let _91
-                    let _92 = 60
                     let _93 = 12
+                    let _94
+                    let _95 = 60
+                    let _96 = 12
 
-                    _26(
+                    _25(
                       40,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
-                    _75--
+                    _78--
 
-                    if (_75 != 0) {
-                      let _94 = _73
-                      let _95 = _74
+                    if (_78 != 0) {
+                      let _97 = _76
+                      let _98 = _77
 
-                      _91 = _18.pop()
+                      _94 = _55.pop()
 
-                      const _96 = setInterval(function() {
-                        if (_92 > 12) {
-                          _90 += 16
-                          _94 -= 8
-                          _95 -= 8
+                      const _99 = setInterval(function() {
+                        if (_95 > 12) {
                           _93 += 16
-                          _91.setAttribute(
+                          _97 -= 8
+                          _98 -= 8
+                          _96 += 16
+                          _94.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _94 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _95 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _97 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _98 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 16
+                          _95 -= 16
                         } else {
-                          clearInterval(_96)
-                          _91.setAttribute(
+                          clearInterval(_99)
+                          _94.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_91)
+                          _55.push(_94)
                         }
                       }, 20)
                     } else {
-                      const _96 = setInterval(function() {
-                        if (_92 > 12) {
-                          _90 += 16
-                          _73 -= 8
-                          _74 -= 8
+                      const _99 = setInterval(function() {
+                        if (_95 > 12) {
                           _93 += 16
-                          _82.setAttribute(
+                          _76 -= 8
+                          _77 -= 8
+                          _96 += 16
+                          _85.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _73 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _74 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _76 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _77 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 16
+                          _95 -= 16
                         } else {
-                          clearInterval(_96)
-                          _82.setAttribute(
+                          clearInterval(_99)
+                          _85.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_82)
+                          _55.push(_85)
                         }
                       }, 20)
 
-                      clearInterval(_99)
+                      clearInterval(_102)
                       break
                     }
                   }
                 }
               } else {
-                const _88
-                  = _74 >> 3
+                const _91
+                  = _77 >> 3
 
-                for (const _89 in _3[
-                  _88
+                for (const _92 in _3[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 12)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 12)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 12)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 12)
+                      >= _45[_92]
                   ) {
-                    let _90 = 12
-                    let _91
-                    let _92 = 60
                     let _93 = 12
+                    let _94
+                    let _95 = 60
+                    let _96 = 12
 
-                    _26(
+                    _25(
                       40,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
-                    _75--
+                    _78--
 
-                    if (_75 != 0) {
-                      let _94 = _73
-                      let _95 = _74
+                    if (_78 != 0) {
+                      let _97 = _76
+                      let _98 = _77
 
-                      _91 = _18.pop()
+                      _94 = _55.pop()
 
-                      const _96 = setInterval(function() {
-                        if (_92 > 12) {
-                          _90 += 16
-                          _94 -= 8
-                          _95 -= 8
+                      const _99 = setInterval(function() {
+                        if (_95 > 12) {
                           _93 += 16
-                          _91.setAttribute(
+                          _97 -= 8
+                          _98 -= 8
+                          _96 += 16
+                          _94.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _94 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _95 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _97 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _98 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 16
+                          _95 -= 16
                         } else {
-                          clearInterval(_96)
-                          _91.setAttribute(
+                          clearInterval(_99)
+                          _94.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_91)
+                          _55.push(_94)
                         }
                       }, 20)
                     } else {
-                      const _96 = setInterval(function() {
-                        if (_92 > 12) {
-                          _90 += 16
-                          _73 -= 8
-                          _74 -= 8
+                      const _99 = setInterval(function() {
+                        if (_95 > 12) {
                           _93 += 16
-                          _82.setAttribute(
+                          _76 -= 8
+                          _77 -= 8
+                          _96 += 16
+                          _85.setAttribute(
                             "style",
-                            "height: " + _90 + "px; left: "
-                              + _73 + "px; opacity: 0."
-                              + _92 + "; top: "
-                              + _74 + "px; width: "
-                              + _93 + "px;"
+                            "height: " + _93 + "px; left: "
+                              + _76 + "px; opacity: 0."
+                              + _95 + "; top: "
+                              + _77 + "px; width: "
+                              + _96 + "px;"
                           )
-                          _92 -= 16
+                          _95 -= 16
                         } else {
-                          clearInterval(_96)
-                          _82.setAttribute(
+                          clearInterval(_99)
+                          _85.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          _18.push(_82)
+                          _55.push(_85)
                         }
                       }, 20)
 
-                      clearInterval(_99)
+                      clearInterval(_102)
                       break
                     }
                   }
@@ -5126,58 +5150,58 @@
               }
             }
 
-            _65 = false
+            _68 = false
           }
 
           if (_14 != 0) {
-            _64 = true
+            _67 = true
           }
 
-          _68 = _111
-          _69 = _112
-          _79.setAttribute(
+          _71 = _114
+          _72 = _115
+          _82.setAttribute(
             "style",
-            "left: " + _68 + "px; top: "
-              + _69 + "px; transition: none;"
+            "left: " + _71 + "px; top: "
+              + _72 + "px; transition: none;"
           )
 
-          const _97 = setInterval(function() {
-            if (_70 != 24) {
-              _68 += _80
-              _69 += _81
-              _71--
-              _79.setAttribute(
+          const _100 = setInterval(function() {
+            if (_73 != 24) {
+              _71 += _83
+              _72 += _84
+              _74--
+              _82.setAttribute(
                 "style",
-                "left: " + _68 + "px; opacity: 0."
-                  + _70 + "; top: "
-                  + _69 + "px;"
+                "left: " + _71 + "px; opacity: 0."
+                  + _73 + "; top: "
+                  + _72 + "px;"
               )
-              _70 -= 3
+              _73 -= 3
             } else {
-              clearInterval(_97)
-              _79.setAttribute(
+              clearInterval(_100)
+              _82.setAttribute(
                 "style",
                 "display: none;"
               )
-              _17.push(_79)
+              _54.push(_82)
             }
           }, 20)
 
-          const _98 = setInterval(function() {
-            if (_67 != 80) {
-              _66 -= 4
-              _67 += 8
+          const _101 = setInterval(function() {
+            if (_70 != 80) {
+              _69 -= 4
+              _70 += 8
               _12.setAttribute(
                 "style",
-                "height: " + _67 + "px; left: "
-                  + _77 + "px; margin: "
-                  + _66 + "px 0 0 "
-                  + _66 + "px; top: "
-                  + _78 + "px; width: "
-                  + _67 + "px;"
+                "height: " + _70 + "px; left: "
+                  + _80 + "px; margin: "
+                  + _69 + "px 0 0 "
+                  + _69 + "px; top: "
+                  + _81 + "px; width: "
+                  + _70 + "px;"
               )
             } else {
-              clearInterval(_98)
+              clearInterval(_101)
               _12.setAttribute(
                 "style",
                 "display: none;"
@@ -5185,77 +5209,77 @@
             }
           }, 10)
 
-          if (_83 < 0) {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+          if (_86 < 0) {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _74 > -50 &&
-                  _73 > -50
+                  _77 > -50 &&
+                  _76 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 > -50 &&
-                  _74 < 428
+                  _76 > -50 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           } else {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 > -50
+                  _76 < 722 &&
+                  _77 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 < 428
+                  _76 < 722 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           }
 
-          const _100 = setInterval(function() {
-            _50.setAttribute(
+          const _103 = setInterval(function() {
+            _51.setAttribute(
               "recoil_heavy",
-              _76
+              _79
             )
-            _52.setAttribute(
+            _53.setAttribute(
               "recoil_heavy",
-              _76
+              _79
             )
             i++
 
             if (i < 5) {
-              _76 = (_76 + 1) & 3
+              _79 = (_79 + 1) & 3
             } else {
-              clearInterval(_100)
-              _50.removeAttribute("recoil_heavy")
-              _52.removeAttribute("recoil_heavy")
+              clearInterval(_103)
+              _51.removeAttribute("recoil_heavy")
+              _53.removeAttribute("recoil_heavy")
             }
           }, 25)
         }
@@ -5263,14 +5287,14 @@
       {
         "initialize": function() {
           let i = 0
-          const _54
-            = _18.length
+          const _57
+            = _55.length
 
           _9 = 50
           _11 = 4
 
-          while (i != _54) {
-            _18[i].setAttribute(
+          while (i != _57) {
+            _55[i].setAttribute(
               "class",
               "element player-weapon-projectile submachine-gun"
             )
@@ -5278,11 +5302,11 @@
           }
         },
         "use": function() {
-          _110()
+          _113()
 
           if (
             _10 < _11 ||
-            _21 != 0
+            _19 != 0
           ) {
             _10++
             return
@@ -5292,88 +5316,88 @@
             _4 == false &&
             _9 == 0
           ) {
-            let _55
-              = (_20 & 3) + 3
-            let _56
-              = ((_20 >> 2) & 3) + 3
-            let _57
             let _58
-            let _59 = 98
-            let _60 = _20 & 255
-            let _61 = 5
-            const _62 = _17.pop()
+              = (_18 & 3) + 3
+            let _59
+              = ((_18 >> 2) & 3) + 3
+            let _60
+            let _61
+            let _62 = 98
+            let _63 = _18 & 255
+            let _64 = 5
+            const _65 = _54.pop()
 
             _4 = true
 
-            if ((_20 & 1) == 0) {
-              _55
-                = -_55
+            if ((_18 & 1) == 0) {
+              _58
+                = -_58
             }
 
-            if (((_20 >> 1) & 1) == 0) {
-              _56
-                = -_56
+            if (((_18 >> 1) & 1) == 0) {
+              _59
+                = -_59
             }
 
-            _52.setAttribute(
+            _53.setAttribute(
               "reload",
-              _20 & 3
+              _18 & 3
             )
 
             setTimeout(function() {
-              _57 = _111
-              _58 = _112
-              _62.setAttribute(
+              _60 = _114
+              _61 = _115
+              _65.setAttribute(
                 "style",
-                "left: " + _57 + "px; top: "
-                  + _58 + "px; transform: rotate("
-                  + _60 + "deg); transition: none; width: 12px;"
+                "left: " + _60 + "px; top: "
+                  + _61 + "px; transform: rotate("
+                  + _63 + "deg); transition: none; width: 12px;"
               )
 
-              const _63 = setInterval(function() {
-                if (_59 != 10) {
-                  if (_59 > 70) {
-                    _57 += _55
-                    _58 += _56
-                    _60 -= 3
+              const _66 = setInterval(function() {
+                if (_62 != 10) {
+                  if (_62 > 70) {
+                    _60 += _58
+                    _61 += _59
+                    _63 -= 3
                   } else {
-                    _61 = 3
+                    _64 = 3
                   }
 
-                  _62.setAttribute(
+                  _65.setAttribute(
                     "style",
-                    "left: " + _57 + "px; opacity: 0."
-                      + _59 + "; top: "
-                      + _58 + "px; transform: rotate("
-                      + _60 + "deg); width: 16px; z-index:"
-                      + _61 + ";"
+                    "left: " + _60 + "px; opacity: 0."
+                      + _62 + "; top: "
+                      + _61 + "px; transform: rotate("
+                      + _63 + "deg); width: 16px; z-index:"
+                      + _64 + ";"
                   )
-                  _59 -= 2
+                  _62 -= 2
                 } else {
-                  clearInterval(_63)
-                  _62.setAttribute(
+                  clearInterval(_66)
+                  _65.setAttribute(
                     "style",
                     "display: none;"
                   )
-                  _17.push(_62)
+                  _54.push(_65)
                 }
               }, 50)
-              _52.setAttribute(
+              _53.setAttribute(
                 "reload",
-                _20 & 3
+                _18 & 3
               )
 
               setTimeout(function() {
-                _52.setAttribute(
+                _53.setAttribute(
                   "reload",
-                  _20 & 3
+                  _18 & 3
                 )
 
                 setTimeout(function() {
                   _4 = false
                   _9 = 50
                   _10 = -20
-                  _52.removeAttribute("reload")
+                  _53.removeAttribute("reload")
                 }, 100)
               }, 100)
             }, 100)
@@ -5383,250 +5407,250 @@
 
           if (
             _4 == true ||
-            (_51[133] + _51[141]
-              + _51[147] + _51[150]) == 0
+            (_52[133] + _52[141]
+              + _52[147] + _52[150]) == 0
           ) {
             return
           }
 
           _10 = 0
 
-          let _64 = false
-          let _65 = false
+          let _67 = false
+          let _68 = false
           let i = 0
-          let _66 = 0
-          let _67 = 8
-          let _68
-          let _69
-          let _70 = 96
-          let _71 = _20 & 255
-          let _72 = 5
-          let _73 = _111 + 3
-          let _74 = _112 + 3
-          let _76 = _20 & 3
-          const _77 = _73
-          const _78 = _74
-          const _79 = _17.pop()
-          const _80
-            = (_7 & 7) - (_20 & 7)
-          const _81
-            = (_8 & 7) - ((_20 >> 3) & 7)
-          const _82 = _18.pop()
-          const _83 = (
+          let _69 = 0
+          let _70 = 8
+          let _71
+          let _72
+          let _73 = 96
+          let _74 = _18 & 255
+          let _75 = 5
+          let _76 = _114 + 3
+          let _77 = _115 + 3
+          let _79 = _18 & 3
+          const _80 = _76
+          const _81 = _77
+          const _82 = _54.pop()
+          const _83
+            = (_7 & 7) - (_18 & 7)
+          const _84
+            = (_8 & 7) - ((_18 >> 3) & 7)
+          const _85 = _55.pop()
+          const _86 = (
             _14
-            + (_20 & 1) - ((_20 >> 1) & 1)
+            + (_18 & 1) - ((_18 >> 1) & 1)
           ) * 0.5
-          const _84 = (
+          const _87 = (
             _15
-            + ((_20 >> 2) & 1) - ((_20 >> 3) & 1)
+            + ((_18 >> 2) & 1) - ((_18 >> 3) & 1)
           ) * 0.5
-          const _85
-            = (_83 * 0.5)
-            + (_111 & 7) - (_20 & 7)
-          const _86
-            = (_84 * 0.5)
-            + (_112 & 7) - ((_20 >> 3) & 7)
+          const _88
+            = (_86 * 0.5)
+            + (_114 & 7) - (_18 & 7)
+          const _89
+            = (_87 * 0.5)
+            + (_115 & 7) - ((_18 >> 3) & 7)
 
-          const _87 = function(_99) {
-            if (_65 == true) {
+          const _90 = function(_102) {
+            if (_68 == true) {
               return
             }
 
-            _65 = true
-            _73 += _83
-            _74 += _84
-            _82.setAttribute(
+            _68 = true
+            _76 += _86
+            _77 += _87
+            _85.setAttribute(
               "style",
-              "left: " + _73 + "px; top: "
-                + _74 + "px;"
+              "left: " + _76 + "px; top: "
+                + _77 + "px;"
             )
 
             if (
-              _73 >= 0 &&
-              _73 <= 672 &&
-              _74 >= 0 &&
-              _74 <= 378
+              _76 >= 0 &&
+              _76 <= 672 &&
+              _77 >= 0 &&
+              _77 <= 378
             ) {
-              if (_64 == true) {
-                const _88
-                  = _73 >> 4
+              if (_67 == true) {
+                const _91
+                  = _76 >> 4
 
-                for (const _89 in _2[
-                  _88
+                for (const _92 in _2[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 8)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 8)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 8)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 8)
+                      >= _45[_92]
                   ) {
-                    let _90 = 8
-                    let _91
-                    let _94 = _73
-                    let _95 = _74
-                    let _92 = 40
                     let _93 = 8
+                    let _94
+                    let _97 = _76
+                    let _98 = _77
+                    let _95 = 40
+                    let _96 = 8
 
-                    _26(
+                    _25(
                       50,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
 
-                    const _96 = setInterval(function() {
-                      if (_92 > 0) {
-                        _90 += 10
-                        _73 -= 5
-                        _74 -= 5
-                        _93 += 8
-                        _82.setAttribute(
+                    const _99 = setInterval(function() {
+                      if (_95 > 0) {
+                        _93 += 10
+                        _76 -= 5
+                        _77 -= 5
+                        _96 += 8
+                        _85.setAttribute(
                           "style",
-                          "height: " + _90 + "px; left: "
-                            + _73 + "px; opacity: 0."
-                            + _92 + "; top: "
-                            + _74 + "px; width: "
-                            + _93 + "px;"
+                          "height: " + _93 + "px; left: "
+                            + _76 + "px; opacity: 0."
+                            + _95 + "; top: "
+                            + _77 + "px; width: "
+                            + _96 + "px;"
                         )
-                        _92 -= 20
+                        _95 -= 20
                       } else {
-                        clearInterval(_96)
-                        _82.setAttribute(
+                        clearInterval(_99)
+                        _85.setAttribute(
                           "style",
                           "display: none;"
                         )
-                        _18.push(_82)
+                        _55.push(_85)
                       }
                     }, 20)
 
-                    clearInterval(_99)
+                    clearInterval(_102)
                     break
                   }
                 }
               } else {
-                const _88
-                  = _74 >> 3
+                const _91
+                  = _77 >> 3
 
-                for (const _89 in _3[
-                  _88
+                for (const _92 in _3[
+                  _91
                 ]) {
                   if (
-                    _73
-                      <= (_43[_89] + 28) &&
-                    (_73 + 8)
-                      >= _43[_89] &&
-                    _74
-                      <= (_44[_89] + 28) &&
-                    (_74 + 8)
-                      >= _44[_89]
+                    _76
+                      <= (_44[_92] + 28) &&
+                    (_76 + 8)
+                      >= _44[_92] &&
+                    _77
+                      <= (_45[_92] + 28) &&
+                    (_77 + 8)
+                      >= _45[_92]
                   ) {
-                    let _90 = 8
-                    let _91
-                    let _92 = 40
                     let _93 = 8
+                    let _94
+                    let _95 = 40
+                    let _96 = 8
 
-                    _26(
+                    _25(
                       50,
-                      _89,
-                      _85,
-                      _86
+                      _92,
+                      _88,
+                      _89
                     )
 
-                    const _96 = setInterval(function() {
-                      if (_92 > 0) {
-                        _90 += 10
-                        _73 -= 5
-                        _74 -= 5
+                    const _99 = setInterval(function() {
+                      if (_95 > 0) {
                         _93 += 10
-                        _82.setAttribute(
+                        _76 -= 5
+                        _77 -= 5
+                        _96 += 10
+                        _85.setAttribute(
                           "style",
-                          "height: " + _90 + "px; left: "
-                            + _73 + "px; opacity: 0."
-                            + _92 + "; top: "
-                            + _74 + "px; width: "
-                            + _93 + "px;"
+                          "height: " + _93 + "px; left: "
+                            + _76 + "px; opacity: 0."
+                            + _95 + "; top: "
+                            + _77 + "px; width: "
+                            + _96 + "px;"
                         )
-                        _92 -= 20
+                        _95 -= 20
                       } else {
-                        clearInterval(_96)
-                        _82.setAttribute(
+                        clearInterval(_99)
+                        _85.setAttribute(
                           "style",
                           "display: none;"
                         )
-                        _18.push(_82)
+                        _55.push(_85)
                       }
                     }, 20)
 
-                    clearInterval(_99)
+                    clearInterval(_102)
                     break
                   }
                 }
               }
             }
 
-            _65 = false
+            _68 = false
           }
 
           if (_14 != 0) {
-            _64 = true
+            _67 = true
           }
 
-          _68 = _111
-          _69 = _112
-          _79.setAttribute(
+          _71 = _114
+          _72 = _115
+          _82.setAttribute(
             "style",
-            "left: " + _68 + "px; top: "
-              + _69 + "px; transition: none;"
+            "left: " + _71 + "px; top: "
+              + _72 + "px; transition: none;"
           )
 
-          const _97 = setInterval(function() {
-            if (_70 != 10) {
-              if (_70 > 70) {
-                _68 += _80
-                _69 += _81
-                _71--
+          const _100 = setInterval(function() {
+            if (_73 != 10) {
+              if (_73 > 70) {
+                _71 += _83
+                _72 += _84
+                _74--
               } else {
-                _72 = 3
+                _75 = 3
               }
 
-              _79.setAttribute(
+              _82.setAttribute(
                 "style",
-                "left: " + _68 + "px; opacity: 0."
-                  + _70 + "; top: "
-                  + _69 + "px; transform: rotate("
-                  + _71 + "deg); width: 6px; z-index: "
-                  + _72 + ";"
+                "left: " + _71 + "px; opacity: 0."
+                  + _73 + "; top: "
+                  + _72 + "px; transform: rotate("
+                  + _74 + "deg); width: 6px; z-index: "
+                  + _75 + ";"
               )
-              _70 -= 2
+              _73 -= 2
             } else {
-              clearInterval(_97)
-              _79.setAttribute(
+              clearInterval(_100)
+              _82.setAttribute(
                 "style",
                 "display: none;"
               )
-              _17.push(_79)
+              _54.push(_82)
             }
           }, 50)
 
-          const _98 = setInterval(function() {
-            if (_67 != 72) {
-              _66 -= 4
-              _67 += 8
+          const _101 = setInterval(function() {
+            if (_70 != 72) {
+              _69 -= 4
+              _70 += 8
               _12.setAttribute(
                 "style",
-                "height: " + _67 + "px; left: "
-                  + _77 + "px; margin: "
-                  + _66 + "px 0 0 "
-                  + _66 + "px; top: "
-                  + _78 + "px; width: "
-                  + _67 + "px;"
+                "height: " + _70 + "px; left: "
+                  + _80 + "px; margin: "
+                  + _69 + "px 0 0 "
+                  + _69 + "px; top: "
+                  + _81 + "px; width: "
+                  + _70 + "px;"
               )
             } else {
-              clearInterval(_98)
+              clearInterval(_101)
               _12.setAttribute(
                 "style",
                 "display: none;"
@@ -5634,77 +5658,77 @@
             }
           }, 10)
 
-          if (_83 < 0) {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+          if (_86 < 0) {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _74 > -50 &&
-                  _73 > -50
+                  _77 > -50 &&
+                  _76 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 > -50 &&
-                  _74 < 428
+                  _76 > -50 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           } else {
-            if (_84 < 0) {
-              const _99 = setInterval(function() {
+            if (_87 < 0) {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 > -50
+                  _76 < 722 &&
+                  _77 > -50
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             } else {
-              const _99 = setInterval(function() {
+              const _102 = setInterval(function() {
                 if (
-                  _73 < 722 &&
-                  _74 < 428
+                  _76 < 722 &&
+                  _77 < 428
                 ) {
-                  _87(_99)
+                  _90(_102)
                 } else {
-                  clearInterval(_99)
-                  _18.push(_82)
+                  clearInterval(_102)
+                  _55.push(_85)
                 }
               }, 10)
             }
           }
 
-          const _100 = setInterval(function() {
-            _50.setAttribute(
+          const _103 = setInterval(function() {
+            _51.setAttribute(
               "recoil_light",
-              _76
+              _79
             )
-            _52.setAttribute(
+            _53.setAttribute(
               "recoil_light",
-              _76
+              _79
             )
             i++
 
             if (i < 5) {
-              _76 = (_76 + 1) & 3
+              _79 = (_79 + 1) & 3
             } else {
-              clearInterval(_100)
-              _50.removeAttribute("recoil_light")
-              _52.removeAttribute("recoil_light")
+              clearInterval(_103)
+              _51.removeAttribute("recoil_light")
+              _53.removeAttribute("recoil_light")
             }
           }, 25)
 
@@ -5713,24 +5737,24 @@
       }
     ]
 
-    const _108 = function(callback) {
+    const _111 = function(callback) {
       if (document.readyState != "complete") {
         setTimeout(function() {
-          _108(callback)
+          _111(callback)
         }, 10)
       } else {
         callback()
       }
     }
 
-    const _109 = function() {
-      if ((_51[97] + _51[100]
-        + _51[115] + _51[119]) == 0) {
+    const _112 = function() {
+      if ((_52[97] + _52[100]
+        + _52[115] + _52[119]) == 0) {
         return
       }
 
       if (
-        _51[119] == true &&
+        _52[119] == true &&
         _8 > 0
       ) {
         _8 -= _6
@@ -5741,7 +5765,7 @@
       }
 
       if (
-        _51[97] == true &&
+        _52[97] == true &&
         _7 > 0
       ) {
         _7 -= _6
@@ -5752,7 +5776,7 @@
       }
 
       if (
-        _51[115] == true &&
+        _52[115] == true &&
         _8 < 378
       ) {
         _8 += _6
@@ -5763,7 +5787,7 @@
       }
 
       if (
-        _51[100] == true &&
+        _52[100] == true &&
         _7 < 672
       ) {
         _7 += _6
@@ -5775,152 +5799,142 @@
 
       _7 = _7
       _8 = _8
-      _50.setAttribute(
+      _51.setAttribute(
         "style",
         "left: " + _7 + "px; top: "
           + _8 + "px;"
       )
     }
 
-    const _110 = function() {
-      let _111 = _7 + 8
-      let _112 = _8 + 8
-      let _113 = 0
-      let _114 = 0
+    const _113 = function() {
+      let _114 = _7 + 8
+      let _115 = _8 + 8
+      let _116 = 0
+      let _117 = 0
 
-      if (_51[150] == true) {
-        _114 = -23
+      if (_52[150] == true) {
+        _117 = -23
 
-        if (_51[141] == true) {
-          _113 = -17
-          _114 = -17
+        if (_52[141] == true) {
+          _116 = -17
+          _117 = -17
         } else {
-          if (_51[147] == true) {
-            _113 = 17
-            _114 = -17
+          if (_52[147] == true) {
+            _116 = 17
+            _117 = -17
           }
         }
 
-        _14 = _113
-        _15 = _114
+        _14 = _116
+        _15 = _117
       } else {
-        if (_51[141] == true) {
-          _113 = -23
+        if (_52[141] == true) {
+          _116 = -23
 
-          if (_51[150] == true) {
-            _113 = -17
-            _114 = -17
+          if (_52[150] == true) {
+            _116 = -17
+            _117 = -17
           } else {
-            if (_51[133] == true) {
-              _113 = -17
-              _114 = 17
+            if (_52[133] == true) {
+              _116 = -17
+              _117 = 17
             }
           }
 
-          _14 = _113
-          _15 = _114
+          _14 = _116
+          _15 = _117
         } else {
-          if (_51[133] == true) {
-            _114 = 23
+          if (_52[133] == true) {
+            _117 = 23
 
-            if (_51[141] == true) {
-              _113 = -17
-              _114 = 17
+            if (_52[141] == true) {
+              _116 = -17
+              _117 = 17
             } else {
-              if (_51[147] == true) {
-                _113 = 17
-                _114 = 17
+              if (_52[147] == true) {
+                _116 = 17
+                _117 = 17
               }
             }
 
-            _14 = _113
-            _15 = _114
+            _14 = _116
+            _15 = _117
           } else {
-            if (_51[147] == true) {
-              _113 = 23
+            if (_52[147] == true) {
+              _116 = 23
 
-              if (_51[150] == true) {
-                _113 = 17
-                _114 = -17
+              if (_52[150] == true) {
+                _116 = 17
+                _117 = -17
               } else {
-                if (_51[133] == true) {
-                  _113 = 17
-                  _114 = 17
+                if (_52[133] == true) {
+                  _116 = 17
+                  _117 = 17
                 }
               }
 
-              _14 = _113
-              _15 = _114
+              _14 = _116
+              _15 = _117
             }
           }
         }
       }
 
-      window._111 = _111
+      window._114 = _114
         + _14
-      window._112 = _112
+      window._115 = _115
         + _15
-      _52.setAttribute(
+      _53.setAttribute(
         "style",
-        "left: " + window._111 + "px; top: "
-          + window._112 + "px;"
+        "left: " + window._114 + "px; top: "
+          + window._115 + "px;"
       )
     }
 
-    const _115 = function(selector, callback) {
-      const _116 = document.querySelectorAll(selector)
+    const _118 = function(selector, callback) {
+      const _119 = document.querySelectorAll(selector)
 
-      if (_116.length) {
-        for (const _117 in _116) {
-          if (_116.hasOwnProperty(_117)) {
-            callback(_116[_117])
+      if (_119.length) {
+        for (const _120 in _119) {
+          if (_119.hasOwnProperty(_120)) {
+            callback(_119[_120])
           }
         }
       }
     }
 
-    const _118 = function() {
+    const _121 = function() {
       let i = 0
       let j
-      let _119 = _20
-      let _120 = _20 & 65535
-      const _121 = (_20 & 15) + 25
+      let _122 = _18
+      let _123 = _18 & 65535
+      const _124 = (_18 & 15) + 25
 
-      _115(".bits, .pieces, .splatter", function(selected_element) {
+      _118(".bits, .pieces, .splatter", function(selected_element) {
         selected_element.remove()
       })
 
       while (i != 51) {
-        if (typeof _23[i] != "undefined") {
-          _23[i].remove()
+        if (typeof _22[i] != "undefined") {
+          _22[i].remove()
         }
 
-        _23[i] = document.createElement("div")
-        _23[i].setAttribute(
+        _22[i] = document.createElement("div")
+        _22[i].setAttribute(
           "class",
           "bits-hidden"
         )
 
-        if (typeof _24[i] != "undefined") {
-          _24[i].remove()
+        if (typeof _23[i] != "undefined") {
+          _23[i].remove()
         }
 
-        _24[i] = _22.appendChild(
+        _23[i] = _20.appendChild(
           document.createElement("div")
         )
-        _40[i] = 0
+        _41[i] = 0
         _2[i] = {}
         _3[i] = {}
-
-        if (typeof _45[i] != "undefined") {
-          _45[i].remove()
-        }
-
-        _45[i] = document.createElement("div")
-        _45[i].setAttribute(
-          "class",
-          "pieces-hidden"
-        )
 
         if (typeof _46[i] != "undefined") {
           _46[i].remove()
@@ -5929,93 +5943,103 @@
         _46[i] = document.createElement("div")
         _46[i].setAttribute(
           "class",
+          "pieces-hidden"
+        )
+
+        if (typeof _47[i] != "undefined") {
+          _47[i].remove()
+        }
+
+        _47[i] = document.createElement("div")
+        _47[i].setAttribute(
+          "class",
           "splatter-hidden"
         )
         j = 0
 
         while (j != 10) {
-          _23[i].appendChild(
-            document.createElement("div")
-          )
-          _45[i].appendChild(
+          _22[i].appendChild(
             document.createElement("div")
           )
           _46[i].appendChild(
             document.createElement("div")
           )
+          _47[i].appendChild(
+            document.createElement("div")
+          )
           j++
         }
 
-        _23[i] = _22.appendChild(
-          _23[i]
+        _22[i] = _20.appendChild(
+          _22[i]
         )
-        _45[i] = _22.appendChild(
-          _45[i]
-        )
-        _46[i] = _22.appendChild(
+        _46[i] = _20.appendChild(
           _46[i]
         )
-        _47[i] = 0
-        _48[i] = false
+        _47[i] = _20.appendChild(
+          _47[i]
+        )
+        _48[i] = 0
         _49[i] = false
+        _50[i] = false
 
-        _119 = ((_119 << 13)
-          | (_119 >> 19)) ^ _120
+        _122 = ((_122 << 13)
+          | (_122 >> 19)) ^ _123
 
-        if (_119 < 0) {
-          _119 >>>= _120 & 15
+        if (_122 < 0) {
+          _122 >>>= _123 & 15
         }
 
-        _120 += 1111111
+        _123 += 1111111
 
-        if ((_119 & 1) == 0) {
-          if (((_119 >> 1) & 1) == 0) {
-            _43[i] = -50
-          } else {
-            _43[i] = 722
-          }
-
-          _44[i] = _119 % 378
-        } else {
-          if (((_119 >> 2) & 1) == 0) {
+        if ((_122 & 1) == 0) {
+          if (((_122 >> 1) & 1) == 0) {
             _44[i] = -50
           } else {
-            _44[i] = 428
+            _44[i] = 722
           }
 
-          _43[i] = _119 % 672
+          _45[i] = _122 % 378
+        } else {
+          if (((_122 >> 2) & 1) == 0) {
+            _45[i] = -50
+          } else {
+            _45[i] = 428
+          }
+
+          _44[i] = _122 % 672
         }
 
-        _24[i].setAttribute(
+        _23[i].setAttribute(
           "style",
-          "left: " + _43[i] + "px; top: "
-            + _44[i] + "px; transition: none;"
+          "left: " + _44[i] + "px; top: "
+            + _45[i] + "px; transition: none;"
         )
         i++
       }
 
       i = 0
       _10 = 0
-      _53[_13].initialize()
-      _19 = setInterval(
-        _53[_13].use,
+      _56[_13].initialize()
+      _17 = setInterval(
+        _56[_13].use,
         10
       )
 
-      const _122 = setInterval(function() {
+      const _125 = setInterval(function() {
         if (
           _0 != 26 &&
           i != 51
         ) {
-          let _32 = _43[i]
-          let _33 = _44[i]
+          let _32 = _44[i]
+          let _33 = _45[i]
 
-          _24[i].setAttribute(
+          _23[i].setAttribute(
             "class",
             "element enemy"
           )
-          _25[i] = 100
-          _42[i] = _20 & 3
+          _24[i] = 100
+          _43[i] = _18 & 3
           _0++
 
           if (_32 > 0) {
@@ -6053,48 +6077,48 @@
 
           _3[_33][i] = null
           _3[_33 + 1][i] = null
-          _41[i] = setInterval(
-            _39,
+          _42[i] = setInterval(
+            _40,
             10,
             i
           )
           i++
         } else {
           if (_0 == 0) {
-            let _123 = 0
+            let _126 = 0
 
-            clearInterval(_122)
-            _50.removeAttribute("recoil_heavy")
-            _50.removeAttribute("recoil_light")
-            _52.removeAttribute("recoil_heavy")
-            _52.removeAttribute("recoil_light")
+            clearInterval(_125)
+            _51.removeAttribute("recoil_heavy")
+            _51.removeAttribute("recoil_light")
+            _53.removeAttribute("recoil_heavy")
+            _53.removeAttribute("recoil_light")
 
-            _21 = setInterval(function() {
-              if (_123 != 704) {
-                _125.setAttribute(
+            _19 = setInterval(function() {
+              if (_126 != 704) {
+                _128.setAttribute(
                   "style",
-                  "height: 378px; width: " + _123 + "px;"
+                  "height: 378px; width: " + _126 + "px;"
                 )
-                _123 += 8
+                _126 += 8
               } else {
-                clearInterval(_21)
+                clearInterval(_19)
                 i = 0
-                _21 = 0
-                _125.setAttribute(
+                _19 = 0
+                _128.setAttribute(
                   "style",
                   "display:none; width: 0;"
                 )
-                clearInterval(_19)
+                clearInterval(_17)
                 _4 = false
                 _16 = _13
-                _13 = _20 % _53.length
+                _13 = _18 % _56.length
 
                 if (_13 == _16) {
                   _13 = (_13 + 1)
-                    % _53.length
+                    % _56.length
                 }
 
-                _118()
+                _121()
               }
             }, 10)
           }
@@ -6102,115 +6126,115 @@
       }, 150)
     }
 
-    const _124 = document.querySelector(".prompt")
-    const _125 = document.createElement("div")
+    const _127 = document.querySelector(".prompt")
+    const _128 = document.createElement("div")
 
     onload = function() {
-      _108(function() {
-        _22.setAttribute(
+      _111(function() {
+        _21.setAttribute(
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: "
             + ((innerHeight >> 1) - 189) + "px;"
         )
-        _51[133] = 0
-        _51[141] = 0
-        _51[147] = 0
-        _51[150] = 0
+        _52[133] = 0
+        _52[141] = 0
+        _52[147] = 0
+        _52[150] = 0
 
         document.querySelector("body").addEventListener(
           "keydown",
           function(event) {
-            let _126 = event.key.charCodeAt(0)
+            let _129 = event.key.charCodeAt(0)
 
             if (
               event.key[0] == "A" &&
               event.key[1] == "r"
             ) {
               event.preventDefault()
-              _126 += event.key.charCodeAt(5)
+              _129 += event.key.charCodeAt(5)
             }
 
-            _51[_126] = 1
+            _52[_129] = 1
           }
         )
 
         document.querySelector("body").addEventListener(
           "keyup",
           function(event) {
-            let _126 = event.key.charCodeAt(0)
+            let _129 = event.key.charCodeAt(0)
 
             if (
               event.key[0] == "A" &&
               event.key[1] == "r"
             ) {
               event.preventDefault()
-              _126 += event.key.charCodeAt(5)
+              _129 += event.key.charCodeAt(5)
             }
 
-            _51[_126] = 0
+            _52[_129] = 0
           }
         )
 
-        const _127 = setInterval(function() {
-          if ((_51[133] + _51[141]
-            + _51[147] + _51[150]) != 0) {
-            let _128 = 0
+        const _130 = setInterval(function() {
+          if ((_52[133] + _52[141]
+            + _52[147] + _52[150]) != 0) {
+            let _131 = 0
             let i = 0
             let j
 
-            clearInterval(_127)
-            clearInterval(_129)
-            _124.classList.add("hidden")
-            _125.setAttribute(
+            clearInterval(_130)
+            clearInterval(_132)
+            _127.classList.add("hidden")
+            _128.setAttribute(
               "class",
               "element wave-cleanup"
             )
-            _22.append(_125)
-            _50.setAttribute("class", "element player")
+            _20.append(_128)
+            _51.setAttribute("class", "element player")
             _7 = 322
             _8 = 175
-            _50.setAttribute(
+            _51.setAttribute(
               "style",
               "left: " + _7 + "px; top: "
                 + _8 + "px;"
             )
-            _22.append(_50)
-            _51[97] = 0
-            _51[100] = 0
-            _51[115] = 0
-            _51[119] = 0
-            _51[133] = 0
-            _51[141] = 0
-            _51[147] = 0
-            _51[150] = 0
-            _5 = setInterval(_109, 20)
-            _52.setAttribute(
+            _20.append(_51)
+            _52[97] = 0
+            _52[100] = 0
+            _52[115] = 0
+            _52[119] = 0
+            _52[133] = 0
+            _52[141] = 0
+            _52[147] = 0
+            _52[150] = 0
+            _5 = setInterval(_112, 20)
+            _53.setAttribute(
               "class",
               "element player-weapon"
             )
-            _22.appendChild(_52)
+            _20.appendChild(_53)
             _12 = document.createElement("div")
             _12.setAttribute(
               "class",
               "element player-weapon-muzzle-flash"
             )
-            _12 = _22.appendChild(
+            _12 = _20.appendChild(
               _12
             )
-            _13 = Date.now() % _53.length
+            _13 = Date.now() % _56.length
 
             while (i != 300) {
-              _18[i] = document.createElement("div")
-              _18[i].setAttribute(
+              _55[i] = document.createElement("div")
+              _55[i].setAttribute(
                 "class",
                 "element player-weapon-projectile"
               )
-              _18[i].setAttribute(
+              _55[i].setAttribute(
                 "style",
                 "display: none;"
               )
-              _18[i] = _22.appendChild(
-                _18[i]
+              _55[i] = _20.appendChild(
+                _55[i]
               )
               i++
             }
@@ -6218,48 +6242,48 @@
             i = 0
 
             while (i != 300) {
-              _17[i] = document.createElement("div")
-              _17[i].setAttribute(
+              _54[i] = document.createElement("div")
+              _54[i].setAttribute(
                 "class",
                 "element player-weapon-projectile-effect"
               )
-              _17[i].setAttribute(
+              _54[i].setAttribute(
                 "style",
                 "display: none;"
               )
-              _17[i] = _22.appendChild(
-                _17[i]
+              _54[i] = _20.appendChild(
+                _54[i]
               )
               i++
             }
 
             setInterval(function() {
-              _20 = ((_20 << 13)
-                | (_20 >> 19)) ^ _128
+              _18 = ((_18 << 13)
+                | (_18 >> 19)) ^ _131
 
-              if (_20 < 0) {
-                _20 >>>= _128 & 15
+              if (_18 < 0) {
+                _18 >>>= _131 & 15
               }
 
-              if (_128 <= 2146372536) {
-                _128 += 1111111
+              if (_131 <= 2146372536) {
+                _131 += 1111111
               } else {
-                _128 = Date.now() & 65535
+                _131 = Date.now() & 65535
               }
             }, 10)
 
-            _118()
+            _121()
           }
         }, 10)
 
-        const _129 = setInterval(function() {
-          _124.classList.toggle("hidden")
+        const _132 = setInterval(function() {
+          _127.classList.toggle("hidden")
         }, 500)
       })
     }
 
     onresize = function() {
-      _22.setAttribute(
+      _21.setAttribute(
         "style",
         "left: " + ((innerWidth >> 1) - 336) + "px; top:"
           + ((innerHeight >> 1) - 189) + "px;"
