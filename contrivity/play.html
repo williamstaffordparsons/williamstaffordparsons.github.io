@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <title>Play Contrivity</title>
-    <link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon">
     <meta content="noindex" name="robots">
     <meta charset="utf-8">
     <style type="text/css">
@@ -2402,9 +2401,9 @@
     let _20 = 0
     const _21 = document.querySelector(".bounds")
     const _22 = document.querySelector(".bounds-container")
-    const _23 = Array(51)
-    const _24 = Array(51)
-    const _25 = Array(51)
+    const _23 = Array(42)
+    const _24 = Array(42)
+    const _25 = Array(42)
 
     const _26 = function(
       enemy_damage,
@@ -2954,21 +2953,21 @@
       _51[_95] = false
     }
 
-    const _42 = Array(51)
-    const _43 = Array(51)
-    const _44 = Array(51)
-    const _45 = Array(51)
-    const _46 = Array(51)
-    const _47 = Array(51)
-    const _48 = Array(51)
-    const _49 = Array(51)
-    const _50 = Array(51)
-    const _51 = Array(51)
+    const _42 = Array(42)
+    const _43 = Array(42)
+    const _44 = Array(42)
+    const _45 = Array(42)
+    const _46 = Array(42)
+    const _47 = Array(42)
+    const _48 = Array(42)
+    const _49 = Array(42)
+    const _50 = Array(42)
+    const _51 = Array(42)
     const _52 = document.createElement("div")
     const _53 = Array(151)
     const _54 = document.createElement("div")
-    const _55 = Array(250)
-    const _56 = Array(250)
+    const _55 = Array(150)
+    const _56 = Array(200)
     const _57 = [
       {
         "initialize": function() {
@@ -2977,7 +2976,7 @@
             = _56.length
 
           _10 = 30
-          _12 = 6
+          _12 = 7
 
           while (i != _58) {
             _56[i].setAttribute(
@@ -5572,7 +5571,7 @@
         selected_element.remove()
       })
 
-      while (i != 51) {
+      while (i != 42) {
         if (typeof _23[i] != "undefined") {
           _23[i].remove()
         }
@@ -5676,6 +5675,12 @@
         i++
       }
 
+      while (i != 51) {
+        _2[i] = {}
+        _3[i] = {}
+        i++
+      }
+
       i = 0
       _11 = 0
       _57[_14].initialize()
@@ -5687,7 +5692,7 @@
       const _128 = setInterval(function() {
         if (
           _0 != 26 &&
-          i != 51
+          i != 42
         ) {
           let _33 = _45[i]
           let _34 = _46[i]
@@ -5881,7 +5886,7 @@
             )
             _14 = Date.now() % _57.length
 
-            while (i != 250) {
+            while (i != 150) {
               _55[i] = document.createElement("div")
               _55[i].setAttribute(
                 "class",
@@ -5899,7 +5904,7 @@
 
             i = 0
 
-            while (i != 250) {
+            while (i != 200) {
               _56[i] = document.createElement("div")
               _56[i].setAttribute(
                 "class",
