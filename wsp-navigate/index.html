@@ -229,7 +229,6 @@ int main(void) {
 
   return map[i];
 }</code><p>Although the aforementioned solution works, <span class="code">map</span> isn't required and wastes 40–80 bytes of memory per instance.</p><p>In addition to the 4 required conditional statements, <span class="code">map</span> uses 8 dereferences, 8 assignments and 7 arithmetic operations.</p><p>These 4 conditional statements can be optimized further by nesting conditional statements and using <span class="code">=</span> operations instead of <span class="code">+=</span> operations.</p><p>The following code is a second attempt without mapping the traversal steps.</p><code>long navigate_bad(const unsigned long grid_width,
-
                   const unsigned long grid_height, const unsigned long source,
                   const unsigned long destination) {
   const unsigned long source_x = source % grid_width;
