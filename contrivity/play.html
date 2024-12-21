@@ -1109,6 +1109,27 @@
 
     const player_weapon_projectile_elements = Array(55)
 
+    const player_weapon_projectile_impact = function(player_weapon_projectile_offset_left, player_weapon_projectile_offset_top) {
+      const bits_element = bits_elements.pop()
+
+      if (typeof bits_element != "undefined") {
+        bits_element.setAttribute("class", "bits bits-" + randomized_bits + " bits-transition element")
+        randomized_bits = (randomized_bits + 1) & 15
+        bits_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
+
+        setTimeout(function() {
+          bits_element.setAttribute("fade-out", "")
+
+          setTimeout(function() {
+            bits_element.removeAttribute("style")
+            bits_element.removeAttribute("fade-out")
+            bits_element.setAttribute("class", "bits-hidden")
+            bits_elements.push(bits_element)
+          }, 400)
+        }, 400)
+      }
+    }
+
     const player_weapons = [
       {
         "initialize": function() {
@@ -1145,8 +1166,8 @@
               let player_weapon_projectile_move
               let player_weapon_projectile_offset_left = player_weapon_offset_left + 3
               let player_weapon_projectile_offset_top = player_weapon_offset_top + 3
-              const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left_state + randomized_state_segmented_medium_e) * 0.4
-              const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top_state + randomized_state_segmented_medium_f) * 0.4
+              const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left_state + randomized_state_segmented_medium_e) * 0.3
+              const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top_state + randomized_state_segmented_medium_f) * 0.3
 
               if (player_weapon_offset_increment_left != 0) {
                 player_weapon_projectile_move = function(player_weapon_projectile_id) {
@@ -1180,25 +1201,7 @@
                         })
 
                         setTimeout(function() {
-                          const bits_element = bits_elements.pop()
-
-                          if (typeof bits_element != "undefined") {
-                            bits_element.setAttribute("class", "bits bits-" + randomized_bits + " bits-transition element")
-                            randomized_bits = (randomized_bits + 1) & 15
-                            bits_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
-
-                            setTimeout(function() {
-                              bits_element.setAttribute("fade-out", "")
-
-                              setTimeout(function() {
-                                bits_element.removeAttribute("style")
-                                bits_element.removeAttribute("fade-out")
-                                bits_element.setAttribute("class", "bits-hidden")
-                                bits_elements.push(bits_element)
-                              }, 400)
-                            }, 400)
-                          }
-
+                          player_weapon_projectile_impact(player_weapon_projectile_offset_left, player_weapon_projectile_offset_top)
                           player_weapon_projectile_element.setAttribute("style", "display: none; left: 0; top: 0;")
                           player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         })
@@ -1243,25 +1246,7 @@
                         })
 
                         setTimeout(function() {
-                          const bits_element = bits_elements.pop()
-
-                          if (typeof bits_element != "undefined") {
-                            bits_element.setAttribute("class", "bits bits-" + randomized_bits + " bits-transition element")
-                            randomized_bits = (randomized_bits + 1) & 15
-                            bits_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
-
-                            setTimeout(function() {
-                              bits_element.setAttribute("fade-out", "")
-
-                              setTimeout(function() {
-                                bits_element.removeAttribute("style")
-                                bits_element.removeAttribute("fade-out")
-                                bits_element.setAttribute("class", "bits-hidden")
-                                bits_elements.push(bits_element)
-                              }, 400)
-                            }, 400)
-                          }
-
+                          player_weapon_projectile_impact(player_weapon_projectile_offset_left, player_weapon_projectile_offset_top)
                           player_weapon_projectile_element.setAttribute("style", "display: none; left: 0; top: 0;")
                           player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         })
@@ -1289,7 +1274,7 @@
 
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }, 9)
+                  }, 7)
 
                   return
                 }
@@ -1305,7 +1290,7 @@
 
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                }, 9)
+                }, 7)
 
                 return
               }
@@ -1322,7 +1307,7 @@
 
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                }, 9)
+                }, 7)
 
                 return
               }
@@ -1338,7 +1323,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 9)
+              }, 7)
             }
 
             while (player_weapon_projectile_delay != 60) {
@@ -1408,8 +1393,8 @@
             let player_weapon_projectile_offset_left = player_weapon_offset_left + 3
             let player_weapon_projectile_offset_top = player_weapon_offset_top + 3
             let player_weapon_projectile_move
-            const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left + randomized_state_segmented_medium_e) * 0.4
-            const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top + randomized_state_segmented_medium_f) * 0.4
+            const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left + randomized_state_segmented_medium_e) * 0.3
+            const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top + randomized_state_segmented_medium_f) * 0.3
 
             if (player_weapon_offset_increment_left != 0) {
               player_weapon_projectile_move = function(player_weapon_projectile_id) {
@@ -1443,25 +1428,7 @@
                       })
 
                       setTimeout(function() {
-                        const bits_element = bits_elements.pop()
-
-                        if (typeof bits_element != "undefined") {
-                          bits_element.setAttribute("class", "bits bits-" + randomized_bits + " bits-transition element")
-                          randomized_bits = (randomized_bits + 1) & 15
-                          bits_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
-
-                          setTimeout(function() {
-                            bits_element.setAttribute("fade-out", "")
-
-                            setTimeout(function() {
-                              bits_element.removeAttribute("style")
-                              bits_element.removeAttribute("fade-out")
-                              bits_element.setAttribute("class", "bits-hidden")
-                              bits_elements.push(bits_element)
-                            }, 400)
-                          }, 400)
-                        }
-
+                        player_weapon_projectile_impact(player_weapon_projectile_offset_left, player_weapon_projectile_offset_top)
                         player_weapon_projectile_element.setAttribute("style", "display: none; left: 0; top: 0;")
                         player_weapon_projectile_elements.push(player_weapon_projectile_element)
                       })
@@ -1506,25 +1473,7 @@
                       })
 
                       setTimeout(function() {
-                        const bits_element = bits_elements.pop()
-
-                        if (typeof bits_element != "undefined") {
-                          bits_element.setAttribute("class", "bits bits-" + randomized_bits + " bits-transition element")
-                          randomized_bits = (randomized_bits + 1) & 15
-                          bits_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
-
-                          setTimeout(function() {
-                            bits_element.setAttribute("fade-out", "")
-
-                            setTimeout(function() {
-                              bits_element.removeAttribute("style")
-                              bits_element.removeAttribute("fade-out")
-                              bits_element.setAttribute("class", "bits-hidden")
-                              bits_elements.push(bits_element)
-                            }, 400)
-                          }, 400)
-                        }
-
+                        player_weapon_projectile_impact(player_weapon_projectile_offset_left, player_weapon_projectile_offset_top)
                         player_weapon_projectile_element.setAttribute("style", "display: none; left: 0; top: 0;")
                         player_weapon_projectile_elements.push(player_weapon_projectile_element)
                       })
@@ -1552,7 +1501,7 @@
 
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                }, 9)
+                }, 7)
 
                 return
               }
@@ -1568,7 +1517,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 9)
+              }, 7)
 
               return
             }
@@ -1585,7 +1534,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 9)
+              }, 7)
 
               return
             }
@@ -1601,7 +1550,7 @@
 
               clearInterval(player_weapon_projectile_id)
               player_weapon_projectile_elements.push(player_weapon_projectile_element)
-            }, 9)
+            }, 7)
           })
 
           setTimeout(function() {
@@ -1667,8 +1616,8 @@
             let player_weapon_projectile_offset_left = player_weapon_offset_left + 3
             let player_weapon_projectile_offset_top = player_weapon_offset_top + 3
             let player_weapon_projectile_move
-            const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left + randomized_state_segmented_small_e) * 0.4
-            const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top + randomized_state_segmented_small_f) * 0.4
+            const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left + randomized_state_segmented_small_e) * 0.3
+            const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top + randomized_state_segmented_small_f) * 0.3
 
             if (player_weapon_offset_increment_left != 0) {
               player_weapon_projectile_move = function(player_weapon_projectile_id) {
@@ -1702,25 +1651,7 @@
                       })
 
                       setTimeout(function() {
-                        const bits_element = bits_elements.pop()
-
-                        if (typeof bits_element != "undefined") {
-                          bits_element.setAttribute("class", "bits bits-" + randomized_bits + " bits-transition element")
-                          randomized_bits = (randomized_bits + 1) & 15
-                          bits_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
-
-                          setTimeout(function() {
-                            bits_element.setAttribute("fade-out", "")
-
-                            setTimeout(function() {
-                              bits_element.removeAttribute("style")
-                              bits_element.removeAttribute("fade-out")
-                              bits_element.setAttribute("class", "bits-hidden")
-                              bits_elements.push(bits_element)
-                            }, 400)
-                          }, 400)
-                        }
-
+                        player_weapon_projectile_impact(player_weapon_projectile_offset_left, player_weapon_projectile_offset_top)
                         player_weapon_projectile_element.setAttribute("style", "display: none; left: 0; top: 0;")
                         player_weapon_projectile_elements.push(player_weapon_projectile_element)
                       })
@@ -1765,25 +1696,7 @@
                       })
 
                       setTimeout(function() {
-                        const bits_element = bits_elements.pop()
-
-                        if (typeof bits_element != "undefined") {
-                          bits_element.setAttribute("class", "bits bits-" + randomized_bits + " bits-transition element")
-                          randomized_bits = (randomized_bits + 1) & 15
-                          bits_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
-
-                          setTimeout(function() {
-                            bits_element.setAttribute("fade-out", "")
-
-                            setTimeout(function() {
-                              bits_element.removeAttribute("style")
-                              bits_element.removeAttribute("fade-out")
-                              bits_element.setAttribute("class", "bits-hidden")
-                              bits_elements.push(bits_element)
-                            }, 400)
-                          }, 400)
-                        }
-
+                        player_weapon_projectile_impact(player_weapon_projectile_offset_left, player_weapon_projectile_offset_top)
                         player_weapon_projectile_element.setAttribute("style", "display: none; left: 0; top: 0;")
                         player_weapon_projectile_elements.push(player_weapon_projectile_element)
                       })
@@ -1811,7 +1724,7 @@
 
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                }, 9)
+                }, 7)
 
                 return
               }
@@ -1827,7 +1740,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 9)
+              }, 7)
 
               return
             }
@@ -1844,7 +1757,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 9)
+              }, 7)
 
               return
             }
@@ -1860,7 +1773,7 @@
 
               clearInterval(player_weapon_projectile_id)
               player_weapon_projectile_elements.push(player_weapon_projectile_element)
-            }, 9)
+            }, 7)
           })
 
           setTimeout(function() {
