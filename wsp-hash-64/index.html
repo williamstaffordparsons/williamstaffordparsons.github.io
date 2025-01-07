@@ -1,243 +1,31 @@
-<!DOCTYPE html><html lang="en"><head><title>WSP-Hash-64: The Fastest Portable 64-Bit Hashing Algorithm</title><link href="https://williamstaffordparsons.github.io/wsp-hash-64/" rel="canonical"><link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.1px;text-decoration:none;transition:opacity 0.2s ease;}a:hover{opacity:0.9;}body,html{background:#fafafa;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:23px;margin:0;overflow-x:hidden;width:100%;}code{background:#f3f3f3 !important;border:2px solid #bcbcbc !important;border-radius:4px;box-sizing:border-box !important;color:#222;display:inline-block;font-family:monospace !important;font-size:11px;font-weight:normal;height:auto;line-height:18px !important;margin:6px 0 16px;max-height:800px;overflow-x:scroll;padding:30px 31px 25px !important;white-space:pre;width:100% !important;}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.7px;line-height:32px;margin:-6px 0 29px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 16px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.2px;margin:13px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 15px;width:100%;}p .code,ul .code{background:#f3f3f3;border:2px solid #bcbcbc;border-radius:4px;color:#222;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;line-height:16px;margin:2px 1px;padding:4px 5px 0;}ul{list-style:none;margin:0;padding:0;}ul li{color:#555;margin-bottom:15px;}.game{background:#000;border-radius:5px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;transition:opacity 0.2s ease;}.game:hover {opacity:0.9;}.game.no-margin-top{margin-top:5px !important;}.game a{border-radius:5px;height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game img{display:block;height:32px;margin:12px 0 0;width:32px;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game p{color:#999;margin-bottom:5px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}.william-stafford-parsons-icon{float:left;margin:0 15px 9px 0;}.william-stafford-parsons-icon img{float:left;height:32px !important;margin:-3px 0 0;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="william-stafford-parsons-icon" href="/"><img src="/icon-william-stafford-parsons.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Hash-64: The Fastest Portable 64-Bit Hashing Algorithm With Aligned Multi-Byte Memory Reading and Good Quality</h1><div class="section"><p class="no-margin-bottom"><a href="/about/">William Stafford Parsons</a> developed a 64-bit hashing algorithm as a substantial improvement to CityHash64, FarmHash64, 64-bit MurmurHash3 x64 and x86, 64-bit SpookyHashV2 and XXHash64.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><code>#include &lt;stdint.h&gt;
-#include &lt;string.h&gt;
+<!DOCTYPE html><html lang="en"><head><title>WSP-Hash-64: The Fastest Portable 64-Bit Hashing Algorithm</title><link href="https://williamstaffordparsons.github.io/wsp-hash-64/" rel="canonical"><link href="/favicon.ico" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.2px;text-decoration:none;}body,html{background:#fff;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:25px;margin:0;overflow-x:hidden;width:100%;}code{background:#eee;border-radius:4px;box-sizing:border-box;color:#111;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;height:auto;letter-spacing:-0.2px;line-height:19px;margin:6px 0 19px;overflow-x:scroll;padding:28px 31px 25px;white-space:pre;width:100%}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.9px;line-height:32px;margin:-6px 0 34px;word-spacing:1.4px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 24px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.3px;margin:10px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 17px;width:100%;}p .code{background:#eee;border-radius:4px;color:#111;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;letter-spacing:-0.2px;line-height:17px;margin:2px 1px;padding:4px 6px 0;}.game{background:#000;border-radius:4px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;}.game.no-margin-top{margin-top:5px !important;}.game a{height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game img{display:block;height:32px;margin-top:12px;width:32px;}.game p{color:#999;margin-bottom:5px;}.icon{float:left;line-height:32px;}.icon img{float:left;height:32px;margin-right:15px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="william-stafford-parsons-icon" href="/"><img src="/icon-william-stafford-parsons.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Hash-64: The Fastest Portable 64-Bit Hashing Algorithm With Aligned Multi-Byte Memory Reading and Good Quality</h1><div class="section"><p class="no-margin-bottom"><a href="https://github.com/williamstaffordparsons/wsp-hash-64">WSP-Hash-64</a> developed a 64-bit hashing algorithm as a substantial improvement to CityHash64, FarmHash64, 64-bit MurmurHash3 x64 and x86, 64-bit SpookyHashV2 and XXHash64.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><p><a href="https://raw.githubusercontent.com/williamstaffordparsons/wsp-hash-64/refs/heads/master/wsp_hash_64.c">wsp_hash_64.c</a><br><a href="https://raw.githubusercontent.com/williamstaffordparsons/wsp-hash-64/refs/heads/master/wsp_hash_64.h">wsp_hash_64.h</a></p><h3>Reference</h3><p><span class="code no-margin-left">wsp_hash_64_initialize()</span> is the initialization function that accepts the following argument.</p><p>1. <span class="code">s</span> is a <span class="code">struct wsp_hash_64_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_64_transform()</span> is the core hashing loop that accepts the 4 following arguments in left-to-right order.</p><p>1. <span class="code">i</span> is the starting index position of elements in the <span class="code">input</span> array.</p><p>2. <span class="code">input_count</span> is the count of elements in the <span class="code">input</span> array. When hashing in split segments, the value must be a multiple of 32, with the exception of the end segment.</p><p>3. <span class="code">input</span> is the <span class="code">const uint8_t</span> array to hash.</p><p>4. <span class="code">s</span> is a <span class="code">struct wsp_hash_64_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_64_finalize()</span> is the finalization function that accepts the following argument.</p><p>1. <span class="code">s</span> is a <span class="code">struct wsp_hash_64_s</span> pointer. <span class="code">s.state</span> contains the finalized hash digest result.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Example</h3><code>#include &lt;stdio.h&gt;
+#include "wsp_hash_64.h"
 
-struct wsp_hash_64_s {
-  uint64_t a;
-  uint64_t b;
-  uint64_t c;
-  uint64_t d;
-  uint64_t mix;
-  uint64_t mix_offset;
-  unsigned long input_count_capture;
-};
+int main(void) {
+  struct wsp_hash_64_s s;
+  uint8_t input[8] = {'m', 'e', 's', 's', 'a', 'g', 'e', 0};
+  unsigned char i = 0;
 
-uint32_t wsp_hash_read_32(const uint8_t *input, unsigned long i) {
-  uint32_t input_aligned;
-
-  memcpy(&input_aligned, &input[i], sizeof(input_aligned));
-  return input_aligned;
-}
-
-uint64_t wsp_hash_read_64(const uint8_t *input, unsigned long i) {
-  uint64_t input_aligned;
-
-  memcpy(&input_aligned, &input[i], sizeof(input_aligned));
-  return input_aligned;
-}
-
-uint64_t wsp_hash_64(unsigned long input_count, const uint8_t *input) {
-  uint64_t input_aligned_capture_a;
-  uint64_t input_aligned_capture_b;
-  uint64_t input_aligned_capture_c;
-  uint64_t input_aligned_capture_d;
-  uint64_t a = 1;
-  uint64_t b = 11;
-  uint64_t c = 111;
-  uint64_t d = 1111;
-  uint64_t mix = 1111111111;
-  uint64_t mix_offset = 111111111;
-  unsigned long input_count_capture = input_count;
-  unsigned long i = 0;
-
-  if (input_count >= 32) {
-    i = 31;
-
-    while (i < input_count) {
-      input_aligned_capture_a = wsp_hash_read_64(input, i - 7);
-      input_aligned_capture_b = wsp_hash_read_64(input, i - 15);
-      input_aligned_capture_c = wsp_hash_read_64(input, i - 23);
-      input_aligned_capture_d = wsp_hash_read_64(input, i - 31);
-      mix += input_aligned_capture_a + input_aligned_capture_b
-        + input_aligned_capture_c + input_aligned_capture_d;
-      a += input_aligned_capture_a + ((a << 30) | (a >> 34)) + mix;
-      b += input_aligned_capture_b + ((b << 29) | (b >> 35));
-      c += input_aligned_capture_c + ((c << 28) | (c >> 36));
-      d += input_aligned_capture_d + ((d << 27) | (d >> 37));
-      i += 32;
-    }
-
-    if (i >= input_count) {
-      i -= 32;
-    }
-
-    mix_offset += input_aligned_capture_a + input_aligned_capture_b
-        + input_aligned_capture_c + input_aligned_capture_d + a + b + c + d;
+  while (i != 10) {
     i++;
+    printf("All-at-once result %u is 0x%016lx.\n", i, wsp_hash_64(8, input));
+    input[7]++;
   }
 
-  if ((input_count - i) >= 16) {
-    i += 16;
-    input_aligned_capture_a = wsp_hash_read_64(input, i - 16);
-    input_aligned_capture_b = wsp_hash_read_64(input, i - 8);
-    mix += input_aligned_capture_a + input_aligned_capture_b;
-    a += input_aligned_capture_a + ((a << 30) | (a >> 34)) + mix;
-    b += input_aligned_capture_b + ((b << 28) | (b >> 36)) + mix;
-  }
+  input[7] = 0;
+  i = 0;
 
-  if ((input_count - i) >= 8) {
-    i += 8;
-    input_aligned_capture_a = wsp_hash_read_64(input, i - 8);
-    mix += input_aligned_capture_a + a;
-    a += ((input_aligned_capture_a << 30) | (input_aligned_capture_a >> 34))
-      + mix;
-  }
-
-  if (i != input_count) {
-    input_count -= i;
-
-    if (input_count >= 4) {
-      mix += (a << 16) | (a >> 48);
-      a += wsp_hash_read_32(input, i) + mix_offset;
-
-      if (input_count != 4) {
-        mix += (b << 20) | (b >> 44);
-
-        switch (input_count) {
-          case 7:
-            b += input[i + 6] << 16;
-          case 6:
-            b += input[i + 5] << 8;
-          case 5:
-            b += input[i + 4];
-        }
-      }
-    }
-
-    switch (input_count) {
-      case 3:
-        a += input[i + 2] << 16;
-      case 2:
-        a += input[i + 1] << 8;
-      case 1:
-        a += input[i] + mix;
-    }
-  }
-
-  a += b + mix_offset + input_count_capture;
-  mix = a ^ (mix + ((a << 16) | (a >> 48)) + ((c << 44) | (c >> 20)));
-  mix_offset += ((a << 40) | (a >> 24)) ^ ((b << 36) | (b >> 28));
-  b ^= mix_offset + input_count_capture;
-  mix_offset += a ^ (((b << 36) | (b >> 28)) + ((d << 14) | (d >> 50)) + mix);
-  a = b + d + mix_offset;
-  c += (d << 22) | (d >> 42);
-  mix_offset += ((a << 40) | (a >> 24)) ^ b;
-  b = a ^ ((mix_offset << 36) | (mix_offset >> 28));
-  d = (((a << 26) | (a >> 38)) ^ d) + c + mix;
-  return b + d + mix_offset;
-}
-
-void wsp_hash_64_initialize(struct wsp_hash_64_s *s) {
-  s->a = 1;
-  s->b = 11;
-  s->c = 111;
-  s->d = 1111;
-  s->mix = 1111111111;
-  s->mix_offset = 111111111;
-  s->input_count_capture = 0;
-}
-
-void wsp_hash_64_transform(unsigned long i, unsigned long input_count,
-                           const uint8_t *input,
-                           struct wsp_hash_64_s *s) {
-  uint64_t input_aligned_capture_a;
-  uint64_t input_aligned_capture_b;
-  uint64_t input_aligned_capture_c;
-  uint64_t input_aligned_capture_d;
-
-  s->input_count_capture += input_count;
-
-  if (input_count >= 32) {
-    i = 31;
-
-    while (i < input_count) {
-      input_aligned_capture_a = wsp_hash_read_64(input, i - 7);
-      input_aligned_capture_b = wsp_hash_read_64(input, i - 15);
-      input_aligned_capture_c = wsp_hash_read_64(input, i - 23);
-      input_aligned_capture_d = wsp_hash_read_64(input, i - 31);
-      s->mix += input_aligned_capture_a + input_aligned_capture_b
-        + input_aligned_capture_c + input_aligned_capture_d;
-      s->a += input_aligned_capture_a + ((s->a << 30) | (s->a >> 34)) + s->mix;
-      s->b += input_aligned_capture_b + ((s->b << 29) | (s->b >> 35));
-      s->c += input_aligned_capture_c + ((s->c << 28) | (s->c >> 36));
-      s->d += input_aligned_capture_d + ((s->d << 27) | (s->d >> 37));
-      i += 32;
-    }
-
-    if (i >= input_count) {
-      i -= 32;
-    }
-
-    s->mix_offset += input_aligned_capture_a + input_aligned_capture_b
-      + input_aligned_capture_c + input_aligned_capture_d + s->a + s->b + s->c
-      + s->d;
+  while (i != 10) {
     i++;
+    wsp_hash_64_initialize(&s);
+    wsp_hash_64_transform(0, 8, input, &s);
+    wsp_hash_64_finalize(&s);
+    input[7]++;
+    printf("Segmented result %u is 0x%016lx.\n", i, s.mix);
   }
 
-  if ((input_count - i) >= 16) {
-    i += 16;
-    input_aligned_capture_a = wsp_hash_read_64(input, i - 16);
-    input_aligned_capture_b = wsp_hash_read_64(input, i - 8);
-    s->mix += input_aligned_capture_a + input_aligned_capture_b;
-    s->a += input_aligned_capture_a + ((s->a << 30) | (s->a >> 34)) + s->mix;
-    s->b += input_aligned_capture_b + ((s->b << 28) | (s->b >> 36)) + s->mix;
-  }
-
-  if ((input_count - i) >= 8) {
-    i += 8;
-    input_aligned_capture_a = wsp_hash_read_64(input, i - 8);
-    s->mix += input_aligned_capture_a + s->a;
-    s->a += ((input_aligned_capture_a << 30) | (input_aligned_capture_a >> 34))
-      + s->mix;
-  }
-
-  if (i != input_count) {
-    input_count -= i;
-
-    if (input_count >= 4) {
-      s->mix += (s->a << 16) | (s->a >> 48);
-      s->a += wsp_hash_read_32(input, i) + s->mix_offset;
-
-      if (input_count != 4) {
-        s->mix += (s->b << 20) | (s->b >> 44);
-
-        switch (input_count) {
-          case 7:
-            s->b += input[i + 6] << 16;
-          case 6:
-            s->b += input[i + 5] << 8;
-          case 5:
-            s->b += input[i + 4];
-        }
-      }
-    }
-
-    switch (input_count) {
-      case 3:
-        s->a += input[i + 2] << 16;
-      case 2:
-        s->a += input[i + 1] << 8;
-      case 1:
-        s->a += input[i] + s->mix;
-    }
-  }
-}
-
-void wsp_hash_64_finalize(struct wsp_hash_64_s *s) {
-  s->a += s->b + s->mix_offset + s->input_count_capture;
-  s->mix = s->a ^ (s->mix + ((s->a << 16) | (s->a >> 48))
-    + ((s->c << 44) | (s->c >> 20)));
-  s->mix_offset += ((s->a << 40) | (s->a >> 24))
-    ^ ((s->b << 36) | (s->b >> 28));
-  s->b ^= s->mix_offset + s->input_count_capture;
-  s->mix_offset += s->a ^ (((s->b << 36) | (s->b >> 28))
-    + ((s->d << 14) | (s->d >> 50)) + s->mix);
-  s->a = s->b + s->d + s->mix_offset;
-  s->c += (s->d << 22) | (s->d >> 42);
-  s->mix_offset += ((s->a << 40) | (s->a >> 24)) ^ s->b;
-  s->b = s->a ^ ((s->mix_offset << 36) | (s->mix_offset >> 28));
-  s->d = (((s->a << 26) | (s->a >> 38)) ^ s->d) + s->c + s->mix;
-  s->mix = s->b + s->d + s->mix_offset;
-}</code><h3>Reference</h3><p><span class="code no-margin-left">wsp_hash_64_initialize()</span> is the initialization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_64_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_64_transform()</span> is the core hashing loop that accepts the 4 following arguments.</p><p><span class="code no-margin-left">i</span> is the starting index position of elements in the <span class="code">input</span> array.</p><p><span class="code no-margin-left">input_count</span> is the count of elements in the <span class="code">input</span> array. When hashing in split segments, the value must be a multiple of 32, with the exception of the end segment.</p><p><span class="code no-margin-left">input</span> is the <span class="code">const uint8_t</span> array to hash.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_64_s</span> pointer.</p><p><span class="code no-margin-left">wsp_hash_64_finalize()</span> is the finalization function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_hash_64_s</span> pointer. <span class="code">s.state</span> contains the finalized hash digest result.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Requirements</h3><p>C compiler with C99 (ISO/IEC 9899:1999) standard compatibility.</p><p class="no-margin-bottom">CPU with single-threaded, instruction-level parallelism support.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Hash-64 is designed to hash keys of all sizes as quickly as possible with minimal collisions across all truncated bit sizes.</p><p>It's the fastest portable 64-bit hashing algorithm with good statistical quality relevant to non-cryptographic hashing.</p><p>It's portable for 64-bit systems. There's an alternative <a href="/wsp-hash-32/">32-bit hashing algorithm</a> for 32-bit systems.</p><p>It meets strict compliance, portability and code security requirements.</p><p>Multi-byte memory reading is designed primarily for systems with little-endian byte order, although big-endian memory reading is functional with similar quality and speed results.</p><p>In rare instances when hash table states must be saved after program termination and re-used in multiple systems with varying endianness, keys should be re-hashed during initialization instead of slowing down runtime hashing with byte order alignment.</p><p>In rare instances when byte order is expected to change during runtime, using a <a href="/wsp-hash-oaat/">one-at-a-time hashing algorithm</a> is a better alternative.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>It supports unlimited input length by splitting <span class="code">input</span> bytes into descending segments of 256, 128, 64 and the remaining 8–63 bits. All-at-once hashing is the faster option, but it isn't required and the digest results are consistent when hashing in partial segments.</p><p>Single-threaded, instruction-level parallelism with low-cost addition and bitwise instructions work well on a wide range of CPU queue loads and devices.</p><p>Not allowing a seed prevents issues from 2³² additional hashing algorithms, so all seed-based tests are omitted.</p><p>It passes the SMHasher differential test and key set collision tests including Cyclic, Permutation, Sparse, Text, Two-Byte, Windowed and Zeroes.</p><p>It passes the extended version of these collision tests as well with both 64-bit output and low 32-bit output.</p><p>There aren't any bit distribution calculation percentages exceeding 5% in the worst instances for both 64-bit output and low 32-bit output at both byte orders, which suggests there aren't any critical non-cryptographic distribution issues among each of the aforementioned tests.</p><p>The strict avalanche test in SMHasher is omitted as it's only relevant to the analysis of cryptographic hash function properties where the worst instance exposes a critical cryptographic vulnerability.</p><p>Furthermore, the following code tests collision counts for truncated digests against each of the 8 bits flipped within a single input byte ranging from 1 to 255 at all positions for all <span class="code">input_count</span> values ranging from 1 to 256.</p><code>#include &lt;stdio.h&gt;
+  return 0;
+}</code><h3>Requirements</h3><p class="no-margin-bottom">It adheres to the C99 standard draft (ISO/IEC 9899:1999), although it's convertible to other programming languages and standards.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Hash-64 is designed to hash keys of all sizes as quickly as possible with minimal collisions across all truncated bit sizes.</p><p>It's the fastest portable 64-bit hashing algorithm with good statistical quality relevant to non-cryptographic hashing.</p><p>It's portable for 64-bit systems. There's an alternative <a href="/wsp-hash-32/">32-bit hashing algorithm</a> for 32-bit systems.</p><p>It meets strict compliance, portability and code security requirements.</p><p>Multi-byte memory reading is designed primarily for systems with little-endian byte order, although big-endian memory reading is functional with similar quality and speed results.</p><p>In rare instances when hash table states must be saved after program termination and re-used in multiple systems with varying endianness, keys should be re-hashed during initialization instead of slowing down runtime hashing with byte order alignment.</p><p>In rare instances when byte order is expected to change during runtime, using a <a href="/wsp-hash-oaat/">one-at-a-time hashing algorithm</a> is a better alternative.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>It supports unlimited input length by splitting <span class="code">input</span> bytes into descending segments of 256, 128, 64 and the remaining 8–63 bits. All-at-once hashing is the faster option, but it isn't required and the digest results are consistent when hashing in partial segments.</p><p>Single-threaded, instruction-level parallelism with low-cost addition and bitwise instructions work well on a wide range of CPU queue loads and devices.</p><p>Not allowing a seed prevents issues from 2³² additional hashing algorithms, so all seed-based tests are omitted.</p><p>It passes the SMHasher differential test and key set collision tests including Cyclic, Permutation, Sparse, Text, Two-Byte, Windowed and Zeroes with both 64-bit output and low 32-bit output.</p><p>There aren't any bit distribution calculation percentages exceeding 5% in the worst instances for both 64-bit output and low 32-bit output at both byte orders, which suggests there aren't any critical non-cryptographic distribution issues among each of the aforementioned tests.</p><p>The strict avalanche test in SMHasher is omitted as it's only relevant to the analysis of cryptographic hash function properties where the worst instance exposes a critical cryptographic vulnerability.</p><p>Furthermore, the following code tests collision counts for truncated digests against each of the 8 bits flipped within a single input byte ranging from 1 to 255 at all positions for all <span class="code">input_count</span> values ranging from 1 to 256.</p><code>#include &lt;stdio.h&gt;
 #include "wsp_hash_64.h"
 
 int main(void) {
@@ -279,12 +67,12 @@ int main(void) {
           }
 
           input[k] = i;
-          result = wsp_hash_64(j, (const uint8_t *) input);
+          result = wsp_hash_64(j, input);
           l = 0;
 
           while (l != 8) {
             input[k] = input[k] ^ (1 << l);
-            result_flipped = wsp_hash_64(j, (const uint8_t *) input);
+            result_flipped = wsp_hash_64(j, input);
             input[k] = input[k] ^ (1 << l);
             m = 1;
 
@@ -394,4 +182,4 @@ int main(void) {
 61-Bit Segmented Collisions:         0
 62-Bit Segmented Collisions:         0
 63-Bit Segmented Collisions:         0
-64-Bit Segmented Collisions:         0</code><p>0 64-bit collisions out of 125 million groups of 8 single-bit flip tests proves the worst instances are rare enough to be considered random occurrences in practical implementations.</p><p>The semi-linear collision increments after each truncation are within an acceptable range based on the probability of collisions at each bit size. For example, 200-300 million collisions in the lower 2 bits are expected out of 1 billion total keys, but only up to a few are expected in the range of 32 to 64 bits.</p><p>It's compared to the fastest portable 64-bit hashing algorithms that aren't limited by specific programming languages, platform optimizations or portabillity macros. For example, it's 75% to 300% faster than RapidHash without platform-specific instructions. Furthermore, the expressions in the core mixing loop are structured conveniently for compatiblity with SIMD and other intrinsics.</p><p>Compared to CityHash64, the speed's approximately 21% faster on average for small keys and 19% faster on average for large keys.</p><p>Compared to FarmHash64, the speed's approximately 16% faster on average for small keys and 18% faster on average for large keys.</p><p>Compared to 64-bit MurmurHash3 x64 and x86, the speed's approximately 25% faster on average for small keys and 145% faster on average for large keys.</p><p>Compared to 64-bit SpookyHashV2, the speed's approximately 40% faster on average for small keys and 22% faster on average for large keys.</p><p>Compared to XXHash64, the speed's at least 26% faster on average for small keys and 21% faster for large keys.</p><p class="no-margin-bottom">All speed tests were performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy oscillations.</p></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li></ul><p style="color:#888;font-size:12px;line-height:19px;margin:52px 0 0;">All external mentions of William Stafford Parsons and associated intellectual property may contain either fraudulent claims or outdated content, especially when referencing subject matter not contained herein. All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only.</p></div></footer></div></body></html>
+64-Bit Segmented Collisions:         0</code><p>0 64-bit collisions out of 125 million groups of 8 single-bit flip tests proves the worst instances are rare enough to be considered random occurrences in practical implementations.</p><p>The semi-linear collision increments after each truncation are within an acceptable range based on the probability of collisions at each bit size. For example, 200-300 million collisions in the lower 2 bits are expected out of 1 billion total keys, but only up to a few are expected in the range of 32 to 64 bits.</p><p>It's compared to the fastest portable 64-bit hashing algorithms that aren't limited by specific programming languages, platform optimizations or portabillity macros. For example, it's 75% to 300% faster than RapidHash without platform-specific instructions. Furthermore, the expressions in the core mixing loop are structured conveniently for compatiblity with SIMD and other intrinsics.</p><p>Compared to CityHash64, the speed's approximately 21% faster on average for small keys and 19% faster on average for large keys.</p><p>Compared to FarmHash64, the speed's approximately 16% faster on average for small keys and 18% faster on average for large keys.</p><p>Compared to 64-bit MurmurHash3 x64 and x86, the speed's approximately 25% faster on average for small keys and 145% faster on average for large keys.</p><p>Compared to 64-bit SpookyHashV2, the speed's approximately 40% faster on average for small keys and 22% faster on average for large keys.</p><p>Compared to XXHash64, the speed's at least 26% faster on average for small keys and 21% faster for large keys.</p><p class="no-margin-bottom">All speed tests are performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy oscillations.</p></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons"><img src="/icon-github.jpg"></a></li></ul><p style="color:#888;font-size:12px;line-height:19px;margin:52px 0 0;">All external mentions of William Stafford Parsons and associated intellectual property may contain either fraudulent claims or outdated content, especially when referencing subject matter not contained herein. All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only.</p></div></footer></div></body></html>
