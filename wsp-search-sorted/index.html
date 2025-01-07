@@ -1,144 +1,26 @@
-<!DOCTYPE html><html lang="en"><head><title>WSP-Search-Sorted: The Fastest Binary Search Optimization</title><link href="https://williamstaffordparsons.github.io/wsp-search-sorted/" rel="canonical"><link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.1px;text-decoration:none;transition:opacity 0.2s ease;}a:hover{opacity:0.9;}body,html{background:#fafafa;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:23px;margin:0;overflow-x:hidden;width:100%;}code{background:#f3f3f3 !important;border:2px solid #bcbcbc !important;border-radius:4px;box-sizing:border-box !important;color:#222;display:inline-block;font-family:monospace !important;font-size:11px;font-weight:normal;height:auto;line-height:18px !important;margin:6px 0 16px;max-height:800px;overflow-x:scroll;padding:30px 31px 25px !important;white-space:pre;width:100% !important;}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.7px;line-height:32px;margin:-6px 0 29px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 16px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.2px;margin:13px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 15px;width:100%;}p .code,ul .code{background:#f3f3f3;border:2px solid #bcbcbc;border-radius:4px;color:#222;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;line-height:16px;margin:2px 1px;padding:4px 5px 0;}ul{list-style:none;margin:0;padding:0;}ul li{color:#555;margin-bottom:15px;}.game{background:#000;border-radius:5px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;transition:opacity 0.2s ease;}.game:hover {opacity:0.9;}.game.no-margin-top{margin-top:5px !important;}.game a{border-radius:5px;height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game img{display:block;height:32px;margin:12px 0 0;width:32px;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game p{color:#999;margin-bottom:5px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}.william-stafford-parsons-icon{float:left;margin:0 15px 9px 0;}.william-stafford-parsons-icon img{float:left;height:32px !important;margin:-3px 0 0;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="william-stafford-parsons-icon" href="/"><img src="/icon-william-stafford-parsons.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Search-Sorted: The Fastest Search Algorithm Derived From Binary Search</h1><div class="section"><p class="no-margin-bottom"><a href="/about/">William Stafford Parsons</a> developed an optimal search algorithm as a substantial improvement to Binary Search, Exponential Search, Fibonacci Search and Interpolation Search.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><code>unsigned char wsp_search_sorted_ascending(unsigned long low, unsigned long high,
-                                          const unsigned long *haystack,
-                                          const unsigned long needle,
-                                          unsigned long *position) {
-  unsigned long gap;
+<!DOCTYPE html><html lang="en"><head><title>WSP-Search-Sorted: The Fastest Binary Search Optimization</title><link href="https://williamstaffordparsons.github.io/wsp-search-sorted/" rel="canonical"><link href="/favicon.ico" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.2px;text-decoration:none;}body,html{background:#fff;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:25px;margin:0;overflow-x:hidden;width:100%;}code{background:#eee;border-radius:4px;box-sizing:border-box;color:#111;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;height:auto;letter-spacing:-0.2px;line-height:19px;margin:6px 0 19px;overflow-x:scroll;padding:28px 31px 25px;white-space:pre;width:100%}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.9px;line-height:32px;margin:-6px 0 34px;word-spacing:1.4px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 22px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.3px;margin:20px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 17px;width:100%;}p .code{background:#eee;border-radius:4px;color:#111;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;letter-spacing:-0.2px;line-height:17px;margin:2px 1px;padding:4px 6px 0;}.game{background:#000;border-radius:4px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;}.game.no-margin-top{margin-top:5px !important;}.game a{height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game img{display:block;height:32px;margin-top:12px;width:32px;}.game p{color:#999;margin-bottom:5px;}.icon{float:left;line-height:32px;}.icon img{float:left;height:32px;margin-right:15px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="icon" href="/"><img src="/icon.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Search-Sorted: The Fastest Search Algorithm Derived From Binary Search</h1><div class="section"><p class="no-margin-bottom"><a href="https://github.com/williamstaffordparsons/wsp-search-sorted" target="_blank">WSP-Search-Sorted</a> is an optimal search algorithm as a substantial improvement to Binary Search, Exponential Search, Fibonacci Search and Interpolation Search.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><p><a href="https://raw.githubusercontent.com/williamstaffordparsons/wsp-search-sorted/refs/heads/master/wsp_search_sorted.c" target="_blank">wsp_search_sorted.c</a><br><a href="https://raw.githubusercontent.com/williamstaffordparsons/wsp-search-sorted/refs/heads/master/wsp_search_sorted.h" target="_blank">wsp_search_sorted.h</a></p><h3>Reference</h3><p><span class="code no-margin-left">wsp_search_sorted()</span> is the searching function for a list of elements already sorted in either ascending or descending order with a marginal performance tradeoff compared to the 2 following functions.</p><p><span class="code no-margin-left">wsp_search_sorted_ascending()</span> is the searching function for a list of elements already sorted in ascending order.</p><p><span class="code no-margin-left">wsp_search_sorted_descending()</span> is the searching function for a list of elements already sorted in descending order.</p><p>Each of the aforementioned functions accept the following 5 arguments in left-to-right order.</p><p>1: <span class="code">low</span> is the lowest index bound to search in <span class="code">haystack</span>.</p><p>2: <span class="code">high</span> is the highest index bound to search in <span class="code">haystack</span>.</p><p>The <span class="code">low</span> value must be less than or equal to the <span class="code">high</span> value and both must be valid indices in <span class="code">haystack</span>.</p><p>3: <span class="code">haystack</span> is the <span class="code">const unsigned long</span> array of elements to search. The data type is interchangeable with any integral data type after modifying the relevant function parameter accordingly.</p><p>4: <span class="code">needle</span> is the <span class="code">const unsigned long</span> element to search for in <span class="code no-margin-left">haystack</span>. The data type is interchangeable with any integral data type after modifying the relevant function parameter to match the <span class="code">haystack</span> data type.</p><p>5: <span class="code">position</span> is the <span class="code">unsigned long</span> pointer containing the index of the searched element.</p><p>The return value data type is <span class="code">unsigned char</span>.</p><p>When the return value is <span class="code">1</span>, <span class="code">position</span> contains the index of the found <span class="code">needle</span>.</p><p>When the return value is <span class="code">0</span>, a new index value isn't assigned to <span class="code">position</span>.</p><h3>Example</h3><code>#include &lt;stdio.h&gt;
+#include "wsp_search_sorted.h"
 
-  if (haystack[high] == needle) {
-    *position = high;
-    return 1;
+int main(void) {
+  const unsigned long input[6] = {1, 11, 111, 1111, 11111, 111111};
+  const unsigned long input_ascending[6] = {1, 11, 111, 1111, 11111, 111111};
+  const unsigned long input_descending[6] = {111111, 11111, 1111, 111, 11, 1};
+  unsigned long position;
+
+  if (wsp_search_sorted(0, 5, input, 11111, &position) == 1) {
+    printf("11111 is found at position %lu in input.\n", position);
   }
 
-  if (
-    haystack[low] < needle &&
-    haystack[high] > needle
-  ) {
-    high--;
-    gap = high - low;
-
-    while (haystack[high] != needle) {
-      while (haystack[high] > needle) {
-        high -= gap >> 1;
-        gap = (gap + 1) >> 1;
-      }
-
-      while (haystack[high] < needle) {
-        high += gap >> 1;
-        gap = (gap + 1) >> 1;
-      }
-    }
-
-    low = high;
+  if (wsp_search_sorted_ascending(0, 5, input_ascending, 111, &position) == 1) {
+    printf("111 is found at position %lu in input_ascending.\n", position);
   }
 
-  if (haystack[low] == needle) {
-    *position = low;
-    return 1;
+  if (wsp_search_sorted_descending(0, 5, input_descending, 1, &position) == 1) {
+    printf("1 is found at position %lu in input_descending.\n", position);
   }
 
   return 0;
-}
-
-unsigned char wsp_search_sorted_descending(unsigned long low,
-                                           unsigned long high,
-                                           const unsigned long *haystack,
-                                           const unsigned long needle,
-                                           unsigned long *position) {
-  unsigned long gap;
-
-  if (haystack[high] == needle) {
-    *position = high;
-    return 1;
-  }
-
-  if (
-    haystack[low] > needle &&
-    haystack[high] < needle
-  ) {
-    high--;
-    gap = high - low;
-
-    while (haystack[high] != needle) {
-      while (haystack[high] < needle) {
-        high -= gap >> 1;
-        gap = (gap + 1) >> 1;
-      }
-
-      while (haystack[high] > needle) {
-        high += gap >> 1;
-        gap = (gap + 1) >> 1;
-      }
-    }
-
-    low = high;
-  }
-
-  if (haystack[low] == needle) {
-    *position = low;
-    return 1;
-  }
-
-  return 0;
-}</code><h3>Reference</h3><p><span class="code no-margin-left">wsp_search_sorted_ascending()</span> is the searching function for a list of elements already sorted in ascending order that accepts the following 5 arguments.</p><p><span class="code no-margin-left">low</span> is the lowest index bound to search in <span class="code">haystack</span>.</p><p><span class="code no-margin-left">high</span> is the highest index bound to search in <span class="code">haystack</span>.</p><p>The <span class="code">low</span> value must be less than or equal to the <span class="code">high</span> value and both must be valid indices in <span class="code">haystack</span>.</p><p><span class="code no-margin-left">haystack</span> is the <span class="code">unsigned long</span> array of elements to search. The default <span class="code">unsigned long</span> data type is interchangeable with any integral data type after modification to the relevant function parameters.</p><p><span class="code no-margin-left">needle</span> is the <span class="code">unsigned long</span> element to search for in <span class="code no-margin-left">haystack</span>. The data type should match the <span class="code">haystack</span> data type.</p><p><span class="code no-margin-left">position</span> is the <span class="code">unsigned long</span> pointer containing the index of the searched element.</p><p>The return value data type is <span class="code">unsigned char</span>.</p><p>When the return value is <span class="code">1</span>, <span class="code">position</span> contains the index of the found <span class="code">needle</span>.</p><p>When the return value is <span class="code">0</span>, a new index value isn't assigned to <span class="code">position</span>.</p><p><span class="code no-margin-left">wsp_search_sorted_descending()</span> is the searching function for a list of elements already sorted in descending order that accepts the following 5 arguments.</p><p><span class="code no-margin-left">low</span> is the lowest index bound to search in <span class="code">haystack</span>.</p><p><span class="code no-margin-left">high</span> is the highest index bound to search in <span class="code">haystack</span>.</p><p>The <span class="code">low</span> value must be less than or equal to the <span class="code">high</span> value and both must be valid indices in <span class="code">haystack</span>.</p><p><span class="code no-margin-left">haystack</span> is the <span class="code">unsigned long</span> array of elements to search. The default <span class="code">unsigned long</span> data type is interchangeable with any integral data type after modification to the relevant function parameters.</p><p><span class="code no-margin-left">needle</span> is the <span class="code">unsigned long</span> element to search for in <span class="code no-margin-left">haystack</span>. The data type should match the <span class="code">haystack</span> data type.</p><p><span class="code no-margin-left">position</span> is the <span class="code">unsigned long</span> pointer containing the index of the searched element.</p><p>The return value data type is <span class="code">unsigned char</span>.</p><p>When the return value is <span class="code">1</span>, <span class="code">position</span> contains the index of the found <span class="code">needle</span>.</p><p>When the return value is <span class="code">0</span>, a new index value isn't assigned to <span class="code">position</span>.</p><h3>Requirements</h3><p class="no-margin-bottom">C compiler with C89 (ISO/IEC 9899:1990) standard compatibility.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Search-Sorted is designed as a practical optimization for all sorted-list search algorithm implementations.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and code security requirements.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>In the rare instance where the sort order is unknown, the following <span class="code">wsp_search_sorted()</span> function searches in either ascending or descending order as a convenience with a marginal performance tradeoff.</p><code>unsigned char wsp_search_sorted(unsigned long low, unsigned long high,
-                                const unsigned long *haystack,
-                                const unsigned long needle,
-                                unsigned long *position) {
-  unsigned long gap;
-
-  if (haystack[high] == needle) {
-    *position = high;
-    return 1;
-  }
-
-  if (
-    (
-      haystack[low] < needle &&
-      haystack[high] > needle
-    ) ||
-    (
-      haystack[low] > needle &&
-      haystack[high] < needle
-    )
-  ) {
-    high--;
-    gap = high - low;
-
-    if (haystack[low] < needle) {
-      while (haystack[high] != needle) {
-        while (haystack[high] > needle) {
-          high -= gap >> 1;
-          gap = (gap + 1) >> 1;
-        }
-
-        while (haystack[high] < needle) {
-          high += gap >> 1;
-          gap = (gap + 1) >> 1;
-        }
-      }
-    } else {
-      while (haystack[high] != needle) {
-        while (haystack[high] < needle) {
-          high -= gap >> 1;
-          gap = (gap + 1) >> 1;
-        }
-
-        while (haystack[high] > needle) {
-          high += gap >> 1;
-          gap = (gap + 1) >> 1;
-        }
-      }
-    }
-
-    low = high;
-  }
-
-  if (haystack[low] == needle) {
-    *position = low;
-    return 1;
-  }
-
-  return 0;
-}</code><p>Beyond the common optimization of verifying the existence of <span class="code">needle</span> within <span class="code">haystack</span> before searching, it modifies the <span class="code">high</span> bound instead of initializing with a median pivot value.</p><p>Subtraction is always the first operation on the <span class="code">high</span> bound, so it decreases repeatedly in the same direction without either wasting CPU cycles on unnecessary conditional statements or exceeding the <span class="code">low</span> bounds that were already verified to contain <span class="code">needle</span>. This drastically decreases the number of <span class="code">gap</span> calculations and comparisons in the average instance.</p><p>Furthermore, the positioning of conditional statements with <span class="code">gap</span> calculations offset by <span class="code">+ 1</span> prevents unnecessary array accesses and equality operations after each modification of the <span class="code">high</span> bound. This drastically increases speed on average, especially for large arrays.</p><p>This process repeats in each iteration with alternating directions whenever the <span class="code">high</span> bound almost exceeds the position of the <span class="code">needle</span> element.</p><p>Compared to Binary Search, it's close to a lossless optimization with up to 890% faster speed on average in the best instances and 15% faster speed on average in most instances.</p><p>A specific best instance against Binary Search is demonstrated with the following code example.</p><code>#include &lt;stdio.h&gt;
+}</code><h3>Requirements</h3><p class="no-margin-bottom">It adheres to the C89 standard draft (ISO/IEC 9899:1990), although it's convertible to other programming languages and standards.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Search-Sorted is designed as a practical optimization for all sorted-list search algorithm implementations.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and code security requirements.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>Beyond the common optimization of verifying the existence of <span class="code">needle</span> within <span class="code">haystack</span> before searching, it modifies the <span class="code">high</span> bound instead of initializing with a median pivot value.</p><p>Subtraction is always the first operation on the <span class="code">high</span> bound, so it decreases repeatedly in the same direction without either wasting CPU cycles on unnecessary conditional statements or exceeding the <span class="code">low</span> bounds that are already verified to contain <span class="code">needle</span>. This drastically decreases the number of <span class="code">gap</span> calculations and comparisons in the average instance.</p><p>Furthermore, the positioning of conditional statements with <span class="code">gap</span> calculations offset by <span class="code">+ 1</span> prevents unnecessary array accesses and equality operations after each modification of the <span class="code">high</span> bound. This drastically increases speed on average, especially for large arrays.</p><p>This process repeats in each iteration with alternating directions whenever the <span class="code">high</span> bound almost exceeds the position of the <span class="code">needle</span> element.</p><p>Compared to Binary Search, it's close to a lossless optimization with up to 890% faster speed on average in the best instances and 15% faster speed on average in most instances.</p><p>A specific best instance against Binary Search is demonstrated with the following code example.</p><code>#include &lt;stdio.h&gt;
 #include "wsp_search_sorted.h"
 
 int main(void) {
@@ -161,9 +43,7 @@ int main(void) {
     while (k != 1000) {
       i--;
 
-      if (wsp_search_sorted_ascending(0, k, (const unsigned short *) input,
-                                      (const unsigned short) input[i],
-                                      &position) != 0) {
+      if (wsp_search_sorted_ascending(0, k, input, input[i], &position) != 0) {
         verification++;
       }
 
@@ -173,9 +53,9 @@ int main(void) {
     j++;
   }
 
-  printf("The verification value is %lu.\n", verification);
+  printf("The verification is %lu.\n", verification);
   return 0;
-}</code><p>Compared to Interpolation Search, it doesn't rely on evenly-distributed <span class="code">haystack</span> values for heuristic calculations and it's 1000% faster than the worst case.</p><p>Compared to other sorted-list search algorithms for sorted arrays, it's at least 10% faster on average across a range of data types and data, both randomized and uniform.</p><p>It's optimized for instances where <span class="code">low</span> is greater than <span class="code">0</span> and where <span class="code">needle</span> is either found or not found in <span class="code">haystack</span>.</p><p>Average speed for uniform data was tested with the following code example.</p><code>#include &lt;stdio.h&gt;
+}</code><p>Compared to Interpolation Search, it doesn't rely on evenly-distributed <span class="code">haystack</span> values for heuristic calculations and it's 1000% faster than the worst case.</p><p>Compared to other sorted-list search algorithms for sorted arrays, it's at least 10% faster on average across a range of data types and data, both randomized and uniform.</p><p>It's optimized for instances where <span class="code">low</span> is greater than <span class="code">0</span> and where <span class="code">needle</span> is either found or not found in <span class="code">haystack</span>.</p><p>Average speed for uniform data is tested with the following code example.</p><code>#include &lt;stdio.h&gt;
 #include "wsp_search_sorted.h"
 
 int main(void) {
@@ -198,9 +78,7 @@ int main(void) {
     while (i != 10000) {
       i--;
 
-      if (wsp_search_sorted_ascending(0, k, (const unsigned short *) input,
-                                      (const unsigned short) input[i],
-                                      &position) != 0) {
+      if (wsp_search_sorted_ascending(0, k, input, input[i], &position) != 0) {
         verification++;
       }
 
@@ -210,9 +88,9 @@ int main(void) {
     j++;
   }
 
-  printf("The verification value is %lu.\n", verification);
+  printf("The verification is %lu.\n", verification);
   return 0;
-}</code><p>Furthermore, the average speed was faster with randomized distribution using the aforementioned code, but with sorted numbers generated from various seeded states in <a href="/wsp-prng-32/">WSP-PRNG-32</a>.</p><p>Different degrees of distribution were tested with bitwise OR operands <span class="code">3</span>, <span class="code">7</span>, <span class="code">15</span> and so on.</p><p>The following code example demonstrates the aforementioned worst instance with Interpolation Search. It searches for <span class="code">1</span> in an array with all values defined as <span class="code">2</span> except for the first value defined as <span class="code">0</span> and the second value defined as <span class="code">1</span>.</p><code>#include &lt;stdio.h&gt;
+}</code><p>Furthermore, the average speed is faster with randomized distribution using the aforementioned code, but with sorted numbers generated from various seeded states in <a href="/wsp-prng-32/">WSP-PRNG-32</a>.</p><p>Different degrees of distribution are tested with bitwise OR operands <span class="code">3</span>, <span class="code">7</span>, <span class="code">15</span> and so on.</p><p>The following code example demonstrates the aforementioned worst instance with Interpolation Search. It searches for <span class="code">1</span> in an array with all values defined as <span class="code">2</span> except for the first value defined as <span class="code">0</span> and the second value defined as <span class="code">1</span>.</p><code>#include &lt;stdio.h&gt;
 #include "interpolation_search.h"
 
 int main(void) {
@@ -239,8 +117,7 @@ int main(void) {
     while (i != 10000) {
       i--;
 
-      if (interpolation_search_ascending(0, k, (const unsigned short *) input,
-                                         1, &position) != 0) {
+      if (interpolation_search_ascending(0, k, input, 1, &position) != 0) {
         verification++;
       }
 
@@ -250,6 +127,6 @@ int main(void) {
     j++;
   }
 
-  printf("The verification value is %lu.\n", verification);
+  printf("The verification is %lu.\n", verification);
   return 0;
-}</code><p>The aforementioned instance with WSP-Search-Sorted is faster than the same instance with Binary Search.</p><p class="no-margin-bottom">All speed tests were performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy oscillations.</p></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li></ul><p style="color:#888;font-size:12px;line-height:19px;margin:52px 0 0;">All external mentions of William Stafford Parsons and associated intellectual property may contain either fraudulent claims or outdated content, especially when referencing subject matter not contained herein. All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only.</p></div></footer></div></body></html>
+}</code><p>The aforementioned instance with WSP-Search-Sorted is faster than the same instance with Binary Search.</p><p class="no-margin-bottom">All speed tests are performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img alt="Contrivity Icon" src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy oscillations.</p></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li></ul><p style="color:#888;font-size:12px;line-height:19px;margin:52px 0 0;">All external mentions of William Stafford Parsons and associated intellectual property may contain either fraudulent claims or outdated content, especially when referencing subject matter not contained herein. All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only.</p></div></footer></div></body></html>
