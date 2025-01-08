@@ -1,152 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>WSP-Navigate | An Optimal 8-Directional Calculation Algorithm</title><link href="https://williamstaffordparsons.github.io/wsp-navigate/" rel="canonical"><link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.1px;text-decoration:none;transition:opacity 0.2s ease;}a:hover{opacity:0.9;}body,html{background:#fafafa;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:23px;margin:0;overflow-x:hidden;width:100%;}code{background:#f3f3f3 !important;border:2px solid #bcbcbc !important;border-radius:4px;box-sizing:border-box !important;color:#222;display:inline-block;font-family:monospace !important;font-size:11px;font-weight:normal;height:auto;line-height:18px !important;margin:6px 0 16px;max-height:800px;overflow-x:scroll;padding:30px 31px 25px !important;white-space:pre;width:100% !important;}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.7px;line-height:32px;margin:-6px 0 29px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 16px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.2px;margin:13px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 15px;width:100%;}p .code,ul .code{background:#f3f3f3;border:2px solid #bcbcbc;border-radius:4px;color:#222;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;line-height:16px;margin:2px 1px;padding:4px 5px 0;}ul{list-style:none;margin:0;padding:0;}ul li{color:#555;margin-bottom:15px;}.game{background:#000;border-radius:5px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;transition:opacity 0.2s ease;}.game:hover {opacity:0.9;}.game.no-margin-top{margin-top:5px !important;}.game a{border-radius:5px;height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game img{display:block;height:32px;margin:12px 0 0;width:32px;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game p{color:#999;margin-bottom:5px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}.william-stafford-parsons-icon{float:left;margin:0 15px 9px 0;}.william-stafford-parsons-icon img{float:left;height:32px !important;margin:-3px 0 0;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="william-stafford-parsons-icon" href="/"><img src="/icon-william-stafford-parsons.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Navigate: An Optimal 2D Grid Navigation Increment Calculation Algorithm</h1><div class="section"><p class="no-margin-bottom"><a href="/about/">William Stafford Parsons</a> developed a grid navigation increment calculation algorithm as a substantial improvement to all similar algorithms for navigating rectangular grids in a 2D plane.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><code>struct wsp_navigate_s {
-  unsigned long grid_width;
-  unsigned long grid_height;
-  unsigned long source;
-  unsigned long destination;
-  long increment;
-  long increment_bottom_left;
-  long increment_bottom_right;
-  long increment_top_center;
-  long increment_top_left;
-  long increment_top_right;
-  char increment_x;
-  char increment_y;
-  unsigned long source_x;
-  unsigned long source_y;
-  unsigned long destination_x;
-  unsigned long destination_y;
-  unsigned long repetitions_count;
-};
-
-void wsp_navigate_initialize_bounds(unsigned long width, unsigned long height,
-                                    struct wsp_navigate_s *s) {
-  s->grid_width = width;
-  s->grid_height = height;
-  s->increment_bottom_left = width - 1;
-  s->increment_bottom_right = width + 1;
-  s->increment_top_center = -width;
-  s->increment_top_left = -1 - width;
-  s->increment_top_right = 1 - width;
-}
-
-void wsp_navigate_initialize_points(unsigned long source,
-                                    unsigned long destination,
-                                    struct wsp_navigate_s *s) {
-  s->source = source;
-  s->destination = destination;
-  s->increment = 0;
-  s->source_y = source / s->grid_width;
-  s->source_x = source - (s->grid_width * s->source_y);
-  s->destination_y = destination / s->grid_width;
-  s->destination_x = destination - (s->grid_width * s->destination_y);
-  s->repetitions_count = 0;
-}
-
-void wsp_navigate_increment(struct wsp_navigate_s *s) {
-  if (s->repetitions_count == 0) {
-    if (s->source_x == s->destination_x) {
-      s->increment_x = 0;
-
-      if (s->source_y != s->destination_y) {
-        if (s->source_y < s->destination_y) {
-          s->increment = s->grid_width;
-          s->increment_y = 1;
-          s->repetitions_count = s->destination_y - s->source_y;
-          goto apply_increment;
-        }
-
-        s->increment = s->increment_top_center;
-        s->increment_y = -1;
-        s->repetitions_count = s->source_y - s->destination_y;
-        goto apply_increment;
-      }
-
-      s->increment = 0;
-      s->increment_y = 0;
-      goto apply_increment;
-    }
-
-    if (s->source_y == s->destination_y) {
-      s->increment_y = 0;
-
-      if (s->source_x < s->destination_x) {
-        s->increment = 1;
-        s->increment_x = 1;
-        s->repetitions_count = s->destination_x - s->source_x;
-        goto apply_increment;
-      }
-
-      s->increment = -1;
-      s->increment_x = -1;
-      s->repetitions_count = s->source_x - s->destination_x;
-      goto apply_increment;
-    }
-
-    if (s->source_x < s->destination_x) {
-      s->increment_x = 1;
-      s->repetitions_count = s->destination_x - s->source_x;
-
-      if (s->source_y < s->destination_y) {
-        s->increment = s->increment_bottom_right;
-        s->increment_y = 1;
-
-        if ((s->destination_y - s->source_y) < s->repetitions_count) {
-          s->repetitions_count = s->destination_y - s->source_y;
-        }
-
-        goto apply_increment;
-      }
-
-      s->increment = s->increment_top_right;
-      s->increment_y = -1;
-
-      if ((s->source_y - s->destination_y) < s->repetitions_count) {
-        s->repetitions_count = s->source_y - s->destination_y;
-      }
-
-      goto apply_increment;
-    }
-
-    s->increment_x = -1;
-    s->repetitions_count = s->source_x - s->destination_x;
-
-    if (s->source_y < s->destination_y) {
-      s->increment = s->increment_bottom_left;
-      s->increment_y = 1;
-
-      if ((s->destination_y - s->source_y) < s->repetitions_count) {
-        s->repetitions_count = s->destination_y - s->source_y;
-      }
-
-      goto apply_increment;
-    }
-
-    s->increment = s->increment_top_left;
-    s->increment_y = -1;
-
-    if ((s->source_y - s->destination_y) < s->repetitions_count) {
-      s->repetitions_count = s->source_y - s->destination_y;
-    }
-  }
-
-  apply_increment:
-    s->source += s->increment;
-    s->source_x += s->increment_x;
-    s->source_y += s->increment_y;
-    s->repetitions_count--;
-}</code><h3>Reference</h3>
-<p><span class="code no-margin-left">wsp_navigate_initialize_bounds()</span> is the grid width and height bounds initialization function that accepts the following 3 arguments.</p><p><span class="code no-margin-left">width</span> is the width of the grid.</p><p><span class="code no-margin-left">height</span> is the height of the grid.</p><p>The result of <span class="code">width</span> * <span class="code">height</span> must be less than or equal to <span class="code">ULONG_MAX - 3</span>.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_navigate_s</span> pointer.</p><p>The return value data type is <span class="code">void</span>.</p><p><span class="code no-margin-left">wsp_navigate_initialize_points()</span> is the grid source and destination points initialization function that accepts the following 3 arguments.</p><p><span class="code no-margin-left">source</span> is the starting position as an index in the grid.</p><p><span class="code no-margin-left">destination</span> is the ending position as an index in the grid.</p><p><span class="code no-margin-left">s</span> is a <span class="code">struct wsp_navigate_s</span> pointer.</p><p>The return value data type is <span class="code">void</span>.</p><p><span class="code no-margin-left">wsp_navigate_increment()</span> is the navigation increment function that accepts the following argument.</p><p><span class="code no-margin-left">s</span> is the <span class="code">struct wsp_navigate_s</span> pointer.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Requirements</h3><p class="no-margin-bottom">C compiler with C89 (ISO/IEC 9899:1990) standard compatibility.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Navigate is designed to calculate the next step in 1 of 8 possible directions within the bounds of a rectangular grid by knowing the grid width, grid height, source index position and destination index position.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and code security requirements.</p><p>For example, the following <span class="code">grid</span> array uses a source <span class="code">1</span> at index position <span class="code">0</span> and a destination <span class="code">2</span> at index position <span class="code">95</span>.</p><code>unsigned char grid[100] = {
-  1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 2, 0, 0, 0, 0
-};</code><p>The next step forward towards the destination <span class="code">2</span> from the source <span class="code">1</span> is at index position <span class="code">11</span>.</p><p>In this case, the <span class="code">wsp_navigate_increment()</span> function increments <span class="code">s.source</span> to advance to this position.</p><p>This is applied recursively until <span class="code">s.source</span> reaches <span class="code">s.destination</span> as demonstrated in the following code example.</p><code>#include &lt;stdio.h&gt;
+<!DOCTYPE html><html lang="en"><head><title>WSP-Navigate: An Optimal 8-Directional Calculation Algorithm</title><link href="https://williamstaffordparsons.github.io/wsp-navigate/" rel="canonical"><link href="/favicon.ico" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.2px;text-decoration:none;}body,html{background:#fff;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:25px;margin:0;overflow-x:hidden;width:100%;}code{background:#eee;border-radius:4px;box-sizing:border-box;color:#111;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;height:auto;letter-spacing:-0.2px;line-height:19px;margin:8px 0 17px;overflow-x:scroll;padding:28px 31px 25px;white-space:pre;width:100%}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.9px;line-height:32px;margin:-6px 0 34px;word-spacing:1.4px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 24px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.3px;margin:10px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 17px;width:100%;}p .code{background:#eee;border-radius:4px;color:#111;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;letter-spacing:-0.2px;line-height:17px;margin:2px 1px;padding:4px 6px 0;}.game{background:#000;border-radius:4px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;}.game.no-margin-top{margin-top:5px !important;}.game a{height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game img{display:block;height:32px;margin-top:12px;width:32px;}.game p{color:#999;margin-bottom:5px;}.icon{float:left;line-height:32px;}.icon img{float:left;height:32px;margin-right:15px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="icon" href="/"><img src="/icon.jpg">William Stafford Parsons</a></header><main style="min-height:280px;width:100%;"><h1>WSP-Navigate: An Optimal 2D Grid Navigation Increment Calculation Algorithm</h1><div class="section"><p class="no-margin-bottom"><a href="https://github.com/williamstaffordparsons/wsp-navigate">WSP-Navigate</a> is a grid navigation increment calculation algorithm as a substantial improvement to all similar algorithms for navigating rectangular grids in a 2D plane.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><p><a href="https://raw.githubusercontent.com/williamstaffordparsons/wsp-navigate/refs/heads/master/wsp_navigate.c">wsp_navigate.c</a><br><a href="https://raw.githubusercontent.com/williamstaffordparsons/wsp-navigate/refs/heads/master/wsp_navigate.h">wsp_navigate.h</a></p></code><h3>Reference</h3><p><span class="code no-margin-left">wsp_navigate_initialize_bounds()</span> is the grid width and height bounds initialization function that accepts the following 3 arguments in left-to-right order.</p><p>1: <span class="code">width</span> is the <span class="code">const unsigned long</span> width of the grid.</p><p>2: <span class="code">height</span> is the <span class="code">const unsigned long</span> height of the grid.</p><p>The result of <span class="code">width</span> * <span class="code">height</span> must be less than or equal to <span class="code">ULONG_MAX - 3</span>.</p><p>3: <span class="code">s</span> is the <span class="code">struct wsp_navigate_s</span> pointer.</p><p>The return value data type is <span class="code">void</span>.</p><p><span class="code no-margin-left">wsp_navigate_initialize_points()</span> is the grid source and destination points initialization function that accepts the following 3 arguments in left-to-right order.</p><p>1: <span class="code">source</span> is the <span class="code">const unsigned long</span> starting position as an index in the grid.</p><p>2: <span class="code">destination</span> is the <span class="code">const unsigned long</span> ending position as an index in the grid.</p><p>3: <span class="code">s</span> is the <span class="code">struct wsp_navigate_s</span> pointer.</p><p>The return value data type is <span class="code">void</span>.</p><p><span class="code no-margin-left">wsp_navigate_increment()</span> is the navigation increment function that accepts the following argument.</p><p>1: <span class="code">s</span> is the <span class="code">struct wsp_navigate_s</span> pointer.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Example</h3><code>#include &lt;stdio.h&gt;
 #include "wsp_navigate.h"
 
 int main(void) {
@@ -188,7 +40,18 @@ int main(void) {
   }
 
   return 0;
-}</code><p>The following grid output is the traversal from the source to the destination with each step marked as <span class="code">3</span>.</p><code>1 0 0 0 0 0 0 0 0 0
+}</code><h3>Requirements</h3><p class="no-margin-bottom">It adheres to the C99 standard draft (ISO/IEC 9899:1999), although it's convertible to other programming languages and standards.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Navigate is designed to calculate the next step in 1 of 8 possible directions within the bounds of a rectangular grid by knowing the grid width, grid height, source index position and destination index position.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and code security requirements.</p><p>In the aforementioned example, the following <span class="code">grid</span> array uses the source <span class="code">1</span> at index position <span class="code">0</span> and the destination <span class="code">2</span> at index position <span class="code">95</span>.</p><code>unsigned char grid[100] = {
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 2, 0, 0, 0, 0
+};</code><p>The next step forward towards the destination <span class="code">2</span> from the source <span class="code">1</span> is at index position <span class="code">11</span>.</p><p>In this case, the <span class="code">wsp_navigate_increment()</span> function increments <span class="code">s.source</span> to advance to this position.</p><p>This is applied recursively until <span class="code">s.source</span> reaches <span class="code">s.destination</span> as demonstrated in the aforementioned code example.</p><p>The resulting grid output is the traversal from the source to the destination with each step marked as <span class="code">3</span>.</p><code>1 0 0 0 0 0 0 0 0 0
 0 3 0 0 0 0 0 0 0 0
 0 0 3 0 0 0 0 0 0 0
 0 0 0 3 0 0 0 0 0 0
@@ -197,7 +60,7 @@ int main(void) {
 0 0 0 0 0 3 0 0 0 0
 0 0 0 0 0 3 0 0 0 0
 0 0 0 0 0 3 0 0 0 0
-0 0 0 0 0 2 0 0 0 0</code><p>This simple calculation could be processed billions of times per minute, so it's necessary to micro-optimize wherever possible.</p><p>There are plenty of ways to do this wrong by calculating steps incorrectly and wasting CPU cycles and memory.</p><p>For example, the following code is the first attempt at creating this algorithm without optimization.</p><code>long navigate_bad(const unsigned long grid_width,
+0 0 0 0 0 2 0 0 0 0</code><p>This simple calculation could be processed billions of times per minute, so it's necessary to micro-optimize wherever possible.</p><p>There are plenty of ways to do this wrong by calculating steps incorrectly and wasting CPU cycles and memory.</p><p>For example, the following code is the first attempt without optimization.</p><code>long navigate_bad(const unsigned long grid_width,
                   const unsigned long grid_height, const unsigned long source,
                   const unsigned long destination) {
   long map[10] = {0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
@@ -228,7 +91,7 @@ int main(void) {
   }
 
   return map[i];
-}</code><p>Although the aforementioned solution works, <span class="code">map</span> isn't required and wastes 40–80 bytes of memory per instance.</p><p>In addition to the 4 required conditional statements, <span class="code">map</span> uses 8 dereferences, 8 assignments and 7 arithmetic operations.</p><p>These 4 conditional statements can be optimized further by nesting conditional statements and using <span class="code">=</span> operations instead of <span class="code">+=</span> operations.</p><p>The following code is a second attempt without mapping the traversal steps.</p><code>long navigate_bad(const unsigned long grid_width,
+}</code><p>Although the aforementioned code is functional, the 4 conditional statements can be optimized further by nesting conditional statements and using <span class="code">=</span> operations instead of <span class="code">+=</span> operations.</p><p>The following code is a second attempt without mapping the traversal steps.</p><code>long navigate_bad(const unsigned long grid_width,
                   const unsigned long grid_height, const unsigned long source,
                   const unsigned long destination) {
   const unsigned long source_x = source % grid_width;
@@ -270,7 +133,7 @@ int main(void) {
   }
 
   return increment;
-}</code><p>The aforementioned code is passable, but still not optimal.</p><p>The initialized value for step is overwritten in a majority of cases and the <span class="code">%</span> operator uses too many CPU cycles.</p><p>Arithmetic division with the <span class="code">/</span> operator is necessary to calculate both <span class="code">source_y</span> and <span class="code">destination_y</span>, but <span class="code">source_x</span> and <span class="code">destination_x</span> can use cheaper operations with arithmetic <span class="code">*</span> and <span class="code">-</span> instead of <span class="code">%</span>.</p><p>The following code tests the processing time of <span class="code">%</span> operations in a loop without compiler optimization enabled.</p><code>#include &lt;stdio.h&gt;
+}</code><p>The aforementioned code is functional, but still not optimal.</p><p>The initialized value for <span class="code">increment</span> is overwritten in a majority of cases and the <span class="code">%</span> operator uses too many CPU cycles.</p><p>Arithmetic division with the <span class="code">/</span> operator is necessary to calculate both <span class="code">source_y</span> and <span class="code">destination_y</span>, but <span class="code">source_x</span> and <span class="code">destination_x</span> can use cheaper operations with arithmetic <span class="code">*</span> and <span class="code">-</span> instead of <span class="code">%</span>.</p><p>The following code tests the processing time of <span class="code">%</span> operations in a loop without compiler optimization enabled.</p><code>#include &lt;stdio.h&gt;
 
 int main(void) {
   unsigned short a = 11111;
@@ -284,7 +147,7 @@ int main(void) {
   }
 
   return 0;
-}</code><p>Arithmetic <span class="code">*</span> and <span class="code">-</span> were more efficient by a few seconds when testing against both <span class="code">/</span> and <span class="code">%</span> with more than 100m iterations as shown in the following table.</p><code>Operators   Expression            Average Time
+}</code><p>Arithmetic <span class="code">*</span> and <span class="code">-</span> are more efficient by a few seconds when testing against both <span class="code">/</span> and <span class="code">%</span> with more than 100m iterations as shown in the following table.</p><code>Operators   Expression            Average Time
 
 * -         c += c - (a * 111);   0m6.105s
 /           c += a / 111;         0m6.780s
@@ -398,186 +261,7 @@ void wsp_navigate_bad(struct wsp_navigate_bad_s *s) {
   s->source_x += s->increment_x;
   s->source_y += s->increment_y;
   s->repetitions_count--;
-}</code><p>The following optimal code result is similar to the aforementioned code, but with segmented initialization functions, pre-calculated increments and <span class="code">goto</span> statements instead of branching with <span class="code">else</span> statements.</p><code>#include &lt;stdio.h&gt;
-
-struct wsp_navigate_s {
-  unsigned long grid_width;
-  unsigned long grid_height;
-  unsigned long source;
-  unsigned long destination;
-  long increment;
-  long increment_bottom_left;
-  long increment_bottom_right;
-  long increment_top_center;
-  long increment_top_left;
-  long increment_top_right;
-  char increment_x;
-  char increment_y;
-  unsigned long source_x;
-  unsigned long source_y;
-  unsigned long destination_x;
-  unsigned long destination_y;
-  unsigned long repetitions_count;
-};
-
-void wsp_navigate_initialize_bounds(unsigned long width, unsigned long height,
-                                    struct wsp_navigate_s *s) {
-  s->grid_width = width;
-  s->grid_height = height;
-  s->increment_bottom_left = width - 1;
-  s->increment_bottom_right = width + 1;
-  s->increment_top_center = -width;
-  s->increment_top_left = -1 - width;
-  s->increment_top_right = 1 - width;
-}
-
-void wsp_navigate_initialize_points(unsigned long source,
-                                    unsigned long destination,
-                                    struct wsp_navigate_s *s) {
-  s->source = source;
-  s->destination = destination;
-  s->increment = 0;
-  s->source_y = source / s->grid_width;
-  s->source_x = source - (s->grid_width * s->source_y);
-  s->destination_y = destination / s->grid_width;
-  s->destination_x = destination - (s->grid_width * s->destination_y);
-  s->repetitions_count = 0;
-}
-
-void wsp_navigate_increment(struct wsp_navigate_s *s) {
-  if (s->repetitions_count == 0) {
-    if (s->source_x == s->destination_x) {
-      s->increment_x = 0;
-
-      if (s->source_y != s->destination_y) {
-        if (s->source_y < s->destination_y) {
-          s->increment = s->grid_width;
-          s->increment_y = 1;
-          s->repetitions_count = s->destination_y - s->source_y;
-          goto apply_increment;
-        }
-
-        s->increment = s->increment_top_center;
-        s->increment_y = -1;
-        s->repetitions_count = s->source_y - s->destination_y;
-        goto apply_increment;
-      }
-
-      s->increment = 0;
-      s->increment_y = 0;
-      goto apply_increment;
-    }
-
-    if (s->source_y == s->destination_y) {
-      s->increment_y = 0;
-
-      if (s->source_x < s->destination_x) {
-        s->increment = 1;
-        s->increment_x = 1;
-        s->repetitions_count = s->destination_x - s->source_x;
-        goto apply_increment;
-      }
-
-      s->increment = -1;
-      s->increment_x = -1;
-      s->repetitions_count = s->source_x - s->destination_x;
-      goto apply_increment;
-    }
-
-    if (s->source_x < s->destination_x) {
-      s->increment_x = 1;
-      s->repetitions_count = s->destination_x - s->source_x;
-
-      if (s->source_y < s->destination_y) {
-        s->increment = s->increment_bottom_right;
-        s->increment_y = 1;
-
-        if ((s->destination_y - s->source_y) < s->repetitions_count) {
-          s->repetitions_count = s->destination_y - s->source_y;
-        }
-
-        goto apply_increment;
-      }
-
-      s->increment = s->increment_top_right;
-      s->increment_y = -1;
-
-      if ((s->source_y - s->destination_y) < s->repetitions_count) {
-        s->repetitions_count = s->source_y - s->destination_y;
-      }
-
-      goto apply_increment;
-    }
-
-    s->increment_x = -1;
-    s->repetitions_count = s->source_x - s->destination_x;
-
-    if (s->source_y < s->destination_y) {
-      s->increment = s->increment_bottom_left;
-      s->increment_y = 1;
-
-      if ((s->destination_y - s->source_y) < s->repetitions_count) {
-        s->repetitions_count = s->destination_y - s->source_y;
-      }
-
-      goto apply_increment;
-    }
-
-    s->increment = s->increment_top_left;
-    s->increment_y = -1;
-
-    if ((s->source_y - s->destination_y) < s->repetitions_count) {
-      s->repetitions_count = s->source_y - s->destination_y;
-    }
-  }
-
-  apply_increment:
-    s->source += s->increment;
-    s->source_x += s->increment_x;
-    s->source_y += s->increment_y;
-    s->repetitions_count--;
-}
-
-int main(void) {
-  struct wsp_navigate_s s;
-  unsigned char grid[100] = {
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-  };
-  unsigned char i = 0;
-
-  wsp_navigate_initialize_bounds(10, 10, &s);
-  wsp_navigate_initialize_points(0, 95, &s);
-  grid[s.source] = 1;
-
-  while (s.source != s.destination) {
-    wsp_navigate_increment(&s);
-    grid[s.source] = 3;
-  }
-
-  grid[s.destination] = 2;
-  i = 0;
-
-  while (i != 100) {
-    printf("%u ", grid[i]);
-
-    if (((i + 1) % 10) == 0) {
-      printf("\n");
-    }
-
-    i++;
-  }
-
-  return 0;
-}</code><p>In addition to saving CPU time and memory, the required conditional statements for calculating navigation are nested properly to minimize conditional checks for each navigational direction, as shown in the following table with optimized repetition calculations excluded.</p><code>Instance   Direction Conditionals   Direction Conditional
+}</code><p>The optimal code result is similar to the aforementioned code, but with segmented initialization functions, pre-calculated increments and <span class="code">goto</span> statements instead of branching with <span class="code">else</span> statements.</p><p>In addition to saving CPU time and memory, the required conditional statements for calculating navigation are nested properly to minimize conditional checks for each navigational direction, as shown in the following table with optimized repetition calculations excluded.</p><code>Instance   Direction Conditionals   Direction Conditional
            Before Optimization      After Optimization
 
 0          1                        3
@@ -591,7 +275,7 @@ int main(void) {
 8          5                        4
            __________               __________
 
-           35                       30</code><p>The minority case when the source is the same as the destination requires more conditional checks to decrease the overall count from <span class="code">35</span> to <span class="code">30</span> and the average count from <span class="code">3.89</span> to <span class="code">3.33</span>.</p><p>Furthermore, <span class="code">wsp_navigate_increment()</span> is iterative, meaning it traverses 1 adjacent grid point at a time in 1 of 8 directions without repeated calculations in the same direction.</p><p>To navigate to a new destination after reaching the current destination, <span class="code">wsp_navigate_initialize_points()</span> must be used to initialize new source and destination points with new <span class="code">s.destination_x</span>, <span class="code">s.destination_y</span>, <span class="code">s.source_x</span> and <span class="code">s.source_y</span> coordinates.</p><p>Whenever the grid size changes, <span class="code">wsp_navigate_initialize_bounds()</span> must be used before initializing the source and destination points with <span class="code">wsp_navigate_initialize_points()</span>.</p><p>4-directional navigation is omitted because it's a trivial adjustment from the 8-directional result and it's dependent on the position of obstacles.</p><p>For example, the 8-directional calculation from position <span class="code">21</span> to <span class="code">32</span> in the following grid with obstacles marked as <span class="code">4</span> doesn't need to consider adjacent obstacles, but the 4-directional adjustment considers a possible obstacle at either position <span class="code">22</span> or <span class="code">31</span>.</p><code>0 0 0 0 0 0 0 0 0 0
+           35                       30</code><p>The minority case when the source is the same as the destination requires more conditional checks to decrease the overall count from <span class="code">35</span> to <span class="code">30</span> and the average count from <span class="code">3.89</span> to <span class="code">3.33</span>.</p><p>Furthermore, <span class="code">wsp_navigate_increment()</span> is iterative, so it traverses 1 adjacent grid point at a time in 1 of 8 directions without repeated calculations in the same direction.</p><p>To navigate to a new destination after reaching the current destination, <span class="code">wsp_navigate_initialize_points()</span> is required to initialize new source and destination points with new <span class="code">s.destination_x</span>, <span class="code">s.destination_y</span>, <span class="code">s.source_x</span> and <span class="code">s.source_y</span> coordinates.</p><p>Whenever the grid size changes, <span class="code">wsp_navigate_initialize_bounds()</span> is required before initializing the source and destination points with <span class="code">wsp_navigate_initialize_points()</span>.</p><p>4-directional navigation is omitted because it's a trivial adjustment from the 8-directional result and it's dependent on the position of obstacles.</p><p>For example, the 8-directional calculation from position <span class="code">21</span> to <span class="code">32</span> in the following grid with obstacles marked as <span class="code">4</span> doesn't need to consider adjacent obstacles, but the 4-directional adjustment considers a possible obstacle at either position <span class="code">22</span> or <span class="code">31</span>.</p><code>0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0
 0 1 0 0 0 0 0 0 0 0
 0 4 3 0 0 0 0 0 0 0
@@ -600,4 +284,4 @@ int main(void) {
 0 0 4 3 0 0 0 0 0 0
 0 0 0 2 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0 0 0</code><p class="no-margin-bottom">In this case, a 4-directional implementation should adjust the calculation step from <span class="code">11</span> to <span class="code">1</span> instead of <span class="code">10</span> based on the obstacle at position <span class="code">31</span>.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy oscillations.</p></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li></ul><p style="color:#888;font-size:12px;line-height:19px;margin:52px 0 0;">All external mentions of William Stafford Parsons and associated intellectual property may contain either fraudulent claims or outdated content, especially when referencing subject matter not contained herein. All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only.</p></div></footer></div></body></html>
+0 0 0 0 0 0 0 0 0 0</code><p class="no-margin-bottom">In this instance, a 4-directional implementation should adjust the calculation step from <span class="code">11</span> to <span class="code">1</span> instead of <span class="code">10</span> based on the obstacle at position <span class="code">31</span>.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy oscillations.</p></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li></ul><p style="color:#888;font-size:12px;line-height:19px;margin:52px 0 0;">All external mentions of William Stafford Parsons and associated intellectual property may contain either fraudulent claims or outdated content, especially when referencing subject matter not contained herein. All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only.</p></div></footer></div></body></html>
