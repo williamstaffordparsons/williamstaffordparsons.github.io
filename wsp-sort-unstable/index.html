@@ -1,76 +1,27 @@
-<!DOCTYPE html><html lang="en"><head><title>WSP-Sort-Unstable: The Fastest Shell Sort Gap Sequence</title><link href="https://williamstaffordparsons.github.io/wsp-sort-unstable/" rel="canonical"><link href="/favicon.ico?1111111111" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.1px;text-decoration:none;transition:opacity 0.2s ease;}a:hover{opacity:0.9;}body,html{background:#fafafa;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:23px;margin:0;overflow-x:hidden;width:100%;}code{background:#f3f3f3 !important;border:2px solid #bcbcbc !important;border-radius:4px;box-sizing:border-box !important;color:#222;display:inline-block;font-family:monospace !important;font-size:11px;font-weight:normal;height:auto;line-height:18px !important;margin:6px 0 16px;max-height:800px;overflow-x:scroll;padding:30px 31px 25px !important;white-space:pre;width:100% !important;}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.7px;line-height:32px;margin:-6px 0 29px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 16px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.2px;margin:13px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 15px;width:100%;}p .code,ul .code{background:#f3f3f3;border:2px solid #bcbcbc;border-radius:4px;color:#222;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;line-height:16px;margin:2px 1px;padding:4px 5px 0;}ul{list-style:none;margin:0;padding:0;}ul li{color:#555;margin-bottom:15px;}.game{background:#000;border-radius:5px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;transition:opacity 0.2s ease;}.game:hover {opacity:0.9;}.game.no-margin-top{margin-top:5px !important;}.game a{border-radius:5px;height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game img{display:block;height:32px;margin:12px 0 0;width:32px;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game p{color:#999;margin-bottom:5px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0 !important;}.section{margin-bottom:40px;position:relative;}.william-stafford-parsons-icon{float:left;margin:0 15px 9px 0;}.william-stafford-parsons-icon img{float:left;height:32px !important;margin:-3px 0 0;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="william-stafford-parsons-icon" href="/"><img src="/icon-william-stafford-parsons.jpg"></a></header><main style="min-height:280px;width:100%;"><h1>WSP-Sort-Unstable: The Fastest Shell Sort Gap Sequence Calculation and Sorting Algorithm Without Auxiliary Partition Space</h1><div class="section"><p class="no-margin-bottom"><a href="/about/">William Stafford Parsons</a> developed a bitwise calculation for an optimal sequence of unstable Shell Sort gaps as a substantial improvement to Ciura, Knuth, Sedgwick and Tokuda sequences.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><code>void wsp_sort_unstable_ascending(unsigned long input_count,
-                                 unsigned long *input) {
-  unsigned long _input;
-  unsigned long gap = (input_count >> 5) + (input_count >> 3) + 1;
-  unsigned long i;
-  unsigned long j;
+<!DOCTYPE html><html lang="en"><head><title>WSP-Sort-Unstable: The Fastest Shell Sort Gap Sequence</title><link href="https://williamstaffordparsons.github.io/wsp-sort-unstable/" rel="canonical"><link href="/favicon.ico" rel="icon" type="image/x-icon"><meta content="initial-scale=1,width=device-width" name="viewport"><meta charset="utf-8"><style type="text/css">a{color:#000;font-weight:bold;letter-spacing:-0.2px;text-decoration:none;}body,html{background:#fff;color:#000;font-family:sans-serif;font-size:14px;font-weight:normal;line-height:25px;margin:0;overflow-x:hidden;width:100%;}code{background:#eee;border-radius:4px;box-sizing:border-box;color:#111;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;height:auto;letter-spacing:-0.2px;line-height:19px;margin:8px 0 17px;overflow-x:scroll;padding:28px 31px 25px;white-space:pre;width:100%}footer{display:inline-block;margin:100px 0;width:100%;}footer ul{display:inline-block;}footer ul{margin:55px 0 0;padding:0;width:100%;}footer ul li{display:inline-block;float:left;line-height:18px;margin:0 15px 5px 0;}footer ul li a{font-size:12px;float:left;}footer .social-media a{display:block;float:left;}footer .social-media a img{height:16px;}h1,h2,h3{display:inline-block;font-weight:normal;text-transform:uppercase;width:100%;}h1{font-size:23px;letter-spacing:-0.9px;line-height:32px;margin:-6px 0 34px;word-spacing:1.4px;}h2{font-size:19px;letter-spacing:-0.6px;line-height:42px;margin:0 0 24px;padding-top:18px;}h3{font-size:14px;letter-spacing:-0.3px;margin:10px 0 20px;}p{box-sizing:border-box;color:#555;display:inline-block;margin:0 0 17px;width:100%;}p .code{background:#eee;border-radius:4px;color:#111;display:inline-block;font-family:monospace;font-size:11px;font-weight:normal;letter-spacing:-0.2px;line-height:17px;margin:2px 1px;padding:4px 6px 0;}.game{background:#000;border-radius:4px;box-sizing:border-box;margin:0 0 30px;padding:21px 32px;position:relative;}.game.no-margin-top{margin-top:5px !important;}.game a{height:100%;left:0;position:absolute;text-indent:-9999px;top:0;width:100%;}.game h3{color:#fff;font-weight:bold;line-height:30px;margin:17px 0 0;}.game img{display:block;height:32px;margin-top:12px;width:32px;}.game p{color:#999;margin-bottom:5px;}.icon{float:left;line-height:32px;}.icon img{float:left;height:32px;margin-right:15px;}.no-margin-bottom{margin-bottom:0 !important;}.no-margin-left{margin-left:0 !important;}.no-margin-top{margin-top:0!important;}.section{margin-bottom:40px;position:relative;}</style></head><body><div style="box-sizing:border-box;margin:0 auto;max-width:720px;padding:0 25px;width:100%;"><header style="display:inline-block;padding:105px 0 70px;width:100%;"><a class="icon" href="/"><img src="/icon.jpg">William Stafford Parsons</a></header><main style="min-height:280px;width:100%;"><h1>WSP-Sort-Unstable: The Fastest Shell Sort Gap Sequence Calculation and Sorting Algorithm Without Auxiliary Partition Space</h1><div class="section"><p class="no-margin-bottom"><a href="https://github.com/williamstaffordparsons/wsp-sort-unstable">WSP-Sort-Unstable</a> is a bitwise calculation for an optimal sequence of unstable Shell Sort gaps as a substantial improvement to Ciura, Knuth, Sedgwick and Tokuda sequences.</p></div><div class="section"><h2>Library</h2><h3 class="no-margin-top">Source</h3><p><a href="https://raw.githubusercontent.com/williamstaffordparsons/wsp-sort-unstable/refs/heads/master/wsp_sort_unstable.c">wsp_sort_unstable.c</a><br><a href="https://raw.githubusercontent.com/williamstaffordparsons/wsp-sort-unstable/refs/heads/master/wsp_sort_unstable.h">wsp_sort_unstable.h</a></p><h3>Reference</h3><p><span class="code no-margin-left">wsp_sort_unstable_ascending()</span> is the sorting function in ascending order that accepts the following 2 arguments in left-to-right order.</p><p>1: <span class="code">input_count</span> is the <span class="code">const unsigned long</span> count of elements in the <span class="code">input</span> array.</p><p>2: <span class="code">input</span> is the <span class="code">unsigned long</span> array to sort. The data type is interchangeable with any integral data type and must match the integral data type of <span class="code">input_capture</span>.</p><p>The return value data type is <span class="code">void</span>.</p><p><span class="code no-margin-left">wsp_sort_unstable_descending()</span> is the sorting function in descending order that accepts the following 2 arguments in left-to-right order.</p><p>1: <span class="code">input_count</span> is the <span class="code">const unsigned long</span> count of elements in the <span class="code">input</span> array.</p><p>2: <span class="code">input</span> is the <span class="code">unsigned long</span> array to sort. The data type is interchangeable with any integral data type and must match the integral data type of <span class="code">input_capture</span>.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Example</h3><code>#include &lt;stdio.h&gt;
+#include "wsp_sort_unstable.h"
 
-  while (gap > 0) {
-    i = gap;
+int main(void) {
+  unsigned long input[10] = {1, 111, 111, 11, 111111, 111, 1, 11, 111111111, 1};
+  unsigned long i = 0;
 
-    while (i < input_count) {
-      _input = input[i];
-      j = i;
+  wsp_sort_unstable_ascending(10, input);
 
-      while (
-        j >= gap &&
-        input[j - gap] > _input
-      ) {
-        input[j] = input[j - gap];
-        j -= gap;
-      }
-
-      input[j] = _input;
-      i++;
-    }
-
-    if (
-      gap > 3 ||
-      gap == 1
-    ) {
-      gap = (gap >> 5) + (gap >> 2);
-    } else {
-      gap = 1;
-    }
+  while (i != 10) {
+    printf("%u\n", input[i]);
+    i++;
   }
-}
 
-void wsp_sort_unstable_descending(unsigned long input_count,
-                                  unsigned long *input) {
-  unsigned long _input;
-  unsigned long gap = (input_count >> 5) + (input_count >> 3) + 1;
-  unsigned long i;
-  unsigned long j;
+  wsp_sort_unstable_descending(10, input);
+  i = 0;
 
-  while (gap > 0) {
-    i = gap;
-
-    while (i < input_count) {
-      _input = input[i];
-      j = i;
-
-      while (
-        j >= gap &&
-        input[j - gap] < _input
-      ) {
-        input[j] = input[j - gap];
-        j -= gap;
-      }
-
-      input[j] = _input;
-      i++;
-    }
-
-    if (
-      gap > 3 ||
-      gap == 1
-    ) {
-      gap = (gap >> 5) + (gap >> 2);
-    } else {
-      gap = 1;
-    }
+  while (i != 10) {
+    printf("%u\n", input[i]);
+    i++;
   }
-}</code><h3>Reference</h3><p><span class="code no-margin-left">wsp_sort_unstable_ascending()</span> is the sorting function in ascending order that accepts the following 2 arguments.</p><p><span class="code no-margin-left">input_count</span> is the count of elements in the <span class="code">input</span> array.</p><p><span class="code no-margin-left">input</span> is the <span class="code">unsigned long</span> array to sort. The default <span class="code">unsigned long</span> data type is interchangeable with any integral data type. The integral data type of the <span class="code">input</span> pointer must match the integral data type of <span class="code">_input</span>.</p><p>The return value data type is <span class="code">void</span>.</p><p><span class="code no-margin-left">wsp_sort_unstable_descending()</span> is the sorting function in descending order that accepts the following 2 arguments.</p><p><span class="code no-margin-left">input_count</span> is the count of elements in the <span class="code">input</span> array.</p><p><span class="code no-margin-left">input</span> is the <span class="code">unsigned long</span> array to sort. The default <span class="code">unsigned long</span> data type is interchangeable with any integral data type. The integral data type of the <span class="code">input</span> array must match the integral data type of <span class="code">_input</span>.</p><p>The return value data type is <span class="code">void</span>.</p><h3>Requirements</h3><p class="no-margin-bottom">C compiler with C89 (ISO/IEC 9899:1990) standard compatibility.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Sort-Unstable is designed to both increase the speed and decrease resource usage for all Shell Sort implementations.</p><p>It's the fastest in-place sorting algorithm on average that doesn't allocate additional memory for input partitions. This applies across all input data types, distributions and sizes.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and code security requirements.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>Before sorting, it doesn't pre-calculate the upper limit with a loop starting from <span class="code">0</span>. Instead, the <span class="code">gap</span> numbers in each sorting instance are dynamically-calculated with inconsistencies among different <span class="code">input_count</span> values.</p><p>Elements are always guaranteed to be sorted within bounds using conditional statements that guarantee the final pass is always a regular insertion sort with a <span class="code">gap</span> value of <span class="code">1</span>.</p><p>After each pass, <span class="code">gap > 3</span> prevents any result of <span class="code">gap</span> calculation from jumping from either <span class="code">3</span> or <span class="code">2</span> to <span class="code">0</span> instead of <span class="code">1</span> based on the following calculation output table.</p><code>Gap   Calculation
+
+  return 0;
+}</code><h3>Requirements</h3><p class="no-margin-bottom">It adheres to the C89 standard draft (ISO/IEC 9899:1990), although it's convertible to other programming languages and standards.</p></div><div class="section"><h2>Explanation</h2><p>WSP-Sort-Unstable is designed to both increase the speed and decrease resource usage for all Shell Sort implementations.</p><p>It's the fastest in-place sorting algorithm on average that doesn't allocate additional memory for input partitions. This applies across all input data types, distributions and sizes.</p><p>It's portable for both 32-bit and 64-bit systems.</p><p>It meets strict compliance, portability and code security requirements.</p><p>It doesn't use modulus, multiplication or division arithmetic operations.</p><p>Before sorting, it doesn't pre-calculate the upper limit with a loop starting from <span class="code">0</span>. Instead, the <span class="code">gap</span> numbers in each sorting instance are dynamically-calculated with inconsistencies among different <span class="code">input_count</span> values.</p><p>Elements are always guaranteed to be sorted within bounds using conditional statements that guarantee the final pass is always a regular insertion sort with a <span class="code">gap</span> value of <span class="code">1</span>.</p><p>After each pass, <span class="code">gap > 3</span> prevents any result of <span class="code">gap</span> calculation from jumping from either <span class="code">3</span> or <span class="code">2</span> to <span class="code">0</span> instead of <span class="code">1</span> based on the following calculation output table.</p><code>Gap   Calculation
       Result
 
 0     0
@@ -83,18 +34,10 @@ void wsp_sort_unstable_descending(unsigned long input_count,
 7     1
 8     2
 9     2
-10    2</code><p>The following speed test results were performed with 1 million randomized elements.</p><p>Compared to optimized Shell Sort, it's 31% faster.</p><p>Compared to optimized Knuth's Sequence, it's 24% faster without requiring either division operations or pre-calculated gap increments.</p><p>Furthermore, it's still faster when the gap increments are hard-coded.</p><p>Compared to optimized Ciura, Sedgewick and Tokuda Sequences, it's marginally-faster without a hard-coded upper limit of elements in auxiliary memory.</p><p>The speed is faster with a variety of <span class="code">input_count</span> values and <span class="code">input</span> data types as shown in the following benchmarking table.</p><code>10k 2-Byte Inputs
-Ciura                  0.005s   Tied
-Knuth                  0.005s   Tied
-SedgeWick              0.005s   Tied
-Tokuda                 0.005s   Tied
-Shell                  0.006s   ----
-WSP-Sort-Unstable      0.005s   Tied
-
-100k 2-Byte Inputs
+10    2</code><p>Compared to optimized Ciura, Knuth, Sedgewick and Tokuda gap sequences, it's faster with varying <span class="code">input_count</span> values as shown in the following benchmarking table.</p><code>100k 2-Byte Inputs
 Ciura                  0.040s   ---
 Knuth                  0.040s   ---
-SedgeWick              0.039s   ---
+Sedgewick              0.039s   ---
 Tokuda                 0.040s   ---
 Shell                  0.047s   ---
 WSP-Sort-Unstable      0.037s   Won
@@ -102,7 +45,7 @@ WSP-Sort-Unstable      0.037s   Won
 250k 2-Byte Inputs
 Ciura                  0.103s   ---
 Knuth                  0.110s   ---
-SedgeWick              0.101s   ---
+Sedgewick              0.101s   ---
 Tokuda                 0.102s   ---
 Shell                  0.126s   ---
 WSP-Sort-Unstable      0.091s   Won
@@ -110,7 +53,7 @@ WSP-Sort-Unstable      0.091s   Won
 500k 2-Byte Inputs
 Ciura                  0.211s   ---
 Knuth                  0.243s   ---
-SedgeWick              0.212s   ---
+Sedgewick              0.212s   ---
 Tokuda                 0.209s   ---
 Shell                  0.291s   ---
 WSP-Sort-Unstable      0.191s   Won
@@ -118,7 +61,7 @@ WSP-Sort-Unstable      0.191s   Won
 1m 1-Byte Inputs
 Ciura                  0.302s   ---
 Knuth                  0.349s   ---
-SedgeWick              0.291s   ---
+Sedgewick              0.291s   ---
 Tokuda                 0.304s   ---
 Shell                  0.380s   ---
 WSP-Sort-Unstable      0.266s   Won
@@ -126,7 +69,7 @@ WSP-Sort-Unstable      0.266s   Won
 1m 2-Byte Inputs
 Ciura                  0.461s   ---
 Knuth                  0.570s   ---
-SedgeWick              0.453s   ---
+Sedgewick              0.453s   ---
 Tokuda                 0.451s   ---
 Shell                  0.634s   ---
-WSP-Sort-Unstable      0.423s   Won</code><p>It's faster than every other sequence as well, including Hibbard, Papernov & Stasevich and Pratt.</p><p class="no-margin-bottom">All speed tests were performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy oscillations.</p></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li></ul><p style="color:#888;font-size:12px;line-height:19px;margin:52px 0 0;">All external mentions of William Stafford Parsons and associated intellectual property may contain either fraudulent claims or outdated content, especially when referencing subject matter not contained herein. All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only.</p></div></footer></div></body></html>
+WSP-Sort-Unstable      0.423s   Won</code><p>It's faster than every other sequence as well, including Hibbard, Papernov & Stasevich and Pratt.</p><p class="no-margin-bottom">All speed tests are performed locally on a Pixelbook Go M3 using Debian.</p></div><div class="no-margin-bottom section"><h2>Games</h2><div class="game no-margin-bottom no-margin-top"><a href="/contrivity/">Contrivity</a><img src="/icon-contrivity.jpg"><h3>Contrivity</h3><p>Spawn into the hostile quantum laboratory and destroy oscillations.</p></div></div></main><footer><div class="no-margin-bottom"><p>&copy; 2024 William Stafford Parsons</p><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/#games">Games</a></li><li><a href="/#research">Research</a></li></ul><ul class="social-media"><li><a href="https://github.com/williamstaffordparsons" target="_blank"><img src="/icon-github.jpg"></a></li></ul><p style="color:#888;font-size:12px;line-height:19px;margin:52px 0 0;">All external mentions of William Stafford Parsons and associated intellectual property may contain either fraudulent claims or outdated content, especially when referencing subject matter not contained herein. All depictions of peril in games by William Stafford Parsons are for fictional gaming entertainment purposes only.</p></div></footer></div></body></html>
